@@ -430,7 +430,7 @@ object frmReadServidor: TfrmReadServidor
     Top = 307
     Width = 1284
     Height = 486
-    ActivePage = cxTabSheet1
+    ActivePage = tshDadosFuncionais
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText

@@ -50,7 +50,8 @@ uses
   ufReadEstagiarios in 'AlterarFeriasEstagiarios\ufReadEstagiarios.pas' {frmReadEstagiarios},
   ufUpdateMatriculaEstagiario in 'AlterarFeriasEstagiarios\ufUpdateMatriculaEstagiario.pas' {frmUpdateMatriculaEstagiario},
   uDmFeriasAbonoAfastamento in 'DataModules\uDmFeriasAbonoAfastamento.pas' {dmFeriasAbonoAfastamento: TDataModule},
-  ufDesligarServidorEstagiario in 'Desligamento\ufDesligarServidorEstagiario.pas' {frmDesligarServidorEstagiario};
+  ufDesligarServidorEstagiario in 'Desligamento\ufDesligarServidorEstagiario.pas' {frmDesligarServidorEstagiario},
+  ufUpdateDadosEstagio in 'Estagio\ufUpdateDadosEstagio.pas' {frmUpdateDadosEstagio};
 
 {$R *.res}
 
@@ -63,5 +64,6 @@ begin
   Application.CreateForm(TdmFeriasAbonoAfastamento, dmFeriasAbonoAfastamento);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmLogs, frmLogs);
+  Application.CreateForm(TfrmUpdateDadosEstagio, frmUpdateDadosEstagio);
   Application.Run;
 end.

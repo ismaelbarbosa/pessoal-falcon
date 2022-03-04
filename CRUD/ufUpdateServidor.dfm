@@ -216,7 +216,7 @@ object frmUpdateServidor: TfrmUpdateServidor
     Top = 92
     Width = 1528
     Height = 572
-    ActivePage = tshFerias
+    ActivePage = tshAfastamentos
     Align = alClient
     TabOrder = 2
     ClientRectBottom = 572
@@ -3929,8 +3929,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           Width = 155
           Height = 35
           Caption = 'Editar afastamento'
-          Enabled = False
           TabOrder = 1
+          OnClick = btnEditarAfastamentoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF

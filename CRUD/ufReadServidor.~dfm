@@ -430,7 +430,7 @@ object frmReadServidor: TfrmReadServidor
     Top = 307
     Width = 1284
     Height = 486
-    ActivePage = tshFuncoes
+    ActivePage = cxTabSheet1
     Align = alClient
     Font.Charset = ANSI_CHARSET
     Font.Color = clWindowText
@@ -2067,7 +2067,7 @@ object frmReadServidor: TfrmReadServidor
         Left = 0
         Top = 0
         Width = 1284
-        Height = 496
+        Height = 459
         Align = alClient
         TabOrder = 0
         object cxGridDBTableView5: TcxGridDBTableView
@@ -2903,6 +2903,10 @@ object frmReadServidor: TfrmReadServidor
           end
         end
       end
+    end
+    object cxTabSheet1: TcxTabSheet
+      Caption = 'Dados do est'#225'gio'
+      ImageIndex = 12
     end
   end
   object pnlNome: TPanel

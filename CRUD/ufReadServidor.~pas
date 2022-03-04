@@ -357,6 +357,7 @@ type
     tvSubstProcuradornProcessoSEI: TcxGridDBColumn;
     lvSubstProcurador: TcxGridLevel;
     tbvHistoricoFuncoesColumn2: TcxGridDBColumn;
+    cxTabSheet1: TcxTabSheet;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);

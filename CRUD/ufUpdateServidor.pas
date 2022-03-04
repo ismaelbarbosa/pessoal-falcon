@@ -407,6 +407,7 @@ type
     procedure cxButton5Click(Sender: TObject);
     procedure btnIncluirSubstituicaoClick(Sender: TObject);
     procedure btnIncluirAfastamentoClick(Sender: TObject);
+    procedure btnEditarAfastamentoClick(Sender: TObject);
   private
     RegistroAlterado: boolean;
     PodeDesfazerCampo: boolean;
@@ -2375,6 +2376,11 @@ begin
   frmUpdateAfastamento.Release;
   frmUpdateAfastamento := nil;
 
+end;
+
+procedure TfrmUpdateServidor.btnEditarAfastamentoClick(Sender: TObject);
+begin
+  ShowMessage('Em desenvolvimento');
 end;
 
 end.

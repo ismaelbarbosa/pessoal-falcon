@@ -60,9 +60,8 @@ begin
   Application.CreateForm(TdmPessoal, dmPessoal);
   Application.CreateForm(TdmCadastroServidor, dmCadastroServidor);
   Application.CreateForm(TdmExibirTabelas, dmExibirTabelas);
+  Application.CreateForm(TdmFeriasAbonoAfastamento, dmFeriasAbonoAfastamento);
   Application.CreateForm(TfrmPrincipal, frmPrincipal);
   Application.CreateForm(TfrmLogs, frmLogs);
-  Application.CreateForm(TdmFeriasAbonoAfastamento, dmFeriasAbonoAfastamento);
-  Application.CreateForm(TfrmDesligarServidorEstagiario, frmDesligarServidorEstagiario);
   Application.Run;
 end.
