@@ -1,0 +1,195 @@
+unit uDMConexao;
+
+interface
+
+uses
+  SysUtils, Classes, DB, ADODB, Dialogs, Forms, Variants;
+
+// Criação da classe TUsuario para retornar o servidor que está logado
+type
+  TUsuario  = record
+    Nome      : string;
+    CPF       : string;
+    Matricula : string;
+    Aplicacao : string;
+    Privilegio: string;
+    idLotacao : string;
+    Lotacao   : string;
+    Sala      : string;
+    Ramal     : string;
+end;//TUsuario
+
+type
+  TDMConexao = class(TDataModule)
+    conPessoal: TADOConnection;
+    SProc_DadosUsuarioLogado: TADOStoredProc;
+    procedure DataModuleCreate(Sender: TObject);
+  private
+
+    fUsuario : TUsuario;
+
+    MAQUINA, SERVIDOR, USER, PASSWORD: String;
+
+  public
+
+    property Usuario: TUsuario read fUsuario;
+
+    function ConectarBanco(Banco: string): boolean;
+    function SetarUsuarioLogado: boolean;
+    function getNomeServidor: String;
+
+  end;
+
+var
+  DMConexao: TDMConexao;
+
+implementation
+
+uses PRG_utils, uPesFuncoes;
+
+{$R *.dfm}
+
+function TDMConexao.ConectarBanco(Banco: string): boolean;
+var STRINGCONEXAO: string;
+begin
+  MAQUINA := NomeComputador;
+
+  if Banco = 'Pessoal' then
+  begin
+    if (MAQUINA = 'SUTIC1276156')
+    then
+    begin
+      //ShowMessage('Máquina de desenvolvimento');
+      SERVIDOR := 'PGSRV19';
+      USER := 'sa';
+      PASSWORD := '3253389';
+    end
+    else
+    begin
+      //ShowMessage('Máquina de produção');
+      SERVIDOR := 'PRG_SERVER3';
+      USER := 'PESSOAL';
+      PASSWORD := 'NhiD90oH';
+    end;
+
+    {Provider=SQLOLEDB.1;Password=NhiD90oH;Persist Security Info=True;User ID=PESSOAL;Initial Catalog=dbPessoal;
+    Data Source=PRG_SERVER3;Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;Workstation
+    ID=SUTIC1276156;Use Encryption for Data=False;Tag with column collation when possible=False}
+
+    STRINGCONEXAO := 'Provider=SQLOLEDB.1;Password=' + PASSWORD + ';'
+      + 'Persist Security Info=True;User ID=' + USER + ';'
+      + 'Initial Catalog=dbPessoal;Data Source=' + SERVIDOR + ';'
+      + 'Use Procedure for Prepare=1;Auto Translate=True;Packet Size=4096;'
+      + 'Workstation ID=' + MAQUINA + ';'
+      + 'Use Encryption for Data=False;'
+      + 'Tag with column collation when possible=False';
+
+
+      conPessoal.Connected := false;
+      conPessoal.ConnectionString := STRINGCONEXAO;
+
+    try
+      with conPessoal do
+      begin
+        Connected := true
+      end;
+      Result := true;
+    except
+      Result := false;
+    end;
+
+  end;
+
+end;
+
+procedure TDMConexao.DataModuleCreate(Sender: TObject);
+begin
+  if not conectarBanco('Pessoal')
+  then
+  begin
+    ShowMessage('Ocorreu um erro na tentativa de acessar o banco de Pessoal');
+    Application.Terminate;
+  end
+  else
+  begin
+    //Showmessage('Banco Pessoal conectado com sucesso.');
+    if not SetarUsuarioLogado then
+      ShowMessage('Erro na identificação do usuário');
+    //else ShowMessage('Usuário identificado')
+  end;
+
+end;
+
+function TDMConexao.getNomeServidor: String;
+begin
+  Result := SERVIDOR;
+end;
+
+function TDMConexao.SetarUsuarioLogado: boolean;
+var x: string;
+begin
+  try
+    SProc_DadosUsuarioLogado.Connection := conPessoal;
+
+    if Nome_do_Usuario_Logado = 'gesol' then
+      begin
+
+        x:= InputBox('Atenção','Entre com o nome do usuário','');
+        SProc_DadosUsuarioLogado.Parameters.ParamValues['@Login'] := x;
+
+      end else
+      begin
+        SProc_DadosUsuarioLogado.Parameters.ParamValues['@Login'] := Nome_do_Usuario_Logado;
+      end; //if gesol
+
+
+    SProc_DadosUsuarioLogado.Active := false;
+    //   SProc_DadosUsuarioLogado.Parameters.ParamValues['@Login'] := Nome_do_Usuario_Logado;
+    SProc_DadosUsuarioLogado.Parameters.ParamValues['@idAplicacao'] := '001';
+    SProc_DadosUsuarioLogado.ExecProc;
+    SProc_DadosUsuarioLogado.Active := true;
+
+
+    if SProc_DadosUsuarioLogado.RecordCount = 0 then//if2
+    begin
+      ShowMessage('Você não está cadastrado para utilizar esta aplicação.');
+      Application.Terminate;
+      Abort;
+
+      SProc_DadosUsuarioLogado.Active := false;
+      SProc_DadosUsuarioLogado.Parameters.ParamValues['@Login'] := Nome_do_Usuario_Logado;
+      SProc_DadosUsuarioLogado.Parameters.ParamValues['@idAplicacao'] := Null;
+      SProc_DadosUsuarioLogado.ExecProc;
+      SProc_DadosUsuarioLogado.Active := true;
+
+      fUsuario.Nome := SProc_DadosUsuarioLogado.FieldValues['NOME'];
+      fUsuario.CPF := SProc_DadosUsuarioLogado.FieldValues['CPF'];
+      fUsuario.Matricula := SProc_DadosUsuarioLogado.FieldValues['MATRICULA'];
+      fUsuario.Aplicacao := NullAsStringValue;
+      fUsuario.Privilegio := 'PESQUISA';
+      fUsuario.idLotacao := SProc_DadosUsuarioLogado.FieldValues['idLOTACAO'];
+      fUsuario.Lotacao := SProc_DadosUsuarioLogado.FieldValues['LOTACAO'];
+      fUsuario.Sala := SProc_DadosUsuarioLogado.FieldValues['SALA'];
+      fUsuario.Ramal := SProc_DadosUsuarioLogado.FieldValues['RAMAL'];
+    end//if2
+    else
+    begin
+      fUsuario.Nome := SProc_DadosUsuarioLogado.FieldValues['NOME'];
+      fUsuario.CPF := SProc_DadosUsuarioLogado.FieldValues['CPF'];
+      fUsuario.Matricula := SProc_DadosUsuarioLogado.FieldValues['MATRICULA'];
+      fUsuario.Aplicacao := SProc_DadosUsuarioLogado.FieldValues['APLICACAO'];
+      fUsuario.Privilegio := SProc_DadosUsuarioLogado.FieldValues['PRIVILEGIO'];
+      fUsuario.idLotacao := SProc_DadosUsuarioLogado.FieldValues['idLOTACAO'];
+      fUsuario.Lotacao := SProc_DadosUsuarioLogado.FieldValues['LOTACAO'];
+      fUsuario.Sala := SProc_DadosUsuarioLogado.FieldValues['SALA'];
+      fUsuario.Ramal := SProc_DadosUsuarioLogado.FieldValues['RAMAL'];
+    end;//if2
+
+    Result := true;
+  except
+    Result := false;
+  end;
+
+end;
+
+end.

@@ -1,0 +1,342 @@
+object frmUpdateHistoricoFuncao: TfrmUpdateHistoricoFuncao
+  Left = 452
+  Top = 258
+  Width = 889
+  Height = 333
+  Caption = 'Atualiza'#231#227'o do hist'#243'rico de fun'#231#245'es do servidor'
+  Color = clBtnFace
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Verdana'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object lblDt_NomeacaoFuncao: TLabel
+    Left = 69
+    Top = 110
+    Width = 60
+    Height = 13
+    Caption = 'Nomea'#231#227'o'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblDt_NomeacaoFuncaoDODF: TLabel
+    Left = 309
+    Top = 110
+    Width = 107
+    Height = 13
+    Caption = 'Nomea'#231#227'o (DODF)'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblFuncao: TLabel
+    Left = 89
+    Top = 60
+    Width = 40
+    Height = 13
+    Caption = 'Fun'#231#227'o'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblDt_PosseFunca: TLabel
+    Left = 35
+    Top = 136
+    Width = 95
+    Height = 13
+    AutoSize = False
+    Caption = 'Posse na fun'#231#227'o'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    WordWrap = True
+  end
+  object lblDt_ExercicioFuncao: TLabel
+    Left = 364
+    Top = 136
+    Width = 51
+    Height = 13
+    Caption = 'Exerc'#237'cio'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblDtDeslig_Funcao: TLabel
+    Left = 50
+    Top = 163
+    Width = 78
+    Height = 13
+    Caption = 'Desligamento'
+  end
+  object Label1: TLabel
+    Left = 291
+    Top = 163
+    Width = 125
+    Height = 13
+    Caption = 'Desligamento (DODF)'
+  end
+  object Label6: TLabel
+    Left = 83
+    Top = 82
+    Width = 46
+    Height = 13
+    Caption = 'S'#237'mbolo'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lblSimbolo: TLabel
+    Left = 144
+    Top = 82
+    Width = 59
+    Height = 13
+    Caption = 'lblSimbolo'
+  end
+  object txtIDHistorico: TLabel
+    Left = 625
+    Top = 162
+    Width = 16
+    Height = 13
+    Caption = '....'
+  end
+  object Label4: TLabel
+    Left = 599
+    Top = 162
+    Width = 14
+    Height = 13
+    Caption = 'ID'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clGray
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+  end
+  object pnlBotoes: TPanel
+    Left = 0
+    Top = 0
+    Width = 881
+    Height = 41
+    Align = alTop
+    BevelOuter = bvNone
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
+    object Label2: TLabel
+      Left = 400
+      Top = 20
+      Width = 149
+      Height = 13
+      Caption = 'frmUpdateHistoricoFuncao'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
+    object lblOperacao: TLabel
+      Left = 270
+      Top = 20
+      Width = 68
+      Height = 13
+      Caption = 'lblOperacao'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object btnSair: TcxButton
+      Left = 144
+      Top = 5
+      Width = 110
+      Height = 35
+      Caption = 'Sai&r'
+      TabOrder = 0
+      OnClick = btnSairClick
+      Glyph.Data = {
+        42040000424D4204000000000000420000002800000010000000100000000100
+        20000300000000040000000000000000000000000000000000000000FF0000FF
+        0000FF00000000000000000000DA000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00DA00000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        000000000000000000B400000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        000000000000000000B500000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000013000000F8000000000000
+        000000000000000000000000000000000000000000EE000000DC000000B80000
+        00940000006F0000004A00000026000000FF000000F900000085000000000000
+        00000000000000000000000000000000000000000005000000260000004A0000
+        006F00000094000000B8000000DC000000E70000000000000000000000000000
+        000000000000}
+    end
+    object btnGravar: TcxButton
+      Left = 2
+      Top = 5
+      Width = 110
+      Height = 35
+      Caption = '&Gravar'
+      TabOrder = 1
+      OnClick = btnGravarClick
+      Glyph.Data = {
+        42040000424D4204000000000000420000002800000010000000100000000100
+        20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
+        0000FF000000000000000000000000000085000000F9000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000F9000000840000
+        0000000000000000000000000000000000F90000001300000000000000000000
+        0000000000000000000000000000000000000000000000000013000000F80000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0006000000AC000000AC00000006000000000000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000060000
+        00B0000000F4000000F4000000B0000000060000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000005000000AF0000
+        00B50000008700000085000000AF000000B50000000700000000000000FF0000
+        0000000000000000000000000000000000FF000000000000005F000000AC0000
+        0006000000800000008000000006000000AC0000005F00000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000FF0000
+        0000000000000000000000000000000000F90000001200000000000000000000
+        0000000000800000008000000000000000000000000000000013000000F80000
+        000000000000000000000000000000000086000000F9000000FF000000DB0000
+        0000000000800000008000000000000000DD000000FF000000F9000000850000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000006E0000006E00000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000000}
+    end
+  end
+  object lkpFuncao: TcxLookupComboBox
+    Left = 141
+    Top = 54
+    Properties.DropDownWidth = 550
+    Properties.KeyFieldNames = 'idFuncao'
+    Properties.ListColumns = <
+      item
+        Width = 100
+        FieldName = 'idDFG'
+      end
+      item
+        Width = 450
+        FieldName = 'Descricao'
+      end
+      item
+        Caption = 'Nova estrutura'
+        Width = 120
+        FieldName = 'NovaEstrutura'
+      end>
+    Properties.ListFieldIndex = 1
+    Properties.ListSource = dsFuncao
+    TabOrder = 1
+    Width = 522
+  end
+  object edtDtNomeacaoFuncao: TcxDateEdit
+    Left = 141
+    Top = 104
+    TabOrder = 2
+    Width = 108
+  end
+  object edtDtPosseFuncao: TcxDateEdit
+    Left = 141
+    Top = 130
+    TabOrder = 4
+    Width = 108
+  end
+  object edtDtNomeacaoFuncaoDODF: TcxDateEdit
+    Left = 429
+    Top = 104
+    TabOrder = 3
+    Width = 108
+  end
+  object edtDtExercicioFuncao: TcxDateEdit
+    Left = 429
+    Top = 130
+    TabOrder = 5
+    Width = 108
+  end
+  object edtDtDesligFuncao: TcxDateEdit
+    Left = 141
+    Top = 157
+    TabOrder = 6
+    Width = 108
+  end
+  object edtDtDesligFuncaoDODF: TcxDateEdit
+    Left = 429
+    Top = 157
+    TabOrder = 7
+    Width = 108
+  end
+  object qryFuncao: TADOQuery
+    CursorType = ctStatic
+    Parameters = <>
+    Left = 264
+    Top = 8
+  end
+  object dsFuncao: TDataSource
+    DataSet = qryFuncao
+    Left = 296
+    Top = 8
+  end
+end

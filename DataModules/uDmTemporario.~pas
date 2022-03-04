@@ -1,0 +1,23 @@
+unit uDmTemporario;
+
+interface
+
+uses
+  SysUtils, Classes;
+
+type
+  TdmTemporario = class(TDataModule)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  dmTemporario: TdmTemporario;
+
+implementation
+
+{$R *.dfm}
+
+end.

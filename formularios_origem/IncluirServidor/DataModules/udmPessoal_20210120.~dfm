@@ -1,0 +1,18 @@
+object dmPessoal_20210120: TdmPessoal_20210120
+  OldCreateOrder = False
+  Left = 292
+  Top = 123
+  Height = 643
+  Width = 975
+  object cntPessoal: TADOConnection
+    Connected = True
+    ConnectionString = 
+      'Provider=SQLOLEDB.1;Password=NhiD90oH;Persist Security Info=True' +
+      ';User ID=PESSOAL;Initial Catalog=dbPessoal;Data Source=PRG_SERVE' +
+      'R3'
+    LoginPrompt = False
+    Provider = 'SQLOLEDB.1'
+    Left = 50
+    Top = 45
+  end
+end

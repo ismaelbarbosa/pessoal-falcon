@@ -1,0 +1,450 @@
+object frmUpdateFerias: TfrmUpdateFerias
+  Left = 192
+  Top = 117
+  Width = 830
+  Height = 491
+  Caption = 'Lan'#231'amento de f'#233'rias'
+  Color = clBtnFace
+  Font.Charset = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Verdana'
+  Font.Style = []
+  OldCreateOrder = False
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object gbxOperacao: TcxGroupBox
+    Left = 566
+    Top = 240
+    Caption = 'Opera'#231#227'o'
+    TabOrder = 0
+    Height = 52
+    Width = 151
+    object lblModoDesc: TLabel
+      Left = 42
+      Top = 20
+      Width = 107
+      Height = 20
+      Caption = 'lblModoDesc'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lblModo: TLabel
+      Left = 18
+      Top = 20
+      Width = 66
+      Height = 20
+      Caption = 'lblModo'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+  end
+  object pnlBotoes: TPanel
+    Left = 0
+    Top = 0
+    Width = 822
+    Height = 40
+    Align = alTop
+    BevelOuter = bvNone
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
+    object Label2: TLabel
+      Left = 416
+      Top = 8
+      Width = 170
+      Height = 25
+      Caption = 'frmLancarFerias'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -21
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+      Visible = False
+    end
+    object btnSair: TcxButton
+      Left = 121
+      Top = 5
+      Width = 110
+      Height = 35
+      Caption = 'Sai&r'
+      TabOrder = 0
+      OnClick = btnSairClick
+      Glyph.Data = {
+        42040000424D4204000000000000420000002800000010000000100000000100
+        20000300000000040000000000000000000000000000000000000000FF0000FF
+        0000FF00000000000000000000DA000000FF000000FF000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+        00DA00000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        000000000000000000B400000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        000000000000000000B500000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000000000000FF000000000000
+        000000000000000000000000000000000000000000FF00000000000000000000
+        0000000000000000000000000000000000FF00000013000000F8000000000000
+        000000000000000000000000000000000000000000EE000000DC000000B80000
+        00940000006F0000004A00000026000000FF000000F900000085000000000000
+        00000000000000000000000000000000000000000005000000260000004A0000
+        006F00000094000000B8000000DC000000E70000000000000000000000000000
+        000000000000}
+    end
+    object btnGravar: TcxButton
+      Left = 3
+      Top = 5
+      Width = 110
+      Height = 35
+      Caption = '&Gravar'
+      TabOrder = 1
+      Glyph.Data = {
+        42040000424D4204000000000000420000002800000010000000100000000100
+        20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
+        0000FF000000000000000000000000000085000000F9000000FF000000FF0000
+        00FF000000FF000000FF000000FF000000FF000000FF000000F9000000840000
+        0000000000000000000000000000000000F90000001300000000000000000000
+        0000000000000000000000000000000000000000000000000013000000F80000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0006000000AC000000AC00000006000000000000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000060000
+        00B0000000F4000000F4000000B0000000060000000000000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000005000000AF0000
+        00B50000008700000085000000AF000000B50000000700000000000000FF0000
+        0000000000000000000000000000000000FF000000000000005F000000AC0000
+        0006000000800000008000000006000000AC0000005F00000000000000FF0000
+        0000000000000000000000000000000000FF0000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000FF0000
+        0000000000000000000000000000000000F90000001200000000000000000000
+        0000000000800000008000000000000000000000000000000013000000F80000
+        000000000000000000000000000000000086000000F9000000FF000000DB0000
+        0000000000800000008000000000000000DD000000FF000000F9000000850000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000800000008000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000006E0000006E00000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        000000000000}
+    end
+  end
+  object cxGroupBox1: TcxGroupBox
+    Left = 0
+    Top = 40
+    Align = alClient
+    TabOrder = 2
+    Height = 420
+    Width = 822
+    object lblDt_Termino: TLabel
+      Left = 120
+      Top = 257
+      Width = 88
+      Height = 16
+      Caption = 'lblDt_Termino'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label7: TLabel
+      Left = 23
+      Top = 257
+      Width = 47
+      Height = 13
+      Caption = 'T'#233'rmino'
+    end
+    object Label6: TLabel
+      Left = 23
+      Top = 224
+      Width = 31
+      Height = 13
+      Caption = 'In'#237'cio'
+    end
+    object Label5: TLabel
+      Left = 23
+      Top = 192
+      Width = 88
+      Height = 13
+      Caption = 'Tipo de parcela'
+    end
+    object Label1: TLabel
+      Left = 23
+      Top = 24
+      Width = 71
+      Height = 18
+      Caption = 'Exerc'#237'cio'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lblNProcessoSEI: TLabel
+      Left = 314
+      Top = 18
+      Width = 93
+      Height = 13
+      Caption = 'N'#186' Processo SEI'
+    end
+    object lblDt_InicioReagendam: TLabel
+      Left = 293
+      Top = 187
+      Width = 107
+      Height = 13
+      Caption = 'In'#237'cio Reagendam.'
+    end
+    object lblDt_TerminoReagendam: TLabel
+      Left = 541
+      Top = 187
+      Width = 123
+      Height = 13
+      Caption = 'T'#233'rmino Reagendam.'
+    end
+    object lblObservacao: TLabel
+      Left = 21
+      Top = 339
+      Width = 68
+      Height = 13
+      Caption = 'Observa'#231#227'o'
+    end
+    object lblOperacao: TLabel
+      Left = 632
+      Top = 344
+      Width = 114
+      Height = 23
+      Caption = 'lblOperacao'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -19
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lkpTipoParcela: TcxLookupComboBox
+      Left = 120
+      Top = 189
+      ParentFont = False
+      Properties.DropDownRows = 20
+      Properties.DropDownWidth = 300
+      Properties.KeyFieldNames = 'idTipoParcela'
+      Properties.ListColumns = <
+        item
+          FieldName = 'Descricao'
+        end
+        item
+          FieldName = 'idTipoParcela'
+        end>
+      Properties.ListSource = dsFeriasTipoParcela
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -13
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 3
+      OnExit = lkpTipoParcelaExit
+      Width = 150
+    end
+    object edtDtInicio: TcxDateEdit
+      Left = 121
+      Top = 221
+      ParentFont = False
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -13
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 4
+      Width = 149
+    end
+    object edtExercicio: TcxTextEdit
+      Left = 120
+      Top = 21
+      ParentFont = False
+      Properties.MaxLength = 4
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -16
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 0
+      Width = 59
+    end
+    object chkAntecipacao: TcxCheckBox
+      Left = 120
+      Top = 296
+      Caption = 'Antecipa'#231#227'o'
+      ParentFont = False
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -11
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 7
+      Width = 121
+    end
+    object edtDt_InicioReagendam: TDBEdit
+      Left = 422
+      Top = 184
+      Width = 80
+      Height = 19
+      Ctl3D = False
+      DataField = 'Dt_InicioReagendamento'
+      Enabled = False
+      ParentCtl3D = False
+      TabOrder = 5
+    end
+    object edtDt_TerminoReagendam: TDBEdit
+      Left = 670
+      Top = 184
+      Width = 80
+      Height = 19
+      Ctl3D = False
+      DataField = 'Dt_TerminoReagendamento'
+      Enabled = False
+      ParentCtl3D = False
+      TabOrder = 6
+    end
+    object memObservacao: TcxMemo
+      Left = 120
+      Top = 333
+      Lines.Strings = (
+        '')
+      TabOrder = 8
+      Height = 41
+      Width = 411
+    end
+    object Button1: TButton
+      Left = 296
+      Top = 248
+      Width = 75
+      Height = 25
+      Caption = 'Button1'
+      TabOrder = 9
+      OnClick = Button1Click
+    end
+    object rgpPeriodo: TcxRadioGroup
+      Left = 24
+      Top = 61
+      Caption = 'Per'#237'odo'
+      ParentFont = False
+      Properties.Columns = 4
+      Properties.Items = <
+        item
+          Caption = #218'nico'
+        end
+        item
+          Caption = 'Primeiro'
+        end
+        item
+          Caption = 'Segundo'
+        end>
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -13
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 1
+      Height = 50
+      Width = 400
+    end
+    object Button2: TButton
+      Left = 680
+      Top = 272
+      Width = 75
+      Height = 25
+      Caption = 'Button2'
+      TabOrder = 10
+      OnClick = Button2Click
+    end
+    object rgpParcela: TcxRadioGroup
+      Left = 24
+      Top = 117
+      Caption = 'Parcela'
+      ParentFont = False
+      Properties.Columns = 4
+      Properties.Items = <
+        item
+          Caption = #218'nica'
+        end
+        item
+          Caption = 'Primeira'
+        end
+        item
+          Caption = 'Segunda'
+        end
+        item
+          Caption = 'Terceira'
+        end>
+      ItemIndex = 0
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -13
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 2
+      Height = 50
+      Width = 400
+    end
+    object edtProcessoSEI: TcxMaskEdit
+      Left = 416
+      Top = 15
+      Properties.EditMask = '00000-00000000/0000-00;0;_'
+      Properties.MaxLength = 0
+      TabOrder = 11
+      Text = '                   '
+      Width = 158
+    end
+  end
+  object dsFeriasTipoParcela: TDataSource
+    DataSet = dmExibirTabelas.qryFeriasTipoParcela
+    Left = 280
+    Top = 8
+  end
+end

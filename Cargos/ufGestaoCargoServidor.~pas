@@ -1,0 +1,24 @@
+unit ufGestaoCargoServidor;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs;
+
+type
+  TfrmGestaoCargoServidor = class(TForm)
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmGestaoCargoServidor: TfrmGestaoCargoServidor;
+
+implementation
+
+{$R *.dfm}
+
+end.

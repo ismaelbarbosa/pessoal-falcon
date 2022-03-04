@@ -1,0 +1,162 @@
+{*-------------------------------------------------------------------------
+Descreve a classe TLogin.
+
+@Author jcl
+@Version ??/??/???? 1.0.0.0
+==========================================================================}
+unit uTLogin;
+
+interface
+
+uses
+Forms, Dialogs, ufrmLogin, SUIEdit, SUIForm;
+
+type
+  {TLogin interface}
+{*-------------------------------------------------------------------------
+Cria o formulário de Login da aplicação.
+
+@Todo Implementar um módulo que crie um menu na aplicação do Desenvolvedor
+que habilite o Gestor a cadastrar usuários e senhas p/ os sistemas sob
+sua responsabilidade.
+==========================================================================}
+  TLogin = class (TObject)
+  private
+    { Private declarations }
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'Versao'.
+Versão do aplicativo em Delphi.
+==========================================================================}
+    fVersao: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'idUsuario'.
+CPF do usuário que logou.
+@Todo Mudar o seu nome para 'fCPF'
+==========================================================================}
+    fidUsuario: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'Nome'.
+==========================================================================}
+    fNome: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'Matrícula'.
+==========================================================================}
+    fMatricula: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'idLotacao'.
+==========================================================================}
+    fidLotacao: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'Lotacao'.
+==========================================================================}
+    fLotacao: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'idAplicacao'.
+==========================================================================}
+    fidAplicacao: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'idPrivilegio'.
+==========================================================================}
+    fidPrivilegio: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'Privilegio'.
+==========================================================================}
+    fPrivilegio: string;
+{*-------------------------------------------------------------------------
+Armazena o valor utilizado pela propriedade 'Aplicacao'.
+==========================================================================}
+    fAplicacao: string;
+  public
+{*-------------------------------------------------------------------------
+Retorna o CPF do usuário que logou no aplicativo. Somente leitura.
+@Todo Mudar o seu nome para 'CPF'
+==========================================================================}
+    property idUsuario: string read fidUsuario;
+{*-------------------------------------------------------------------------
+Retorna o Nome do usuário que logou no aplicativo. Somente leitura.
+==========================================================================}
+    property Nome: string read fNome;
+{*-------------------------------------------------------------------------
+Retorna a Matrícula do usuário que logou no aplicativo. Somente leitura.
+==========================================================================}
+    property Matricula: string read fMatricula;
+{*-------------------------------------------------------------------------
+Retorna o código da lotação do usuário que logou no aplicativo.
+Somente leitura.
+==========================================================================}
+    property idLotacao: string read fidLotacao;
+{*-------------------------------------------------------------------------
+Retorna a descrição da lotação do usuário que logou no aplicativo.
+Somente leitura.
+==========================================================================}
+    property Lotacao: string read fLotacao;
+{*-------------------------------------------------------------------------
+Retorna o código da aplicação atual (001 = Pessoal, 002 = Judicial, etc).
+Somente leitura.
+==========================================================================}
+    property idAplicacao: string read fidAplicacao;
+{*-------------------------------------------------------------------------
+Retorna o código do privilégio do usuário que logou no aplicativo
+(01 = GESTOR, 02 = ADMINISTRADOR, etc). Somente leitura.
+==========================================================================}
+    property idPrivilegio: string read fidPrivilegio;
+{*-------------------------------------------------------------------------
+Retorna a descrição do privilégio do usuário que logou no aplicativo
+(GESTOR, ADMINISTRADOR, etc). Somente leitura.
+@Todo Criar uma propriedade que retorne a descrição dos privilégios com
+acentos, 'ç' etc.
+==========================================================================}
+    property Privilegio: string read fPrivilegio;
+{*-------------------------------------------------------------------------
+Retorna a descrição da aplicação atual (PESSOAL, JUDICIAL, etc).
+Somente leitura.
+@Todo Criar uma propriedade que retorne a descrição das aplicações com
+acentos, 'ç' etc.
+==========================================================================}
+    property Aplicacao: string read fAplicacao;
+{*-------------------------------------------------------------------------
+Armazena a versão do aplicativo desenvolvido em Delphi (Judicial,
+Atendimento etc.).
+==========================================================================}
+    property Versao: string read fVersao;
+    constructor Create;
+  end;
+  {TLogin fim interface}
+
+implementation
+
+uses PRG_utils;
+
+{TLogin implementation}
+constructor TLogin.Create;
+var
+fLogin: TfrmLogin;
+begin
+
+if Conectado = false then
+begin
+  Application.Terminate;
+end;//if
+
+fLogin := TfrmLogin.Create(Application);
+fLogin.Color := Application.MainForm.Color;
+fLogin.ShowModal;
+
+fidUsuario := fLogin.fAcesso.idUsuario;
+fNome := fLogin.fAcesso.Nome;
+fMatricula := fLogin.fAcesso.Matricula;
+fidLotacao := fLogin.fAcesso.idLotacao;
+fLotacao := fLogin.fAcesso.Lotacao;
+fidAplicacao := fLogin.fAcesso.idAplicacao;
+fAplicacao := fLogin.fAcesso.Aplicacao;
+fidPrivilegio := fLogin.fAcesso.idPrivilegio;
+fPrivilegio := fLogin.fAcesso.Privilegio;
+fVersao := Versao_do_Sistema;
+
+fLogin.Free;
+
+end;
+{TLogin fim implementation}
+
+
+end.

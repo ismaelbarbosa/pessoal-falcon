@@ -1,0 +1,11 @@
+object dmPessoal: TdmPessoal
+  OldCreateOrder = False
+  Left = 192
+  Top = 124
+  Height = 469
+  Width = 584
+  object qryExecSQL: TADOConnection
+    Left = 104
+    Top = 64
+  end
+end

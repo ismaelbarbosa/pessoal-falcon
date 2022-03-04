@@ -1,0 +1,80 @@
+unit ufRegistrosBanco;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
+  cxControls, cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage,
+  cxEdit, DB, cxDBData, cxContainer, ADODB, cxGroupBox, cxGridLevel,
+  cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
+  cxGridCustomView, cxGrid, StdCtrls, DBCtrls, cxPC, cxButtons, ExtCtrls;
+
+type
+  TfrmRegistrosBanco = class(TForm)
+    pnlBotoes: TPanel;
+    btnSair: TcxButton;
+    pgcSituacao: TcxPageControl;
+    tshRegistrosBanco: TcxTabSheet;
+    pnlCargosComissionados: TPanel;
+    Label3: TLabel;
+    DBText2: TDBText;
+    Label6: TLabel;
+    DBText5: TDBText;
+    Label8: TLabel;
+    DBText7: TDBText;
+    cxGrid1: TcxGrid;
+    cxGrid1DBTableView1: TcxGridDBTableView;
+    cxGrid1DBTableView1Column1: TcxGridDBColumn;
+    cxGrid1DBTableView1Column2: TcxGridDBColumn;
+    cxGrid1DBTableView1Column3: TcxGridDBColumn;
+    cxGrid1DBTableView1Column4: TcxGridDBColumn;
+    cxGrid1Level1: TcxGridLevel;
+    cxGroupBox1: TcxGroupBox;
+    lblTotalGeral: TLabel;
+    lblTotalExercicioExterno: TLabel;
+    Label1: TLabel;
+    Label2: TLabel;
+    qryLog: TADOQuery;
+    dsLog: TDataSource;
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    function pesquisarRegistros: integer;
+  end;
+
+var
+  frmRegistrosBanco: TfrmRegistrosBanco;
+
+implementation
+
+{$R *.dfm}
+
+{ TfrmRegistrosBanco }
+
+function TfrmRegistrosBanco.pesquisarRegistros: integer;
+begin
+  with qryLog do
+  begin
+    Active := false;
+    SQL.Clear;
+    SQL.Text := 'SELECT'
+      + ' pes.Nome as Usuario, convert(char(10), log.data, 103) as dataEvento'
+      + ', log.tabela, log.Evento'
+      + ' FROM tbLog log'
+      + ' INNER JOIN tbPessoal pes on pes.cpf = log.idUsuario'
+      + ' ORDER BY idLog desc';
+    Active := true;
+  end;
+
+  Result := qryLog.RecordCount;
+
+end;
+
+procedure TfrmRegistrosBanco.FormActivate(Sender: TObject);
+begin
+  lblTotalGeral.Caption := IntToStr(pesquisarRegistros);
+end;
+
+end.

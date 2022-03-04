@@ -1,0 +1,26 @@
+unit ufLogs;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxContainer, cxEdit, cxTextEdit, cxMemo;
+
+type
+  TfrmLogs = class(TForm)
+    mmoLog: TcxMemo;
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frmLogs: TfrmLogs;
+
+implementation
+
+{$R *.dfm}
+
+end.
