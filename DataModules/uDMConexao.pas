@@ -83,24 +83,24 @@ begin
 
   if Banco = 'Pessoal' then
   begin
-    if (MAQUINA = 'SUTIC0341154z')
+    if (MAQUINA = 'SUTIC0341154?')
     or (MAQUINA = 'SUTIC1276156')
     or (MAQUINA = 'SUTIC034609')
     then
     begin
       //ShowMessage('Máquina de desenvolvimento');
-      BASE := '2';
-      SERVIDOR := 'PGSRV19';
-      USER := 'sa';
-      PASSWORD := '3253389';
-    end
+      BASE      := '2';
+      SERVIDOR  := 'PGSRV19';
+      USER      := 'sa';
+      PASSWORD  := '3253389';
+    end                                        
     else
     begin
       //ShowMessage('Máquina de produção');
-      BASE := '1';
-      SERVIDOR := 'PRG_SERVER3';
-      USER := 'PESSOAL';
-      PASSWORD := 'NhiD90oH';
+      BASE      := '1';
+      SERVIDOR  := 'PRG_SERVER3';
+      USER      := 'PESSOAL';
+      PASSWORD  := 'NhiD90oH';
     end;
 
     {Provider=SQLOLEDB.1;Password=NhiD90oH;Persist Security Info=True;User ID=PESSOAL;Initial Catalog=dbPessoal;

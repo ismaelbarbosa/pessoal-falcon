@@ -185,6 +185,8 @@ begin
         RetornaData(2),
         'tbServidor, tbHist_ExercicioExterno',
         frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.txtMatricula.Caption,
         'idOrgaoExercicioExterno',
         'Alteração do exercício externo'
         + ', Matrícula: ' + frmUpdateServidor.txtMatricula.Caption

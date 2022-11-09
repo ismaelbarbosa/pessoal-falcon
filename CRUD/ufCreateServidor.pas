@@ -4,33 +4,70 @@ interface
 
 uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
-  Dialogs, ShellAPI, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
-  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxEdit, DB,
-  cxDBData, cxCalendar, cxContainer, ExtCtrls, cxSplitter, Grids, DBGrids,
+  Dialogs, cxGraphics, cxControls, cxLookAndFeels, cxLookAndFeelPainters,
+  cxContainer, cxEdit, Menus, DB, ADODB, ExtCtrls, cxButtons, cxMemo,
+  Grids, DBGrids, cxSplitter, cxCheckBox, StdCtrls, cxDBEdit,
+  cxDropDownEdit, cxCalendar, cxMaskEdit, cxLookupEdit, cxDBLookupEdit,
+  cxDBLookupComboBox, cxTextEdit, Mask, DBCtrls, Buttons, cxPC, ComCtrls,
+  cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGroupBox, cxGridLevel, cxGridCustomTableView, cxGridTableView,
-  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid, StdCtrls,
-  DBCtrls, Mask, ComCtrls, Buttons, ADODB, cxTextEdit, cxMaskEdit,
-  cxDropDownEdit, cxDBEdit, cxLookupEdit, cxDBLookupEdit,
-  cxDBLookupComboBox, cxMemo, cxCheckBox, cxPC, IniFiles, Menus, cxButtons;
+  cxGridDBTableView, cxClasses, cxGridCustomView, cxGrid;
+
+type
+  TPessoal = record
+    nome, cpf, dtNascimento, idPessoal, idServidor,
+    idCargo, cargo, especialidade, idLotacao, lotacao,
+    dtPosseCargo, dtExercicioCargo,
+    dtNomeacaoCargo, dtNomeacaoCargoDODF,
+    requisitado, orgaoOrigem,
+    cargaHoraria, classe,
+    padrao, cfNum,
+    auxTransporte,
+    naturalidade, naturalUF,
+    pai, mae, estadoCivil,
+    tipoSangue, conjuge,
+    endereco, bairro, cidade, enderecoUF,
+    cep, email, grauInstrucao,
+    curso, ciNum, ciEmissao, ciUF,
+    teNum, teZona, teSecao, teUF,
+    teEmissao, pisPasep,
+    banco, agencia, contaBanco,
+    oabNum, oabSecao,
+    Dt_InicioContrato1_Estagiario,
+    Dt_TerminoContrato1_Estagiario,
+    {Dt_InicioContrato2_Estagiario,
+    Dt_TerminoContrato2_Estagiario,
+    Dt_InicioContrato3_Estagiario,
+    Dt_TerminoContrato3_Estagiario,
+    Dt_InicioContrato4_Estagiario,
+    Dt_TerminoContrato4_Estagiario,}
+    Supervisor_Estagiario,
+    TurnoEstagio,
+    Semestre,
+    InstituicaoEnsino,
+    observacao
+    : Array[0..1] of String;
+end;
+
+type
+  TStatus = class
+  idStatus: char;
+  dscStatus: String;
+end;
 
 type
   TPessoalArray = array of string;
 
+type
   TfrmCreateServidor = class(TForm)
     barServidor: TStatusBar;
     pnlNomeMatricula: TPanel;
     txtNome: TDBText;
-    tmrRelPersonalizado: TTimer;
     pgcPessoal: TcxPageControl;
     tshDadosFuncionais: TcxTabSheet;
-    tshDadosPessoais: TcxTabSheet;
-    tshDocumentos: TcxTabSheet;
     grpbxDadosFuncionais: TGroupBox;
-    lblMatricula: TLabel;
-    lblNome: TLabel;
     lblCargo: TLabel;
     lblLotacao: TLabel;
-    lblCF_Num: TLabel;
     btnGera_CF_Numero: TSpeedButton;
     lblEspecialidade: TLabel;
     lblCargaHoraria: TLabel;
@@ -44,7 +81,6 @@ type
     lblDt_NomeacaoFuncaoDODF: TLabel;
     lblAverbacaoGDF: TLabel;
     lblAverbacaoServPublico: TLabel;
-    lblCPF: TLabel;
     lblFuncao: TLabel;
     lblDt_PosseFunca: TLabel;
     lblDt_ExercicioFuncao: TLabel;
@@ -52,31 +88,15 @@ type
     Label4: TLabel;
     Label7: TLabel;
     lbl_IDP: TLabel;
+    lbl_IDS: TLabel;
+    Label1: TLabel;
     edtAverbacaoServPublico: TDBEdit;
-    edtCPF: TcxDBTextEdit;
-    edtidServidor: TcxDBTextEdit;
-    edtNome: TcxDBTextEdit;
-    lkpLotacao: TcxDBLookupComboBox;
-    lkpCargo: TcxDBLookupComboBox;
-    edtDt_PosseCargo: TcxDBDateEdit;
-    edtDt_ExercicioCargo: TcxDBDateEdit;
-    edtDt_PrimeiroExercicioGDF: TcxDBDateEdit;
-    lkpEspecialidade: TcxDBLookupComboBox;
-    cbxCargaHoraria: TcxDBComboBox;
-    edtOrgaoOrigem: TcxDBTextEdit;
-    chkRequisitado: TcxDBCheckBox;
-    edtDt_NomeacaoCargo: TcxDBDateEdit;
-    edtDt_NomeacaoFuncao: TcxDBDateEdit;
-    edtAverbacaoGDF: TcxDBDateEdit;
-    edtDt_NomeacaoCargoDODF: TcxDBDateEdit;
-    edtDt_NomeacaoFuncaoDODF: TcxDBDateEdit;
     chkAuxTransporte: TcxDBCheckBox;
-    lkpFuncao: TcxDBLookupComboBox;
-    edtDt_PosseFuncao: TcxDBDateEdit;
-    edtDt_ExercicioFuncao: TcxDBDateEdit;
-    cbxClasse: TcxDBComboBox;
-    cbxPadrao: TcxDBComboBox;
-    edtCF_Num: TcxDBTextEdit;
+    chkPessoal: TcxCheckBox;
+    chkServidor: TcxCheckBox;
+    chkDados: TcxCheckBox;
+    chkDatas: TcxCheckBox;
+    tshDadosPessoais: TcxTabSheet;
     grpbxDados: TGroupBox;
     lblNaturalidade: TLabel;
     lblPai: TLabel;
@@ -93,21 +113,7 @@ type
     lblCurso: TLabel;
     lblTipoSanguineo: TLabel;
     lblEmail: TLabel;
-    edtPai: TcxDBTextEdit;
-    edtMae: TcxDBTextEdit;
-    edtConjuge: TcxDBTextEdit;
-    edtEndereco: TcxDBTextEdit;
-    edtBairro: TcxDBTextEdit;
-    edtCidade: TcxDBTextEdit;
-    edtCEP: TcxDBTextEdit;
-    edtEmail: TcxDBTextEdit;
-    edtNaturalidade: TcxDBTextEdit;
-    cbxEnderecoUF: TcxDBComboBox;
-    lkpEstadoCivil: TcxDBLookupComboBox;
-    cbxGrauInstrucao: TcxDBComboBox;
-    cbxTipoSanguineo: TcxDBComboBox;
-    lkpCurso: TcxDBLookupComboBox;
-    cbxNatural_UF: TcxDBComboBox;
+    tshDocumentos: TcxTabSheet;
     grpbxDocum: TGroupBox;
     lblRG: TLabel;
     lblTitulo: TLabel;
@@ -123,64 +129,120 @@ type
     lblConta: TLabel;
     lblOAB: TLabel;
     lblOAB_Secao: TLabel;
-    edtCI_Num: TcxDBTextEdit;
-    edtTE_Num: TcxDBTextEdit;
-    edtTE_Zona: TcxDBTextEdit;
-    edtPis_Pasep: TcxDBTextEdit;
-    edtAgencia: TcxDBTextEdit;
-    edtConta: TcxDBTextEdit;
-    edtOAB_Num: TcxDBTextEdit;
-    edtTE_Secao: TcxDBTextEdit;
-    cbxCI_UF: TcxDBComboBox;
-    edtCI_Emissao: TcxDBDateEdit;
-    edtTE_Emissao: TcxDBDateEdit;
-    edtOAB_Secao: TcxDBTextEdit;
-    lkpBanco: TcxDBLookupComboBox;
-    cbxTE_UF: TcxDBComboBox;
     tshTelefones: TcxTabSheet;
-    grpbxTelefone: TGroupBox;
-    lblTipo: TLabel;
-    btnSelTipoTelefone: TSpeedButton;
-    txtDesc_TipoTel: TDBText;
-    lblNumero: TLabel;
-    btnGravarTel: TSpeedButton;
-    btnExcluir: TSpeedButton;
-    btnEditarTel: TSpeedButton;
-    btnInserirTel: TSpeedButton;
-    btnCancelarTel: TSpeedButton;
-    edtTipoTel: TDBEdit;
-    edtNumero: TDBEdit;
-    SplitterDocumentos: TcxSplitter;
-    dbgrdTelefone: TDBGrid;
-    edtDtNascimento: TcxDBDateEdit;
-    lblNascimento: TLabel;
+    tshAFazer: TcxTabSheet;
+    cxMemo1: TcxMemo;
     pnlBotoes: TPanel;
-    Button1: TButton;
-    Button2: TButton;
+    lblOperacao: TLabel;
     btnNovo: TcxButton;
     btnGravar: TcxButton;
     btnSair: TcxButton;
-    lblOperacao: TLabel;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
-    chkPessoal: TcxCheckBox;
-    chkServidor: TcxCheckBox;
-    chkDados: TcxCheckBox;
-    chkDatas: TcxCheckBox;
-    lbl_IDS: TLabel;
-    Label1: TLabel;
+    tmrRelPersonalizado: TTimer;
+    qryMaxID: TADOQuery;
+    lkpCargo: TcxLookupComboBox;
+    lkpEspecialidade: TcxLookupComboBox;
+    edtDt_PosseCargo: TcxDateEdit;
+    edtDt_ExercicioCargo: TcxDateEdit;
+    edtDt_PrimeiroExercicioGDF: TcxDateEdit;
+    edtDt_NomeacaoCargo: TcxDateEdit;
+    edtDt_NomeacaoCargoDODF: TcxDateEdit;
+    edtDt_NomeacaoFuncao: TcxDateEdit;
+    edtDt_NomeacaoFuncaoDODF: TcxDateEdit;
+    edtDt_PosseFuncao: TcxDateEdit;
+    edtDt_ExercicioFuncao: TcxDateEdit;
+    edtAverbacaoGDF: TcxDateEdit;
+    lkpLotacao: TcxLookupComboBox;
+    chkRequisitado: TcxCheckBox;
+    edtOrgaoOrigem: TcxTextEdit;
+    lkpFuncao: TcxLookupComboBox;
+    cbxCargaHoraria: TcxComboBox;
+    cbxClasse: TcxComboBox;
+    cbxPadrao: TcxComboBox;
+    edtCF_Num: TcxTextEdit;
+    edtNaturalidade: TcxTextEdit;
+    edtPai: TcxTextEdit;
+    edtMae: TcxTextEdit;
+    edtConjuge: TcxTextEdit;
+    edtEndereco: TcxTextEdit;
+    edtBairro: TcxTextEdit;
+    edtCidade: TcxTextEdit;
+    edtEmail: TcxTextEdit;
+    edtCI_Num: TcxTextEdit;
+    edtCI_Emissao: TcxTextEdit;
+    edtTE_Num: TcxTextEdit;
+    edtTE_Zona: TcxTextEdit;
+    edtPis_Pasep: TcxTextEdit;
+    edtTE_Secao: TcxTextEdit;
+    edtAgencia: TcxTextEdit;
+    edtConta: TcxTextEdit;
+    edtOAB_Num: TcxTextEdit;
+    edtOAB_Secao: TcxTextEdit;
+    cbxNatural_UF: TcxComboBox;
+    cbxTipoSanguineo: TcxComboBox;
+    cbxEnderecoUF: TcxComboBox;
+    cbxGrauInstrucao: TcxComboBox;
+    cbxCI_UF: TcxComboBox;
+    cbxTE_UF: TcxComboBox;
+    lkpEstadoCivil: TcxLookupComboBox;
+    lkpCurso: TcxLookupComboBox;
+    edtCEP: TcxMaskEdit;
+    edtTE_Emissao: TcxDateEdit;
+    lkpBanco: TcxLookupComboBox;
+    btnSelFuncao: TcxButton;
+    btnSelLotacao: TcxButton;
+    lblCF_Num: TLabel;
+    grdTelefones: TcxGrid;
+    tbvTelefones: TcxGridDBTableView;
+    tbvTelefonesColumn1: TcxGridDBColumn;
+    tbvTelefonesColumn2: TcxGridDBColumn;
+    lvlTelefones: TcxGridLevel;
+    gbxCRUDTelefones: TcxGroupBox;
+    btnIncluirTelefone: TcxButton;
+    btnEditarTelefone: TcxButton;
+    dsTelefonesServidor: TDataSource;
+    qryTelefonesServidor: TADOQuery;
+    lblCPF: TLabel;
+    edtCPF: TcxMaskEdit;
+    lblMatricula: TLabel;
+    edtidServidor: TcxTextEdit;
+    lblNome: TLabel;
+    edtNome: TcxTextEdit;
+    lblNascimento: TLabel;
+    edtDtNascimento: TcxDateEdit;
+    tshEstagio: TcxTabSheet;
+    Label14: TLabel;
+    Label18: TLabel;
+    Label45: TLabel;
+    Label47: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    edtSupervisor_Estagiario: TcxTextEdit;
+    edtDt_InicioContrato1_Estagiario: TcxDateEdit;
+    edtDt_TerminoContrato1_Estagiario: TcxDateEdit;
+    edtInstituicaoEnsino: TcxTextEdit;
+    edtTurnoEstagio: TcxTextEdit;
+    edtSemestre: TcxTextEdit;
+    mmoObservacao_Estagio: TcxMemo;
+    cxButton1: TcxButton;
+    Label2: TLabel;
+    lbl_IDA: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
-    procedure btnGravarClick(Sender: TObject);
-    procedure btnSairClick(Sender: TObject);
-    procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
-    procedure edtNomeExit(Sender: TObject);
-    procedure lkpCargoKeyUp(Sender: TObject; var Key: Word;
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
-    procedure lkpFuncaoKeyUp(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
+    procedure edtCPFKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCPFExit(Sender: TObject);
+    procedure edtidServidorKeyPress(Sender: TObject; var Key: Char);
+    procedure edtidServidorExit(Sender: TObject);
     procedure edtOrgaoOrigemKeyPress(Sender: TObject; var Key: Char);
+    procedure btnSelFuncaoClick(Sender: TObject);
+    procedure btnGravarClick(Sender: TObject);
+    procedure edtNomeExit(Sender: TObject);
+    procedure btnSairClick(Sender: TObject);
+    procedure btnSelLotacaoClick(Sender: TObject);
+    procedure btnIncluirTelefoneClick(Sender: TObject);
+    procedure edtNomeKeyPress(Sender: TObject; var Key: Char);
     procedure edtNaturalidadeKeyPress(Sender: TObject; var Key: Char);
     procedure edtPaiKeyPress(Sender: TObject; var Key: Char);
     procedure edtMaeKeyPress(Sender: TObject; var Key: Char);
@@ -188,94 +250,78 @@ type
     procedure edtEnderecoKeyPress(Sender: TObject; var Key: Char);
     procedure edtBairroKeyPress(Sender: TObject; var Key: Char);
     procedure edtCidadeKeyPress(Sender: TObject; var Key: Char);
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure btnNovoClick(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
-    procedure edtCPFExit(Sender: TObject);
-    procedure cbxNatural_UFExit(Sender: TObject);
-    procedure cbxEnderecoUFExit(Sender: TObject);
-    procedure cbxCI_UFExit(Sender: TObject);
-    procedure cbxTE_UFExit(Sender: TObject);
-    procedure FormKeyDown(Sender: TObject; var Key: Word;
-      Shift: TShiftState);
-    procedure edtidServidorExit(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure edtCPFKeyPress(Sender: TObject; var Key: Char);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
+    procedure edtCEPKeyPress(Sender: TObject; var Key: Char);
     procedure edtDtNascimentoExit(Sender: TObject);
+    procedure lkpCargoExit(Sender: TObject);
+    procedure edtOrgaoOrigemExit(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure cxButton1Click(Sender: TObject);
   private
     OPERACAO: Integer;
-
     Mens: Array of String;
     Campos: Array of String;
+    TStatus: Array of String;
 
-    LstUser: String;
-    LstDate : TDateTime;
-
+    function SQLNovoIDServidor(idPessoal: String): String;
   public
+    procedure setarStatus(prmModo: char);
     function setarOperacao(tipo: Integer):boolean;
+
+    procedure setarModoInclusaoPessoal;
+    procedure setarModoInclusaoServidor;
+    procedure setarModoAlteracao;
+    procedure setarCampos;
+
     procedure configurarCampos;
-
-    procedure LimparCampos;
-    procedure BloquearCampos;
-    procedure DesbloquearCampos;
-
+    procedure limparCampos;
+    procedure desbloquearCampos;
     procedure bloquearEdicao;
     procedure desbloquearEdicao;
 
-    procedure SetarStatus(prmModo: char);
-    procedure SetarModoInclusao;
-    procedure SetarModoAlteracao;
-    procedure HabilitarBtnGravar;
-    procedure DesabilitarBtnGravar;
+    procedure habilitarBtnNovo;
+    procedure desabilitarBtnNovo;
+    procedure habilitarBtnGravar;
+    procedure desabilitarBtnGravar;
 
-    procedure HabilitarBtnNovo;
-    procedure DesabilitarBtnNovo;
-
-    procedure IniciarNovoRegistro;
     procedure preencherCamposUF;
-    procedure setarCampos;
-    function CamposVazios(Campos: Array of String;
-         Mensagens: Array of String): Boolean;
 
-    function CPFJaCadastrado(pCPF: string): TPessoalArray;
-    function MatriculaCadastradaNoID(pIdPessoal, pMatricula: string): TPessoalArray;
-    function servidorEstaAtivo(pCPF: string): TPessoalArray;
+    function cpfEstaOK(CPF: String): boolean;
+    function cpfJaCadastrado(pCPF: string): TPessoalArray;
+    function carregarDados:boolean;
+    function matriculaCadastradaNoID(pIdPessoal, pMatricula: string): TPessoalArray;
 
-    function UF_EValida(pUF: String):Boolean;
+    function incluirRegistro(modo: integer): boolean;
+    function alterarRegistro: boolean;
+    function exibirTelefones(pidPessoal: String): Integer;
 
-    function retornaSQLInsertPessoal(pIDP: String): String;
-    function retornaSQLInsertServidor(pIDP: String): String;
-    function retornaSQLInsertDados(pIDP: String): String;
-    function retornaSQLInsertCamposAltServ(pIDP: String): String;
+    function SQLInsertPessoal(pIDP: String): String;
+    function SQLInsertServidor(pIDP: String): String;
+    function SQLInsertDados(pIDP: String): String;
+    function SQLInsertCamposAltServ(pIDP: String): String;
 
-    function retornaSQLInsertDados_OLD(pIDP: String): String;
-    function retornaSQLInsertServidor_OLD(pIDP: String): String;
+    //function SQLInsertNotificaNupro(pIDP, Evento: String): String;
+    function SQLInsertNotificaNupro
+    (idAlteracao, idServidorAnt, idServidorNov, dtExercicioCargoAnt
+    , dtExerciciocargoNov, dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt
+    , dtExercicioFuncaoNov, dtDesligFuncaoAnt, dtDesligFuncaoNov, dtFalecimentoAnt
+    , dtFalecimentoNov, idCargo, idFuncao, idLotacaoAnt
+    , idLotacaoNov, idUsuario, dtAlteracao: String): String;
 
-    function retornaSQLInsertNotificaNupro(pIDP, Evento: String): String;
+    function SQLUpdateServidor(pIDP, pIDS: String): String;
+    function SQLUpdateDatas(pIDP, pIDS: String): String;
 
-    function retornaSQLUpdatePessoal: String;
-    function retornaSQLUpdateServidor(pIDP, pIDS: String): String;
-    function retornaSQLUpdateDados: String;
-
-    function retornaSQLUpdateDatas(pIDP, pIDS: String): String;
+    function SQLUpdateCamposAltServ
+    (idAlteracao, idServidorAnt, idServidorNov, dtExercicioCargoAnt
+    , dtExerciciocargoNov, dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt
+    , dtExercicioFuncaoNov, dtDesligFuncaoAnt, dtDesligFuncaoNov, dtFalecimentoAnt
+    , dtFalecimentoNov, idCargo, idFuncao, idLotacaoAnt
+    , idLotacaoNov, idUsuario, dtAlteracao: String): String;
 
     function retornaNovoIDServidor(idPessoal:String):String;
 
-    procedure CarregarSessaoAnterior;
-
-    procedure GravarLog;
+    function setarRegistroAGravar: boolean;
 
   end;
-
-type
-  TStatus = class
-  idStatus: char;
-  dscStatus: String;
-end;
 
 var
   frmCreateServidor: TfrmCreateServidor;
@@ -283,39 +329,197 @@ var
 
 implementation
 
-uses uPesFuncoes, PRG_utils,
-  uDmCadastroServidor, uDMConexao, udmPessoal, uAmbiente, ufPrincipal,
-  ufLogs;
+uses uDMConexao, PRG_utils, uPesFuncoes, uDmCadastroServidor, ufLogs,
+  uDMPessoal, ufSelecionaFuncao, ufSelLotacao, ufUpdateTelefone;
 
 {$R *.dfm}
 
+var EstadoEdicao, RegistroAGravar: TPessoal;
+
+procedure TfrmCreateServidor.configurarCampos;
+begin
+  edtNome.Properties.MaxLength := 60;
+  edtCF_Num.Properties.MaxLength := 4;
+end;
+
+procedure TfrmCreateServidor.desabilitarBtnGravar;
+begin
+  btnGravar.Enabled := false;
+end;
+
+procedure TfrmCreateServidor.desabilitarBtnNovo;
+begin
+  btnNovo.Enabled := false;
+end;
+
+procedure TfrmCreateServidor.desbloquearCampos;
+var i: integer;
+begin
+  for i:= 0 to ComponentCount -1 do
+  begin
+    if (Components[i] is TcxTextEdit) then
+    begin
+      if Components[i].Name <> 'edtIdProcuradoria' then
+      TcxTextEdit(Components[i]).Enabled := true;
+    end;
+
+    if (Components[i] is TcxLookupComboBox) then
+      TcxLookupComboBox(Components[i]).Enabled := true;
+
+    if (Components[i] is TcxComboBox) then
+      TcxComboBox(Components[i]).Enabled := true;
+
+    if (Components[i] is TcxDateEdit) then
+       TcxDateEdit(Components[i]).Enabled := true;
+
+    if (Components[i] is TcxMaskEdit) then
+       TcxMaskEdit(Components[i]).Enabled := true;
+
+    if (Components[i] is TcxCheckBox) then
+       TcxCheckBox(Components[i]).Enabled := true;
+  end;
+end;
 
 procedure TfrmCreateServidor.FormCreate(Sender: TObject);
 begin
-
   KeyPreview := true;
-  dmCadastroServidor.qryPessoal.Active := true;
+
+  //dmCadastroServidor.qryPessoal.Active := true; ************ Verificar se essa linha é necessária
 
   pgcPessoal.ActivePageIndex := 0;
+  tshEstagio.Enabled := false;
 
   Setlength(Campos, 5);
   Mens := VarArrayof(['CPF','Nome','Data de nascimento',
             'Matrícula', 'Lotação']);
 
+  limparCampos;
   configurarCampos;
-  SetarModoInclusao;
+  SetarModoInclusaoPessoal;
 
   //CarregarSessaoAnterior;
 
-  //frmLogs.mmoLog.Lines.Add('Sessão iniciada em: ' + RetornaData(2));
-  monitorarAcoesDaSessao('ufCreateServidor', 'Evento OnCreate', 'Sessão iniciada em: ' + RetornaData(2));
+  monitorarAcoesDaSessao('ufCreateServidor', 'Evento OnCreate', 'Sessão iniciada');
 
+  qryMaxID.Connection             := DMConexao.conPessoal;
+  qryTelefonesServidor.Connection := DMConexao.conPessoal;
+end;
+
+procedure TfrmCreateServidor.habilitarBtnGravar;
+begin
+  btnGravar.Enabled := true;
+end;
+
+procedure TfrmCreateServidor.habilitarBtnNovo;
+begin
+  btnNovo.Enabled := true;
+end;
+
+procedure TfrmCreateServidor.limparCampos;
+var i: Integer;
+begin
+  lbl_IDP.Caption := '0';
+  lbl_IDS.Caption := '0';
+
+  for i:= 0 to ComponentCount -1 do
+  begin
+    if (Components[i] is TcxTextEdit) then
+    begin
+      if (Components[i].Name <> 'edtCPF') // campos que serão mantidos
+      and (Components[i].Name <> 'outroCampoASerMantido')
+      then
+      TcxTextEdit(Components[i]).Clear;
+    end;
+
+    if (Components[i] is TcxLookupComboBox) then
+    begin
+      if (Components[i].Name <> 'lkpLotacao_OLD')
+      then
+      TcxLookupComboBox(Components[i]).Clear;
+    end;
+
+    if (Components[i] is TcxComboBox) then
+    begin
+      if (Components[i].Name <> 'lkpLotacao_OLD')
+      then
+      TcxComboBox(Components[i]).Clear;
+    end;
+
+    if (Components[i] is TcxMaskEdit) then
+      TcxMaskEdit(Components[i]).Clear;
+
+    if (Components[i] is TcxDBDateEdit) then
+      TcxDBDateEdit(Components[i]).Clear;
+
+    if (Components[i] is TcxDBCheckBox) then
+      TcxDBCheckBox(Components[i]).Checked := false;
+  end;
+end;
+
+procedure TfrmCreateServidor.setarModoInclusaoPessoal;
+begin
+  edtCPF.Clear; // incluido pois é exceção no limparCampos devido ao cadastro de servidor com CPF já existente
+  desbloquearCampos;
+  setarStatus('1');
+  setarOperacao(1);
+  desabilitarBtnNovo;
+  habilitarBtnGravar;
+  tshTelefones.Enabled := false;
+end;
+
+function TfrmCreateServidor.setarOperacao(tipo: Integer): boolean;
+begin
+  OPERACAO := tipo;
+
+  case OPERACAO of
+    1: lblOperacao.Caption := 'INCLUSÃO PESSOAL';   // Inclusão de novo registro nas tabelas tbPessoal, tbServidor e tbDados
+    2: lblOperacao.Caption := 'INCLUSÃO SERVIDOR';  // Inclusão de novo registro apenas na tabela tbServidor
+    3: lblOperacao.Caption := 'EDIÇÃO';             // Edição do registro cadastrado (as 3 tabelas acima)
+  end;
+
+  Result := true;
+end;
+
+procedure TfrmCreateServidor.setarStatus(prmModo: char);
+begin
+  case prmModo of
+    '1':
+    begin
+      with obStatus do
+      begin
+        idStatus := '1'; dscStatus := 'INCLUSÃO PESSOAL';
+      end;
+    end;
+    '2':
+    begin
+      with obStatus do
+      begin
+        idStatus := '2'; dscStatus := 'INCLUSÃO SERVIDOR';
+      end;
+    end;
+    '3':
+    begin
+      with obStatus do
+      begin
+        idStatus := '3'; dscStatus := 'EDIÇÃO';
+      end;
+    end;
+  end;
+
+  with barServidor do
+  begin
+     Panels[0].Text := obStatus.idStatus;
+     Panels[1].Text := obStatus.dscStatus;
+     Panels[2].Text := DMConexao.Usuario.Nome;
+     Panels[3].Text := DMConexao.getNomeServidor;
+  end;
 end;
 
 procedure TfrmCreateServidor.FormActivate(Sender: TObject);
 begin
   WindowState := wsMaximized;
-
+  tshAFazer.Enabled := false;
+  
   edtCPF.SetFocus;
 
   if not dmCadastroServidor.retornarPessoal
@@ -352,398 +556,24 @@ begin
   //mmoLog.Lines.Add(LstUser);
   //mmoLog.Lines.Add(DateToStr(LstDate));
 
-  monitorarAcoesDaSessao('ufCreateServidor', 'Evento OnActivate', 'Operação: ' + lblOperacao.Caption);
+  monitorarAcoesDaSessao('ufCreateServidor', 'Evento OnActivate',
+  'Operação: ' + lblOperacao.Caption + chr(13)
+  + 'Retornar tabelas relacionadas' + chr(13)
+  + 'Preencher campos UF'
+  );
 
 end;
 
-
-procedure TfrmCreateServidor.btnGravarClick(Sender: TObject);
-var wMens, NIDP, NIDS, Evento: String;
-OK_Pes, OK_Ser, OK_Dad, OK_Dat, OK_NN: boolean;
-begin //1
-  wMens := 'Atenção! Confirma a inclusão deste(a) servidor(a)?' + #13 + #13
-         + edtCPF.Text + #13
-         + edtNome.Text;
-
-  case OPERACAO of //2
-
-  // Inclusão
-
-  1:
-    begin //3
-      if ConfirmaAcao(wMens,3) = 1 then
-      begin //4
-        edtNomeExit(Self);
-        setarCampos;
-
-        //if lbl_IDP.Caption = '0' then
-        //begin //5
-
-        NIDP := InserirZeros
-        (dmCadastroServidor.GerarID('tbPessoal','idPessoal'),5);
-
-        lbl_IDP.Caption := NIDP;
-
-        //end;  //5
-
-        if dmCadastroServidor.IncluirPessoal      // Tabela de Pessoal
-        (retornaSQLInsertPessoal(NIDP))
-        then
-          OK_Pes := true
-        else
-          OK_Pes := false;
-
-        if dmCadastroServidor.IncluirServidor   // Tabela de Servidor
-        (retornaSQLInsertServidor(NIDP))
-        then
-          OK_Ser := true
-        else
-          OK_Ser := false;
-
-        if dmCadastroServidor.IncluirDados  // Tabela de Dados
-        (retornaSQLInsertDados(NIDP))
-        then
-          OK_Dad := true
-        else
-          OK_Dad := false;
-
-        NIDS := retornaNovoIDServidor(NIDP);
-        lbl_IDS.Caption := NIDS;
-
-        if dmCadastroServidor.atualizarDatas
-        // Tabela tbServidor, campos do tipo data
-        (retornaSQLUpdateDatas(NIDP, NIDS))
-        then
-          OK_Dat := true
-        else
-          OK_Dat := false;
-
-
-        if OK_Pes then
-        begin //6
-          chkPessoal.Checked := true;
-          //frmLogs.mmoLog.Lines.Add('Registro incluído na tabela de Pessoal');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Registro incluído na tabela de Pessoal em: ' + RetornaData(2));
-
-        end   //6
-        else
-        begin //6
-          chkPessoal.Checked := false;
-          //frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela de Pessoal');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Registro não incluído na tabela de Pessoal em: ' + RetornaData(2));
-        end; //6
-
-        if OK_Ser then
-        begin //7
-          chkServidor.Checked := true;
-          //frmLogs.mmoLog.Lines.Add('Registro incluído na tabela de Servidor');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Registro incluído na tabela de Servidor em: ' + RetornaData(2));
-        end   //7
-        else
-        begin //7
-          chkServidor.Checked := false;
-          //frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela de Servidor');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Registro não incluído na tabela de Servidor em: ' + RetornaData(2));
-        end;  //7
-
-        if OK_Dad then
-        begin //8
-          chkDados.Checked := true;
-          //frmLogs.mmoLog.Lines.Add('Registro incluído na tabela de Dados');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Registro incluído na tabela de Dados em: ' + RetornaData(2));
-        end   //8
-        else
-        begin //8
-          chkDados.Checked := false;
-          //frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela de Dados');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Registro não incluído na tabela de Dados em: ' + RetornaData(2));
-        end;  //8
-
-        if OK_Dat then
-        begin //9
-          chkDatas.Checked := true;
-          //frmLogs.mmoLog.Lines.Add('Datas atualizadas na tabela Servidor');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Datas atualizadas na tabela Servidor em: ' + RetornaData(2));
-        end
-        else
-        begin //9
-          chkDatas.Checked := false;
-          //frmLogs.mmoLog.Lines.Add('Datas não atualizadas na tabela Servidor');
-          monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
-          'Datas não atualizadas na tabela Servidor em: ' + RetornaData(2));
-        end;  //9
-
-        if (OK_Pes) and (OK_Ser) and (OK_Dad) and (OK_Dat)
-        then
-        begin //10
-          if dmCadastroServidor.alterarServidor   // Tabela de Servidor
-          (retornaSQLUpdateServidor(NIDP, NIDS))
-          then
-            OK_Ser := true
-          else
-            OK_Ser := false;
-
-          if dmCadastroServidor.alterarDados  // Tabela de Dados
-          (retornaSQLUpdateDados)
-          then
-            OK_Dad := true
-          else
-            OK_Dad := false;
-
-          if dmCadastroServidor.atualizarDatas
-          // Tabela tbServidor, campos do tipo data
-          (retornaSQLUpdateDatas(NIDP, NIDS))
-          then
-            OK_Dat := true
-          else
-            OK_Dat := false;
-
-          setarOperacao(2); // Alteração de registro
-
-
-          Evento := 'Inclusão de novo registro na tabela de pessoal'
-          + chr(13)
-          + 'Cargo: ' + lkpCargo.Text
-          + chr(13)
-          + 'Lotação: ' + lkpLotacao.Text;
-
-          if dmCadastroServidor.registrarNotificaNupro
-          // Tabela tbCamposAltSer
-          (retornaSQLInsertNotificaNupro(NIDP, Evento))
-          then
-            //frmLogs.mmoLog.Lines.Add('Registro incluído na tabela NotificaNupro')
-            monitorarAcoesDaSessao('ufCreateServidor', 'btnGravar',
-            'Registro incluído na tabela NotificaNupro' + RetornaData(2))
-
-          else
-            //frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela NotificaNupro');
-            monitorarAcoesDaSessao('ufCreateServidor', 'btnGravar',
-            'Registro não incluído na tabela NotificaNupro' + RetornaData(2));
-
-
-          IncluirLog
-          (
-          DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
-          RetornaData(2),
-          'tbPessoal, tbServidor, tbDados',
-          NIDP,
-          'TODOS',
-          'Inclusão do servidor: '
-          + 'Matrícula: ' + edtidServidor.Text
-          + ' Nome: ' + edtNome.Text
-          );
-          
-          // bloquear registro
-
-          SetarModoAlteracao;
-          ShowMessage('Registro gravado com sucesso.');
-          //frmCreateServidor.Activate;  // atualiza a página para exibir o modo de alteraç~~ao
-        end  //10
-        else
-          ShowMessage('Houve um erro no cadastro de uma das tabelas.');
-
-      end //4
-      else Abort;
-
-    end; //3
-
-
-  // Edição
-
-  2:
-    begin //11
-      setarCampos;
-
-      if dmCadastroServidor.alterarPessoal      // Tabela de Pessoal
-      (retornaSQLUpdatePessoal)
-      then
-        OK_Pes := true
-      else
-        OK_Pes := false;
-
-      if dmCadastroServidor.alterarServidor   // Tabela de Servidor
-      (retornaSQLUpdateServidor(NIDP, NIDS))
-      then
-        OK_Ser := true
-      else
-        OK_Ser := false;
-
-      if dmCadastroServidor.alterarDados  // Tabela de Dados
-      (retornaSQLUpdateDados)
-      then
-        OK_Dad := true
-      else
-        OK_Dad := false;
-
-      if dmCadastroServidor.atualizarDatas
-      // Tabela tbServidor, campos do tipo data
-      (retornaSQLUpdateDatas(NIDP, NIDS))
-      then
-        OK_Dat := true
-      else
-        OK_Dat := false;
-
-
-      if OK_Pes then
-      begin //12
-        chkPessoal.Checked := true;
-        frmLogs.mmoLog.Lines.Add('Registro alterado na tabela de Pessoal');
-      end   //12
-      else
-      begin //12
-        chkPessoal.Checked := false;
-        frmLogs.mmoLog.Lines.Add('Registro não alterado na tabela de Pessoal');
-      end;  //12
-
-      if OK_Ser then
-      begin //13
-        chkServidor.Checked := true;
-        frmLogs.mmoLog.Lines.Add('Registro alterado na tabela de Servidor');
-      end   //13
-      else
-      begin //13
-        chkServidor.Checked := false;
-        frmLogs.mmoLog.Lines.Add('Registro não alterado na tabela de Servidor');
-      end;  //13
-
-      if OK_Dad then
-      begin //14
-        chkDados.Checked := true;
-        frmLogs.mmoLog.Lines.Add('Registro alterado na tabela de Dados');
-      end   //14
-      else
-      begin //14
-        chkDados.Checked := false;
-        frmLogs.mmoLog.Lines.Add('Registro não alterado na tabela de Dados');
-      end;  //14
-
-      if OK_Dat then
-      begin //15
-        chkDatas.Checked := true;
-        frmLogs.mmoLog.Lines.Add('Datas atualizadas na tabela Servidor');
-      end   //15
-      else
-      begin //15
-        chkDatas.Checked := false;
-        frmLogs.mmoLog.Lines.Add('Datas não atualizadas na tabela Servidor');
-      end; //15
-
-      if (OK_Pes) and (OK_Ser) and (OK_Dad) and (OK_Dat)
-      then
-      begin //16
-        IncluirLog
-        (
-        DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
-        RetornaData(2),
-        'tbPessoal, tbServidor, tbDados',
-        NIDP,
-        'TODOS',
-        'Alteração do servidor: '
-        + 'Matrícula: ' + edtidServidor.Text
-        + ' Nome: ' + edtNome.Text
-        );
-
-        // bloquear registro
-
-        //SetarModoAlteracao;
-        ShowMessage('Registro gravado com sucesso.');
-      end   //16
-      else
-        ShowMessage('Houve um erro no cadastro de uma das tabelas.');
-    end; //11
-  end; //2
-
-  GravarLog;
-  
-end; //1
-
-function TfrmCreateServidor.CamposVazios(Campos,
-  Mensagens: array of String): Boolean;
-var cont: integer;
-begin
-  Result := false;
-
-  if Length(Campos) <> Length(Mensagens) then
-  begin
-    MessageDlg('O número de Mensagens deve ser igual ao número de Campos', mtError,[mbOK],0);
-    Halt;
-  end
-  else
-  begin
-    for cont := 0 to high(Campos) do
-    begin
-      if trim(Campos[cont]) = '' then//if2
-      begin
-        Result := true;
-        ShowMessage('Preencha o campo ' + Mensagens[cont]);
-        //Campos[cont].SetFocus;
-        Break;
-      end
-      else Result := false;
-    end;
-  end;
-
-end;
-
-procedure TfrmCreateServidor.setarCampos;
-begin
-  Campos[0] := edtCPF.Text;
-  Campos[1] := edtNome.Text;
-  Campos[2] := edtDtNascimento.Text;
-  Campos[3] := edtIdServidor.Text;
-  Campos[4] := lkpLotacao.EditText;
-end;
-
-
-procedure TfrmCreateServidor.btnSairClick(Sender: TObject);
-begin
-  Close;
-end;
-
-procedure TfrmCreateServidor.edtNomeKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtNomeExit(Sender: TObject);
-begin
-  edtNome.Text :=
-  AnsiUpperCase(RemoveEspaco(edtNome.Text));
-
-  if dmCadastroServidor.qryPessoal.State in [dsInsert, dsEdit] then
-  dmCadastroServidor.qryPessoal.FieldValues['Nome'] := edtNome.Text;
-end;
-
-
-
-
-procedure TfrmCreateServidor.lkpCargoKeyUp(Sender: TObject; var Key: Word;
+procedure TfrmCreateServidor.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if (Key = VK_DELETE) then
+  if Shift = [ssCtrl] then
   begin
-    lkpCargo.Clear;
-  end;
-
+    if key = VK_F12
+    then
+      frmLogs.ShowModal;
+  end
 end;
-
-procedure TfrmCreateServidor.lkpFuncaoKeyUp(Sender: TObject;
-  var Key: Word; Shift: TShiftState);
-begin
-  if (Key = VK_DELETE) then
-  begin
-    lkpFuncao.Clear;
-  end;       
-end;
-
 
 procedure TfrmCreateServidor.preencherCamposUF;
 var UF: string;
@@ -751,19 +581,6 @@ begin
 
   // Só retornou o nome dos campos
   // É necessário retornar o valor do campo NOME
-
-  {with dmCadastroServidor.qryUF do
-  begin
-    //
-    Active := True;
-    First;
-    NumCampo :=0;
-    while NumCampo < Fields.Count do
-    begin
-      cbxNatural_UF.Properties.Items.Add(dmCadastroServidor.qryUF.Fields[NumCampo].FieldName);
-      NumCampo:=NumCampo+1;
-    end;
-  end;}
 
   with dmCadastroServidor.qryUF do
   begin
@@ -780,9 +597,498 @@ begin
         Next;
       end;
     end;
-  end;  
+  end;
 end;
 
+procedure TfrmCreateServidor.edtCPFKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if not (key in ['0'..'9',#8, #9]) then key := #0;
+end;
+
+procedure TfrmCreateServidor.edtCPFExit(Sender: TObject);
+var
+  Pessoal: TPessoalArray;
+  Mensagem: String;
+  dados : Integer;
+begin
+  if btnSair.Focused then Close
+  else
+  begin
+//    ShowMessage('Validando o CPF');
+    if cpfEstaOK(edtCPF.Text) then
+    begin
+//      ShowMessage('CPF está OK');
+
+      Setlength(Pessoal, 3);
+      Pessoal := CPFJaCadastrado(edtCPF.Text);
+
+      if (Pessoal[0] <> '0')
+      and (lbl_IDP.Caption = '0') then
+      begin
+        Mensagem := 'O CPF: ' + edtCPF.Text
+                    + ' já está cadastrado para: '
+                    + #13 + Pessoal[1]
+                    + #13 + 'Nascimento: ' + Pessoal[2]
+                    + #13 + #13 + 'Deseja continuar?';
+
+        if ConfirmaAcao(Mensagem, 3) = 1
+        then
+        begin
+          //ShowMessage('Confirmada a inclusão do servidor');
+          lbl_IDP.Caption := Pessoal[0]; // O Id do Pessoal já fica setado
+          SetarModoInclusaoServidor;
+
+
+          // carregar dados
+
+          dados := dmPessoal.pesquisarPessoal
+          (' AND pes.CPF = '
+          + QuotedStr(edtCPF.Text)
+          );
+
+          if not carregarDados
+          then
+          ShowMessage('Os dados pessoais não foram carregados para edição');
+        end;
+      end;
+    end;
+  end;
+end;
+
+function TfrmCreateServidor.cpfEstaOK(CPF: String): boolean;
+begin
+  if Trim(CPF) = '' then
+  begin
+    ShowMessage('Você deve digitar o número do CPF');
+    edtCPF.SetFocus;
+    Result := false;
+    Abort;
+  end
+  else
+  if Length(Trim(CPF)) < 11 then
+  begin
+    ShowMessage('O CPF deve ter 11 dígitos');
+    edtCPF.SetFocus;
+    Result := false;
+    Abort;
+  end
+  else
+  begin
+    if CPF_valido(CPF) = false then
+    begin
+      ShowMessage('Número de CPF inválido.');
+      edtCPF.SetFocus;
+      edtCPF.SelectAll;
+      Result := false;
+      Abort;
+    end;
+  end;
+
+  Result := true;
+  
+end;
+
+function TfrmCreateServidor.cpfJaCadastrado(pCPF: string): TPessoalArray;
+begin
+  SetLength(Result, 3);
+   with dmCadastroServidor.qryExecSQL do
+   begin
+     Connection := DMConexao.conPessoal;
+     SQL.Text := 'SELECT idPessoal, Nome, Dt_Nascimento FROM tbPessoal'
+     + ' WHERE tbPessoal.CPF = ' + QuotedStr(pCPF);
+
+     monitorarAcoesDaSessao('frmCreateServidor', 'função CPFJaCadastrado', SQL.Text);
+     Open;
+   end;
+
+   if (dmCadastroServidor.qryExecSQL.RecordCount = 0)
+   then
+     Result[0] := '0'
+   else
+   begin
+     Result[0] := dmCadastroServidor.qryExecSQL.FieldValues['idPessoal'];
+
+     if not dmCadastroServidor.qryExecSQL.FieldByName('Nome').IsNull then
+      Result[1] := dmCadastroServidor.qryExecSQL.FieldValues['Nome']
+     else
+      Result[1] := '';
+
+     if not dmCadastroServidor.qryExecSQL.FieldByName('Dt_Nascimento').IsNull then
+      Result[2] := dmCadastroServidor.qryExecSQL.FieldValues['Dt_Nascimento']
+     else
+      Result[2] := '';
+   end;
+
+   dmCadastroServidor.qryExecSQL.Close;
+
+end;
+
+procedure TfrmCreateServidor.setarCampos;
+begin
+//
+end;
+
+procedure TfrmCreateServidor.setarModoAlteracao;
+begin
+//  BloquearCampos;
+  setarStatus('3');
+  setarOperacao(3); //
+  //  DesabilitarBtnGravar;
+  habilitarBtnNovo;
+  tshTelefones.Enabled := true;;
+end;
+
+procedure TfrmCreateServidor.setarModoInclusaoServidor;
+begin
+  desbloquearCampos;
+  setarStatus('2');
+  setarOperacao(2);
+  desabilitarBtnNovo;
+  habilitarBtnGravar;
+end;
+
+function TfrmCreateServidor.carregarDados: boolean;
+begin
+  with dmPessoal.qryPesquisa do
+  begin
+
+    //lbl_IDP.Caption         := FieldValues['idPessoal'];
+    //lbl_IDS.Caption         := FieldValues['ID'];
+
+    // Manter o valor do campo Nome no registro EstadoEdicao
+    //EstadoEdicao.CPF[0]  := edtCPF.Text;
+
+    if FieldByName('dt_nascimento').IsNull
+    then edtDtNascimento.Text := ''
+    else edtDtNascimento.Text := Trim(FieldValues['dt_nascimento']);
+
+    // Manter o valor do campo dt_Nascimento no registro EstadoEdicao
+    //EstadoEdicao.dtNascimento[0]  := edtDtNascimento.Text;
+
+    {if FieldByName('idServidor').IsNull
+    then edtidServidor.Text := ''
+    else edtidServidor.Text := Trim(FieldValues['idServidor']);
+    }
+    // Manter o valor do campo idServidor no registro EstadoEdicao
+    //EstadoEdicao.idServidor[0]  := edtidServidor.Text;
+
+    if FieldByName('Nome').IsNull
+    then edtNome.Text := ''
+    else edtNome.Text := Trim(FieldValues['Nome']);
+
+    // Manter o valor do campo Nome no registro EstadoEdicao
+    //EstadoEdicao.Nome[0]  := edtNome.Text;
+
+
+    //ShowMessage(FieldValues['descricaoCargo']);
+
+    {if FieldByName('descricaoCargo').IsNull
+    then lkpCargo.Text := ''
+    else lkpCargo.Text := Trim(FieldValues['descricaoCargo']);
+
+    // Manter o valor do campo Cargo no registro EstadoEdicao
+    EstadoEdicao.Cargo[0]    := Trim(lkpCargo.Text);
+    }
+
+    {if FieldByName('Especialidade').IsNull
+    then lkpEspecialidade.Text := ''
+    else lkpEspecialidade.Text := Trim(FieldValues['Especialidade']);
+
+    if FieldByName('Dt_PosseCargo').IsNull
+    then edtDt_PosseCargo.Text := ''
+    else edtDt_PosseCargo.Text := Trim(FieldValues['Dt_PosseCargo']);
+
+    if FieldByName('Dt_ExercicioCargo').IsNull
+    then edtDt_ExercicioCargo.Text := ''
+    else edtDt_ExercicioCargo.Text := Trim(FieldValues['Dt_ExercicioCargo']);
+
+    // Manter o valor do campo Dt_ExercicioCargo no registro EstadoEdicao
+
+    EstadoEdicao.DtExercicioCargo[0]   := Trim(edtDt_ExercicioCargo.Text);
+
+    if FieldByName('Dt_NomeacaoCargo').IsNull
+    then edtDt_NomeacaoCargo.Text := ''
+    else edtDt_NomeacaoCargo.Text := Trim(FieldValues['Dt_NomeacaoCargo']);
+
+    if FieldByName('Dt_NomeacaoCargoDODF').IsNull
+    then edtDt_NomeacaoCargoDODF.Text := ''
+    else edtDt_NomeacaoCargoDODF.Text := Trim(FieldValues['Dt_NomeacaoCargoDODF']);
+    }
+    {if FieldByName('descricaoLotacao').IsNull
+    then txtLotacao.Caption := '' // lkpLotacao.Text := ''
+    else txtLotacao.Caption :=    // lkpLotacao.Text :=
+    Trim(FieldValues['descricaoLotacao']);
+
+    // Manter o valor do campo Lotacao no registro EstadoEdicao
+    EstadoEdicao.Lotacao[0]  := Trim(txtLotacao.Caption);
+    }
+
+    //lot.idlotacao, lot.Sigla as SiglaLotacao, lot.descricao as descricaoLotacao,
+
+    {if not FieldByName('requisitado').IsNull
+    then chkRequisitado.Checked := false
+    else chkRequisitado.Checked := true;
+
+    if FieldByName('OrgaoDeOrigem').IsNull
+    then edtOrgaoOrigem.Text := ''
+    else edtOrgaoOrigem.Text := Trim(FieldValues['OrgaoDeOrigem']);
+
+    if FieldByName('CargaHoraria').IsNull
+    then cbxCargaHoraria.Text := ''
+    else cbxCargaHoraria.Text := Trim(FieldValues['CargaHoraria']);
+
+    if FieldByName('Classe').IsNull
+    then cbxClasse.Text := ''
+    else cbxClasse.Text := Trim(FieldValues['Classe']);
+
+    if FieldByName('Padrao').IsNull
+    then cbxPadrao.Text := ''
+    else cbxPadrao.Text := Trim(FieldValues['Padrao']);
+    }
+
+    // Aba dados pessoais
+
+    if FieldByName('Naturalidade').IsNull
+    then edtNaturalidade.Text := ''
+    else edtNaturalidade.Text := Trim(FieldValues['Naturalidade']);
+
+    if FieldByName('Natural_UF').IsNull
+    then cbxNatural_UF.Text := ''
+    else cbxNatural_UF.Text := Trim(FieldValues['Natural_UF']);
+
+    if FieldByName('Pai').IsNull
+    then edtPai.Text := ''
+    else edtPai.Text := Trim(FieldValues['Pai']);
+
+    if FieldByName('Mae').IsNull
+    then edtMae.Text := ''
+    else edtMae.Text := Trim(FieldValues['Mae']);
+
+    if FieldByName('EstadoCivil').IsNull
+    then lkpEstadoCivil.Text := ''
+    else lkpEstadoCivil.Text := Trim(FieldValues['EstadoCivil']);
+
+    if FieldByName('TipoSanguineo').IsNull
+    then cbxTipoSanguineo.Text := ''
+    else cbxTipoSanguineo.Text := Trim(FieldValues['TipoSanguineo']);
+
+    if FieldByName('Conjuge').IsNull
+    then edtConjuge.Text := ''
+    else edtConjuge.Text := Trim(FieldValues['Conjuge']);
+
+    if FieldByName('Endereco').IsNull
+    then edtEndereco.Text := ''
+    else edtEndereco.Text := Trim(FieldValues['Endereco']);
+
+    if FieldByName('Bairro').IsNull
+    then edtBairro.Text := ''
+    else edtBairro.Text := Trim(FieldValues['Bairro']);
+
+    if FieldByName('Cidade').IsNull
+    then edtCidade.Text := ''
+    else edtCidade.Text := Trim(FieldValues['Cidade']);
+
+    if FieldByName('UF').IsNull
+    then cbxEnderecoUF.Text := ''
+    else cbxEnderecoUF.Text := Trim(FieldValues['UF']);
+
+    if FieldByName('CEP').IsNull
+    then edtCEP.Text := ''
+    else edtCEP.Text := Trim(FieldValues['CEP']);
+
+    if FieldByName('Grau').IsNull
+    then cbxGrauInstrucao.Text := ''
+    else cbxGrauInstrucao.Text := Trim(FieldValues['Grau']);
+
+    if FieldByName('Email').IsNull
+    then edtEmail.Text := ''
+    else edtEmail.Text := Trim(FieldValues['Email']);
+
+    if FieldByName('Curso').IsNull
+    then lkpCurso.Text := ''
+    else lkpCurso.Text := Trim(FieldValues['Curso']);
+
+
+    // Aba documentos
+
+    if FieldByName('CI_NUM').IsNull
+    then edtCI_NUM.Text := ''
+    else edtCI_NUM.Text := Trim(FieldValues['CI_NUM']);
+
+    if FieldByName('CI_Emissao').IsNull
+    then edtCI_Emissao.Text := ''
+    else edtCI_Emissao.Text := Trim(FieldValues['CI_Emissao']);
+
+    if FieldByName('CI_UF').IsNull
+    then cbxCI_UF.Text := ''
+    else cbxCI_UF.Text := Trim(FieldValues['CI_UF']);
+
+    if FieldByName('TE_Num').IsNull
+    then edtTE_Num.Text := ''
+    else edtTE_Num.Text := Trim(FieldValues['TE_Num']);
+
+    if FieldByName('TE_Zona').IsNull
+    then edtTE_Zona.Text := ''
+    else edtTE_Zona.Text := Trim(FieldValues['TE_Zona']);
+
+    if FieldByName('TE_Secao').IsNull
+    then edtTE_Secao.Text := ''
+    else edtTE_Secao.Text := Trim(FieldValues['TE_Secao']);
+
+    if FieldByName('TE_UF').IsNull
+    then cbxTE_UF.Text := ''
+    else cbxTE_UF.Text := Trim(FieldValues['TE_UF']);
+
+    if FieldByName('TE_Emissao').IsNull
+    then edtTE_Emissao.Text := ''
+    else edtTE_Emissao.Text := Trim(FieldValues['TE_Emissao']);
+
+    if FieldByName('Pis_Pasep').IsNull
+    then edtPis_Pasep.Text := ''
+    else edtPis_Pasep.Text := Trim(FieldValues['Pis_Pasep']);
+
+    {if FieldByName('Banco').IsNull
+    then lkpBanco.Text := ''
+    else lkpBanco.Text := Trim(FieldValues['Banco']);}
+
+    if FieldByName('Agencia').IsNull
+    then edtAgencia.Text := ''
+    else edtAgencia.Text := Trim(FieldValues['Agencia']);
+
+    if FieldByName('Conta').IsNull
+    then edtConta.Text := ''
+    else edtConta.Text := Trim(FieldValues['Conta']);
+
+    if FieldByName('OAB_Num').IsNull
+    then edtOAB_Num.Text := ''
+    else edtOAB_Num.Text := Trim(FieldValues['OAB_Num']);
+
+    if FieldByName('OAB_Secao').IsNull
+    then edtOAB_Secao.Text := ''
+    else edtOAB_Secao.Text := Trim(FieldValues['OAB_Secao']);
+  end;                                                       
+end;
+
+procedure TfrmCreateServidor.edtidServidorKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+  if not (key in ['0'..'9','X',#8, #9]) then key := #0;
+end;
+
+procedure TfrmCreateServidor.edtidServidorExit(Sender: TObject);
+var
+  Pessoal: TPessoalArray;
+  Mensagem: String;
+begin
+  if btnSair.Focused then Close
+  else
+  begin
+    edtidServidor.Text := InserirZeros(edtidServidor.Text,10);
+    Setlength(Pessoal, 3);
+
+    Pessoal := MatriculaCadastradaNoID(
+    lbl_IDP.Caption, Trim(edtidServidor.Text));
+
+    if lbl_IDP.Caption <> '0' then
+    begin
+      if Pessoal[0] <> '0' then
+      begin
+        Mensagem := 'Já existe um registro cadastrado para esses valores: '
+                    + #13 + 'Matrícula: ' + Pessoal[0]
+                    + #13 + 'Nome: ' + Pessoal[1]
+                    + #13 + 'Cargo: ' + Pessoal[2];
+
+
+        ShowMessage(Mensagem);
+
+        bloquearEdicao;
+
+        edtidServidor.Text := '' ;
+        edtidServidor.SetFocus;
+      end
+      else
+      begin
+        DesbloquearCampos;
+        edtNome.SetFocus;
+      end;
+    end;
+  //end;
+  end;
+end;
+
+function TfrmCreateServidor.matriculaCadastradaNoID(pIdPessoal,
+  pMatricula: string): TPessoalArray;
+begin
+  SetLength(Result, 3);
+
+  with dmCadastroServidor.qryExecSQL do
+  begin
+   Connection := DMConexao.conPessoal;
+   SQL.Text :=
+
+    'SELECT pes.idPessoal, ser.ID, ser.idServidor, pes.Nome, car.Descricao'
+   + ' FROM tbPessoal pes'
+   + ' INNER JOIN tbServidor ser ON ser.idPessoal = pes.idPessoal'
+   + ' INNER JOIN tbCargo car ON car.idCargo = ser.idCargo'
+   + ' WHERE pes.idPessoal = '  + QuotedStr(pIdPessoal)
+   + ' AND ser.idServidor = '   + QuotedStr(pMatricula);
+
+   Open;
+
+   //frmLogs.mmoLog.Lines.Add(SQL.Text);
+   monitorarAcoesDaSessao('ufCreateServidor', 'função matriculaCadastradaNoID', SQL.Text);
+
+  end;
+
+  if (dmCadastroServidor.qryExecSQL.RecordCount = 0)
+  then
+   Result[0] := '0'
+  else
+  begin
+   Result[0] := dmCadastroServidor.qryExecSQL.FieldValues['idServidor'];
+   Result[1] := dmCadastroServidor.qryExecSQL.FieldValues['Nome'];
+   Result[2] := dmCadastroServidor.qryExecSQL.FieldValues['Descricao'];
+  end;
+  // dmCadastroServidor.qryExecSQL.Close;
+end;
+
+procedure TfrmCreateServidor.bloquearEdicao;
+var i: integer;
+begin
+  for i:= 0 to ComponentCount -1 do
+  begin
+    if (Components[i] is TcxTextEdit) then
+    begin
+      if (Components[i].Name <> 'edtCPF') and
+         (Components[i].Name <> 'edtidServidor')
+      then
+      TcxTextEdit(Components[i]).Enabled := false;
+    end;
+
+    if (Components[i] is TcxLookupComboBox) then
+      TcxLookupComboBox(Components[i]).Enabled := false;
+
+    if (Components[i] is TcxComboBox) then
+      TcxComboBox(Components[i]).Enabled := false;
+
+    if (Components[i] is TcxDateEdit) then
+      if (Components[i].Name <> 'edtDtNascimento')
+      then TcxDateEdit(Components[i]).Enabled := false;
+
+    if (Components[i] is TcxDBMaskEdit) then
+       TcxMaskEdit(Components[i]).Enabled := false;
+
+    if (Components[i] is TcxDBCheckBox) then
+       TcxCheckBox(Components[i]).Enabled := false;
+  end;    
+end;
+
+procedure TfrmCreateServidor.desbloquearEdicao;
+begin
+
+end;
 
 procedure TfrmCreateServidor.edtOrgaoOrigemKeyPress(Sender: TObject;
   var Key: Char);
@@ -790,254 +1096,980 @@ begin
   Key := CaracterSemAcento(Key, True);
 end;
 
-procedure TfrmCreateServidor.edtNaturalidadeKeyPress(Sender: TObject;
-  var Key: Char);
+procedure TfrmCreateServidor.btnSelFuncaoClick(Sender: TObject);
+var wIdFuncao: String;
 begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtPaiKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtMaeKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtConjugeKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtEnderecoKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtBairroKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.edtCidadeKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  Key := CaracterSemAcento(Key, True);
-end;
-
-procedure TfrmCreateServidor.LimparCampos;
-var i: Integer;
-begin
-  lbl_IDP.Caption := '0';
-  lbl_IDS.Caption := '0';
-
-  for i:= 0 to ComponentCount -1 do
-  begin
-    if (Components[i] is TcxDBTextEdit) then
+  if not Assigned(frmSelecionaFuncao) then
+  frmSelecionaFuncao := TfrmSelecionaFuncao.Create(Application);
+  try
+    frmSelecionaFuncao.ShowModal;
+    if frmSelecionaFuncao.qryFuncao.Active then
     begin
-      if (Components[i].Name <> 'edtIdProcuradoria') // campos que serão mantidos
-      and (Components[i].Name <> 'edtDt_Entrada')
-      then
-      TcxDBTextEdit(Components[i]).Clear;
+      wIdFuncao := frmSelecionaFuncao.retornaIdFuncao;
+      if wIdFuncao <> '' then
+      begin
+        lkpFuncao.EditValue  := wIdFuncao;
+        //edtIdAcao.SetFocus;
+      end;
     end;
-
-    if (Components[i] is TcxDBLookupComboBox) then
-    begin
-      if (Components[i].Name <> 'lkpLotacao_OLD')
-      then
-      TcxDBLookupComboBox(Components[i]).Clear;
-    end;
-
-    if (Components[i] is TcxDBComboBox) then
-    begin
-      if (Components[i].Name <> 'lkpLotacao_OLD')
-      then
-      TcxLookupComboBox(Components[i]).Clear;
-    end;
-
-    if (Components[i] is TcxMaskEdit) then
-      TcxMaskEdit(Components[i]).Clear;
-
-    if (Components[i] is TcxDBDateEdit) then
-      TcxDBDateEdit(Components[i]).Clear;
-
-    if (Components[i] is TcxDBCheckBox) then
-      TcxDBCheckBox(Components[i]).Checked := false;
+  finally
+    frmSelecionaFuncao.Release;
+    frmSelecionaFuncao := nil;
   end;
-
 end;
 
-procedure TfrmCreateServidor.SpeedButton1Click(Sender: TObject);
+procedure TfrmCreateServidor.btnGravarClick(Sender: TObject);
+var Registro_Setado: boolean;
+idAlteracaoNN, idFuncao: String;
 begin
-  if ConfirmaAcao('Limpar os campos?',3) = 1
+  edtCPFExit(Nil);
+
+  if (edtCPF.Text = '')
   then
   begin
-    IniciarNovoRegistro;
-    LimparCampos;
+    ShowMessage('O CPF deve ser informado.');
+    edtCPF.SetFocus;
+    Abort;
   end;
+
+  if (edtidServidor.Text = '') or (edtidServidor.Text = '000000000')
+  then
+  begin
+    ShowMessage('A matrícula deve ser informada.');
+    edtidServidor.SetFocus;
+    Abort;
+  end;
+
+  if (edtNome.Text = '')
+  then
+  begin
+    ShowMessage('O nome deve ser informado.');
+    edtNome.SetFocus;
+    Abort;
+  end;
+
+  if (edtDtNascimento.Text = '')
+  then
+  begin
+    ShowMessage('A data de nascimento deve ser informada.');
+    edtDtNascimento.SetFocus;
+    Abort;
+  end;
+
+  if (lkpCargo.Text = '')
+  then
+  begin
+    ShowMessage('O cargo deve ser informado.');
+    lkpCargo.SetFocus;
+    Abort;
+  end;
+
+  if (edtDt_ExercicioCargo.Text = '')
+  then
+  begin
+    ShowMessage('A data de exercício no cargo deve ser informada.');
+    edtDt_ExercicioCargo.SetFocus;
+    Abort;
+  end;
+
+  if lkpFuncao.EditingValue <> Null
+  then idFuncao := lkpFuncao.EditingValue
+  else idFuncao := '99999'; //NULL'
+
+  // Setar os valores do registro RegistroAGravar e utilizar os valores nas funções que realizam updates
+  if setarRegistroAGravar then
+  Registro_Setado := true;
+
+  case OPERACAO of
+    // Inclusão de Pessoal
+    1:
+    begin
+      if incluirRegistro(1) then ShowMessage('Registro cadastrado (1) com sucesso');
+
+      // Inserir em tbCamposAltServ
+
+      idAlteracaoNN := InserirZeros
+          (dmCadastroServidor.GerarID('tbCamposAltServ','idAlteracao'),12);
+
+      lbl_IDA.Caption := idAlteracaoNN;
+
+      // Campos a serem passados para a função de registro do Notifica Nupro (19 no total)
+      {
+        idAlteracao, idServidorAnt, idServidorNov, dtExercicioCargoAnt, dtExerciciocargoNov,
+        dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt, dtExercicioFuncaoNov, dtDesligFuncaoAnt,
+        dtDesligFuncaoNov, dtFalecimentoAnt, dtFalecimentoNov, idCargo, idFuncao,
+        idLotacaoAnt, idLotacaoNov, idUsuario, dtAlteracao
+      }
+
+      //ShowMessage('Incluído na tabela tbPessoal. Será incluída na tabela tbCamposAltServ');
+
+      with RegistroAGravar do
+      begin
+        dmCadastroServidor.registrarNotificaNupro
+        (SQLInsertNotificaNupro(idAlteracaoNN, '', idServidor[0], '',
+        edtDt_ExercicioCargo.Text, '', '', '',
+        '', '', '', '', '', idCargo[0], idFuncao, '', idLotacao[0],
+        DMConexao.Usuario.CPF,
+        RetornaData(2)))
+      end;
+    end;
+
+    // Inclusão de Servidor
+    2:
+    begin
+      if incluirRegistro(2) then ShowMessage('Registro cadastrado (2) com sucesso');
+      ShowMessage('Inclusão tbServidor');
+      idAlteracaoNN := InserirZeros
+          (dmCadastroServidor.GerarID('tbCamposAltServ','idAlteracao'),12);
+
+      lbl_IDA.Caption := idAlteracaoNN;
+
+      // Campos a serem passados para a função de registro do Notifica Nupro (19 no total)
+      {
+        idAlteracao, idServidorAnt, idServidorNov, dtExercicioCargoAnt, dtExerciciocargoNov,
+        dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt, dtExercicioFuncaoNov, dtDesligFuncaoAnt,
+        dtDesligFuncaoNov, dtFalecimentoAnt, dtFalecimentoNov, idCargo, idFuncao,
+        idLotacaoAnt, idLotacaoNov, idUsuario, dtAlteracao
+      }
+
+      ShowMessage('Incluído na tabela tbPessoal. Será incluída na tabela tbCamposAltServ');
+
+      with RegistroAGravar do
+      begin
+        dmCadastroServidor.registrarNotificaNupro
+        (SQLInsertNotificaNupro(idAlteracaoNN, '', idServidor[0], '',
+        edtDt_ExercicioCargo.Text, '', '', '',
+        '', '', '', '', '', idCargo[0], idFuncao, '', idLotacao[0],
+        DMConexao.Usuario.CPF,
+        RetornaData(2)))
+      end;
+
+    end;
+    // Alteração
+    3:
+    begin
+      //ShowMessage(RegistroAGravar.idLotacao[0]);
+      if alterarRegistro then ShowMessage('Registro alterado com sucesso');
+      //ShowMessage('Alteração tbServidor');
+
+      with RegistroAGravar do
+      begin
+        dmCadastroServidor.registrarNotificaNupro
+        (SQLUpdateCamposAltServ(lbl_IDA.Caption, '', idServidor[0], '',
+        edtDt_ExercicioCargo.Text, '', '', '',
+        '', '', '', '', '', idCargo[0], idFuncao, '', idLotacao[0],
+        DMConexao.Usuario.CPF,
+        RetornaData(2)))
+      end;
+
+    end;
+  end;
+
+  // Incluir dados na tabela tbCamposAltServ pela
+  // função registrarNotificaNupro (dmCadastroServidor)
+
+  // GravarLog;
+
 end;
 
-procedure TfrmCreateServidor.IniciarNovoRegistro;
+function TfrmCreateServidor.alterarRegistro: boolean;
+var NIDP, NIDS, Evento
+    , Endereco, Bairro, Cidade, EnderecoUF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade
+    , Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao
+    , Pai, Mae, EstadoCivil, Conjuge, Banco, Agencia, Conta, OAB_Num, OAB_Secao, GrauInstrucao
+    , Curso, TipoSanguineo, Email: String;
+
+    OK_Pes, OK_Ser, OK_Dad, OK_Dat, OK_NN: boolean;
 begin
-  dmCadastroServidor.qryPessoal.Active := false;
-  dmCadastroServidor.qryPessoal.Active := true;
-end;
+  edtNomeExit(Self);
+  setarCampos;
 
-procedure TfrmCreateServidor.btnNovoClick(Sender: TObject);
-begin
-  {if txtIdPessoal.Caption <> '0' then
-  ShowMessage('O registro atual ainda não foi gravado. Grave primeiro');}
+  //ShowMessage('Alterar as tabelas tbPessoal, tbServidor e tbDados');
 
-  SetarModoInclusao;
-end;
+  NIDP := lbl_IDP.Caption;
+  NIDS := lbl_IDS.Caption;
 
-function TfrmCreateServidor.retornaSQLInsertDados_OLD(pIDP: String): String;
-var SQL_Dados: String;
-begin
+  //ShowMessage(lbl_IDP.Caption + ' ' + lbl_IDS.Caption);
 
-  SQL_Dados := 'SET DATEFORMAT dmy'
-  + ' INSERT INTO '
-  + ' tbDados'
-  + ' (idPessoal, Endereco, Bairro, Cidade';
+  if (NIDP = '0') or (NIDS = '0')
+  or (NIDP = '') or (NIDS = '')
+  then
+  begin
+    ShowMessage('AS chaves de pessoal e servidor estão incorretas. Verifique.');
+    Abort;
+  end;
+
+
+  if edtEndereco.Text <> Null
+  then Endereco :=  edtEndereco.Text
+  else Endereco := '';
+
+  if edtBairro.Text <> Null
+  then Bairro := edtBairro.Text
+  else Bairro := '';
+
+  if edtCidade.Text <> Null
+  then Cidade := edtCidade.Text
+  else Cidade := '';
 
   if cbxEnderecoUF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', UF';
+  then EnderecoUF := cbxEnderecoUF.Text
+  else EnderecoUF := '';
 
-  SQL_Dados := SQL_Dados
-  + ', CEP, CI_Num';
+  if edtCEP.Text <> Null
+  then CEP := edtCEP.Text
+  else CEP := '';
+
+  if edtCI_Num.Text <> Null
+  then CI_Num := edtCI_Num.Text
+  else CI_Num := '';
 
   if cbxCI_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', CI_UF';
+  then CI_UF := cbxCI_UF.Text
+  else CI_UF := '';
 
-  if edtCI_Emissao.Text <> ''
-  then SQL_Dados := SQL_Dados
-  + ', CI_Emissao';
+  if edtCI_Emissao.Text <> Null
+  then CI_Emissao := edtCI_Emissao.Text
+  else CI_Emissao := '';
 
-  SQL_Dados := SQL_Dados
-  + ', Naturalidade';
+  if edtNaturalidade.Text <> Null
+  then Naturalidade := edtNaturalidade.Text
+  else Naturalidade := '';
 
   if cbxNatural_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados +
-  ', Natural_UF';
+  then Natural_UF := cbxNatural_UF.EditingValue
+  else Natural_UF := '';
 
-  SQL_Dados := SQL_Dados
-  + ', Pis_Pasep, TE_Num, TE_Zona, TE_Secao';
+  if edtPis_Pasep.Text <> Null
+  then Pis_Pasep := edtPis_Pasep.Text
+  else Pis_Pasep := '';
+
+  if edtTE_Num.Text <> Null
+  then TE_Num := edtTE_Num.Text
+  else TE_Num := '';
+
+  if edtTE_Zona.Text <> Null
+  then TE_Zona := edtTE_Zona.Text
+  else TE_Zona := '';
+
+  if edtTE_Secao.Text <> Null
+  then TE_Secao := edtTE_Secao.Text
+  else TE_Secao := '';
 
   if cbxTE_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados +
-  ', TE_UF';
+  then TE_UF := cbxTE_UF.EditingValue
+  else TE_UF := '';
 
-  if edtTE_Emissao.EditingValue <> ''
-  then SQL_Dados := SQL_Dados +
-  ', TE_Emissao';
+  if edtTE_Emissao.Text <> Null
+  then TE_Emissao := edtTE_Emissao.Text
+  else TE_Emissao := '';
 
-  SQL_Dados := SQL_Dados
-  +', Pai, Mae';
+  if edtPai.Text <> Null
+  then Pai := edtPai.Text
+  else Pai := '';
+
+  if edtMae.Text <> Null
+  then Mae := edtMae.Text
+  else Mae := '';
 
   if lkpEstadoCivil.EditingValue <> Null
-  then SQL_Dados := SQL_Dados +
-  ', idEstadoCivil';
+  then EstadoCivil := lkpEstadoCivil.EditingValue
+  else EstadoCivil := '';
 
-  SQL_Dados := SQL_Dados
-  + ', Conjuge';
+  if edtConjuge.Text <> Null
+  then Conjuge := edtConjuge.Text
+  else Conjuge := '';
 
   if lkpBanco.EditingValue <> Null
+  then Banco :=lkpBanco.EditingValue
+  else Banco := '';
+
+  if edtAgencia.Text <> Null
+  then Agencia := edtAgencia.Text
+  else Agencia := '';
+
+  if edtConta.Text <> Null
+  then Conta := edtConta.Text
+  else Conta := '';
+
+  if edtOAB_Num.Text <> Null
+  then OAB_Num := edtOAB_Num.Text
+  else OAB_Num := '';
+
+  if edtOAB_Secao.Text <> Null
+  then OAB_Secao := edtOAB_Secao.Text
+  else OAB_Secao := '';
+
+  if cbxGrauInstrucao.EditingValue <> Null
+  then GrauInstrucao := cbxGrauInstrucao.EditingValue
+  else GrauInstrucao := '';
+
+  if lkpCurso.EditingValue <> Null
+  then Curso := lkpCurso.EditingValue
+  else Curso := '';
+
+  if cbxTipoSanguineo.EditingValue <> Null
+  then TipoSanguineo := cbxTipoSanguineo.EditingValue
+  else TipoSanguineo := '';
+
+  if edtEmail.Text <> Null
+  then Email := edtEmail.Text
+  else Email := '';
+
+
+  // Tabela de Pessoal
+
+  with dmCadastroServidor do
+  begin
+    if executarSQL(SQLUpdatePessoal(NIDP, edtCPF.Text, edtNome.Text, edtDtNascimento.Text))
+    then
+      OK_Pes := true
+    else
+      OK_Pes := false;
+  end;
+
+
+  // Tabela de Dados
+
+  with dmCadastroServidor do
+  begin
+    if executarSQL(SQLUpdateDados
+    (NIDP
+    , Endereco, Bairro, Cidade, EnderecoUF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade
+    , Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao
+    , Pai, Mae, EstadoCivil, Conjuge, Banco, Agencia, Conta, OAB_Num, OAB_Secao, GrauInstrucao
+    , Curso, TipoSanguineo, Email
+    )
+    )
+    then
+      OK_Dad := true
+    else
+      OK_Dad := false;
+  end;
+
+  // Tabela de Servidor
+
+  if dmCadastroServidor.executarSQL(SQLUpdateServidor(NIDP, NIDS))
   then
-  SQL_Dados := SQL_Dados
-  + ', idBanco';
+    OK_Dad := true
+  else
+    OK_Dad := false;
 
-  SQL_Dados := SQL_Dados
-  + ', Agencia, Conta, OAB_Num, OAB_Secao'
-  + ', Grau, Curso, TipoSanguineo'
-  + ', Email)'
 
-  + ' Values ('
+  // Tabela tbServidor, campos do tipo data
 
-  + QuotedStr(pIDP)             + ', '
-  + QuotedStr(edtEndereco.Text) + ', '
-  + QuotedStr(edtBairro.Text)   + ', '
-  + QuotedStr(edtCidade.Text);
+  if dmCadastroServidor.executarSQL(SQLUpdateDatas(NIDP, NIDS))
+  then
+    OK_Dat := true
+  else
+    OK_Dat := false;
 
-  if cbxEnderecoUF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(cbxEnderecoUF.Text);
 
-  SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtCEP.Text)
-  + ', ' + QuotedStr(edtCI_Num.Text);
+  if OK_Pes then
+  begin
+    chkPessoal.Checked := true;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro incluído na tabela de Pessoal em: ' + RetornaData(2));
+  end
+  else
+  begin
+    chkPessoal.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro não incluído na tabela de Pessoal em: ' + RetornaData(2));
+  end;
 
-  if cbxCI_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(cbxCI_UF.Text);
+  if OK_Ser then
+  begin
+    chkServidor.Checked := true;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro incluído na tabela de Servidor em: ' + RetornaData(2));
+  end
+  else
+  begin
+    chkServidor.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro não incluído na tabela de Servidor em: ' + RetornaData(2));
+  end;
 
-  if edtCI_Emissao.Text <> ''
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtCI_Emissao.Text);
+  if OK_Dad then
+  begin
+    chkDados.Checked := true;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro incluído na tabela de Dados em: ' + RetornaData(2));
+  end
+  else
+  begin
+    chkDados.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro não incluído na tabela de Dados em: ' + RetornaData(2));
+  end;
 
-  SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtNaturalidade.Text);
+  if OK_Dat then
+  begin
+    chkDatas.Checked := true;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Datas atualizadas na tabela Servidor em: ' + RetornaData(2));
+  end
+  else
+  begin
+    chkDatas.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Datas não atualizadas na tabela Servidor em: ' + RetornaData(2));
+  end;
 
-  if cbxNatural_UF.Text <> ''
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(cbxNatural_UF.Text);
+  if (OK_Pes) and (OK_Ser) and (OK_Dad) and (OK_Dat)
+  then
+  begin
 
-  SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtPis_Pasep.Text)
-  + ', ' + QuotedStr(edtTE_Num.Text)
-  + ', ' + QuotedStr(edtTE_Zona.Text)
-  + ', ' + QuotedStr(edtTE_Secao.Text);
+    setarOperacao(3); // Alteração de registro
 
-  if cbxTE_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(cbxTE_UF.Text);
+    Evento := 'Alteração de registro na tabela de pessoal'
+    + chr(13)
+    + 'Cargo: ' + lkpCargo.Text
+    + chr(13)
+    + 'Lotação: ' + lkpLotacao.Text;
 
-  if edtTE_Emissao.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtTE_Emissao.Text);
+    {
+    if dmCadastroServidor.registrarNotificaNupro
+    // Tabela tbCamposAltSer
+    (retornaSQLInsertNotificaNupro(NIDP, Evento))
+    then
+      monitorarAcoesDaSessao('ufCreateServidor', 'btnGravar',
+      'Registro incluído na tabela NotificaNupro' + RetornaData(2))
+    else
+      monitorarAcoesDaSessao('ufCreateServidor', 'btnGravar',
+      'Registro não incluído na tabela NotificaNupro' + RetornaData(2));
+    }
 
-  SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtPai.Text)
-  + ', ' + QuotedStr(edtMae.Text);
+    IncluirLog
+    (
+    DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+    RetornaData(2),
+    'tbPessoal, tbServidor, tbDados',
+    'NULL',
+    NIDP,
+    edtidServidor.Text,
+    'TODOS',
+    'Alteração de registro do servidor: '
+    + 'Matrícula: ' + edtidServidor.Text
+    + ' Nome: ' + edtNome.Text
+    );
 
-  if lkpEstadoCivil.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(lkpEstadoCivil.EditingValue);
+    // bloquear registro
 
-  SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtConjuge.Text);
+    SetarModoAlteracao;
+    ShowMessage('Registro gravado com sucesso.');
+    //frmCreateServidor.Activate;  // atualiza a página para exibir o modo de alteraç~~ao
 
-  if lkpBanco.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(lkpBanco.EditingValue);
+  end
+end;
 
-  SQL_Dados := SQL_Dados
-  + ', ' + QuotedStr(edtAgencia.Text)
-  + ', ' + QuotedStr(edtConta.Text)
-  + ', ' + QuotedStr(edtOAB_Num.Text)
-  + ', ' + QuotedStr(edtOAB_Secao.Text)
-  + ', ' + QuotedStr(cbxGrauInstrucao.Text)
-  + ', ' + QuotedStr(lkpCargo.Text)
-  + ', ' + QuotedStr(cbxTipoSanguineo.Text)
-  + ', ' + QuotedStr(edtEmail.Text)
-  + ')';
+function TfrmCreateServidor.incluirRegistro(modo: integer): boolean;
+var NIDP, NIDS, Evento
+        {, Endereco, Bairro, Cidade, EnderecoUF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade
+        , Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao
+        , Pai, Mae, EstadoCivil, Conjuge, Banco, Agencia, Conta, OAB_Num, OAB_Secao, GrauInstrucao
+        , Curso, TipoSanguineo, Email}
+        : String;
+OK_Pes, OK_Ser, OK_Dad, OK_Dat: boolean;
+begin
+  edtNomeExit(Self);
+  setarCampos;
 
-  Result := SQL_Dados;
+  case modo of
+    1: // Incluir na tabela tbPessoal
+    begin
+      NIDP := InserirZeros
+      (dmCadastroServidor.GerarID('tbPessoal','idPessoal'),5);
+
+      // Realizar os inserts iniciais nas tabelas tbPessoal, tbDados e tbServidor
+
+      if dmCadastroServidor.executarSQL(SQLInsertPessoal(NIDP))     // Tabela de Pessoal
+      then
+        OK_Pes := true
+      else
+        OK_Pes := false;
+
+
+      if dmCadastroServidor.executarSQL(SQLInsertDados(NIDP))       // Tabela de Dados
+      then
+        OK_Dad := true
+      else
+        OK_Dad := false;
+
+
+      if dmCadastroServidor.executarSQL(SQLInsertServidor(NIDP))    // Tabela de Servidor
+      then
+        OK_Ser := true
+      else
+        OK_Ser := false;
+
+
+      // realizar os updates nas tabelas tbDados e tbServidor
+
+
+      with dmCadastroServidor, RegistroAGravar do
+      begin
+        if executarSQL(SQLUpdateDados
+        (
+          NIDP
+          , endereco[0], bairro[0], cidade[0], enderecoUF[0], cep[0], ciNum[0], ciUF[0], ciEmissao[0], naturalidade[0]
+          , naturalUF[0], pisPasep[0], teNum[0], teZona[0], teSecao[0], teUF[0], teEmissao[0]
+          , Pai[0], Mae[0], EstadoCivil[0], Conjuge[0], Banco[0], Agencia[0], contaBanco[0], oabNum[0], oabSecao[0], grauInstrucao[0]
+          , Curso[0], tipoSangue[0], email[0]
+        )
+        )
+        then
+          OK_Dad := true
+        else
+          OK_Dad := false;
+      end;
+    end; // 1
+
+
+    2: // Incluir na tabela tbServidor
+    begin
+      NIDP := lbl_IDP.Caption; // confirmar se este label está sendo setado pela pesquisa
+
+      if dmCadastroServidor.executarSQL(SQLInsertServidor(NIDP))   // Tabela de Servidor
+      then
+        OK_Ser := true
+      else
+        OK_Ser := false;
+
+      // Tabela de Pessoal
+
+      with dmCadastroServidor do
+      begin
+        if executarSQL(SQLUpdatePessoal(NIDP, edtCPF.Text, edtNome.Text, edtDtNascimento.Text))
+        then
+          OK_Pes := true
+        else
+          OK_Pes := false;
+      end;
+
+      with dmCadastroServidor, RegistroAGravar do
+      begin
+        if executarSQL
+        (SQLUpdateDados
+          (
+            NIDP
+            , endereco[0], bairro[0], cidade[0], enderecoUF[0], cep[0], ciNum[0], ciUF[0], ciEmissao[0], naturalidade[0]
+            , naturalUF[0], pisPasep[0], teNum[0], teZona[0], teSecao[0], teUF[0], teEmissao[0]
+            , Pai[0], Mae[0], EstadoCivil[0], Conjuge[0], Banco[0], Agencia[0], contaBanco[0], oabNum[0], oabSecao[0], grauInstrucao[0]
+            , Curso[0], tipoSangue[0], email[0]
+          )
+            {(NIDP
+            , Endereco, Bairro, Cidade, EnderecoUF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade
+            , Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao
+            , Pai, Mae, EstadoCivil, Conjuge, Banco, Agencia, Conta, OAB_Num, OAB_Secao, GrauInstrucao
+            , Curso, TipoSanguineo, Email
+            )}
+        )
+        then
+          OK_Dad := true
+        else
+          OK_Dad := false;
+      end;
+
+      if OK_Ser then
+      begin
+        chkServidor.Checked := true;
+        if dmCadastroServidor.executarSQL(SQLUpdateServidor(NIDP, NIDS)) // Tabela de Servidor
+        then
+          OK_Ser := true
+        else
+          OK_Ser := false;
+
+        monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+        'Registro incluído na tabela de Servidor em: ' + RetornaData(2));
+      end
+      else
+      begin
+        chkServidor.Checked := false;
+        monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+        'Registro não incluído na tabela de Servidor em: ' + RetornaData(2));
+      end;
+    end; //2
+  end; // case
+
+
+//////////////////////////////////////////////////////////
+
+// Executar o código abaixo para as duas opções de inclusão
+
+  lbl_IDP.Caption := NIDP;
+  //ShowMessage(lbl_IDP.Caption);
+
+
+  NIDS := retornaNovoIDServidor(NIDP);  // corrigido para trazer o último ID (MAX(ID)
+  lbl_IDS.Caption := NIDS;
+
+
+  // Tabela tbServidor, campos do tipo data
+
+  if dmCadastroServidor.executarSQL(SQLUpdateDatas(NIDP, NIDS))
+  then
+    OK_Dat := true
+  else
+    OK_Dat := false;
+
+
+  if OK_Pes then
+  begin
+    chkPessoal.Checked := true;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro incluído na tabela de Pessoal em: ' + RetornaData(2));
+  end
+  else
+  begin
+    chkPessoal.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro não incluído na tabela de Pessoal em: ' + RetornaData(2));
+  end;
+
+  // Gravar os demais dados da tabela tbServidor pois na inclusão
+  // só foram gravados os campos idPessoal e idServidor
+
+  if OK_Ser then
+  begin
+    chkServidor.Checked := true;
+    //if dmCadastroServidor.alterarServidor   // Tabela de Servidor
+    if dmCadastroServidor.executarSQL(SQLUpdateServidor(NIDP, NIDS))
+    then
+      OK_Ser := true
+    else
+      OK_Ser := false;
+
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro incluído na tabela de Servidor em: ' + RetornaData(2));
+  end
+  else
+  begin
+    chkServidor.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro não incluído na tabela de Servidor em: ' + RetornaData(2));
+  end;  //7
+
+  if OK_Dad then
+  begin //8
+    chkDados.Checked := true;
+
+    {if dmCadastroServidor.alterarDados  // Tabela de Dados
+    (retornaSQLUpdateDados)
+    then
+      OK_Dad := true
+    else
+      OK_Dad := false;
+    }
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro incluído na tabela de Dados em: ' + RetornaData(2));
+  end   //8
+  else
+  begin //8
+    chkDados.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Registro não incluído na tabela de Dados em: ' + RetornaData(2));
+  end;  //8
+
+  if OK_Dat then
+  begin //9
+    chkDatas.Checked := true;
+
+    {if dmCadastroServidor.atualizarDatas
+    // Tabela tbServidor, campos do tipo data
+    (retornaSQLUpdateDatas(NIDP, NIDS))
+    then
+      OK_Dat := true
+    else
+      OK_Dat := false;
+    }
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Datas atualizadas na tabela Servidor em: ' + RetornaData(2));
+  end
+  else
+  begin //9
+    chkDatas.Checked := false;
+    monitorarAcoesDaSessao('ufCreateServidor', 'Evento btnGravar',
+    'Datas não atualizadas na tabela Servidor em: ' + RetornaData(2));
+  end;  //9
+
+
+  if (OK_Pes) and (OK_Ser) and (OK_Dad) and (OK_Dat)
+  then
+  begin //10
+
+    setarOperacao(3); // Alteração de registro
+
+
+    Evento := 'Inclusão de novo registro na tabela de pessoal'
+    + chr(13)
+    + 'Cargo: ' + lkpCargo.Text
+    + chr(13)
+    + 'Lotação: ' + lkpLotacao.Text;
+
+    {
+    if dmCadastroServidor.registrarNotificaNupro
+    // Tabela tbCamposAltSer
+    (retornaSQLInsertNotificaNupro(NIDP, Evento))
+    then
+      monitorarAcoesDaSessao('ufCreateServidor', 'btnGravar',
+      'Registro incluído na tabela NotificaNupro' + RetornaData(2))
+    else
+      monitorarAcoesDaSessao('ufCreateServidor', 'btnGravar',
+      'Registro não incluído na tabela NotificaNupro' + RetornaData(2));
+    }
+    
+    IncluirLog
+    (
+    DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+    RetornaData(2),
+    'tbPessoal, tbServidor, tbDados',
+    'NULL',
+    NIDP,
+    edtidServidor.Text,
+    'TODOS',
+    'Inclusão do servidor: '
+    + 'Matrícula: ' + edtidServidor.Text
+    + ' Nome: ' + edtNome.Text
+    );
+
+    // bloquear registro
+
+    SetarModoAlteracao;
+    ShowMessage('Registro gravado com sucesso.');
+    //frmCreateServidor.Activate;  // atualiza a página para exibir o modo de alteraç~~ao
+
+  end  //10
+
+  //  else
+//    ShowMessage('Houve um erro no cadastro de uma das tabelas.');
+
+
+
+
+//////////////////////////////////////////////////////////
+
+
 
 end;
 
-function TfrmCreateServidor.retornaSQLUpdateDatas(pIDP, pIDS: String): String;
-var SQL_Datas: String;
+procedure TfrmCreateServidor.edtNomeExit(Sender: TObject);
+begin
+  edtNome.Text :=
+  AnsiUpperCase(RemoveEspaco(edtNome.Text));
+end;
+
+function TfrmCreateServidor.SQLInsertCamposAltServ(pIDP: String): String;
+begin
+//
+end;
+
+function TfrmCreateServidor.SQLInsertDados(pIDP: String): String;
+begin
+  Result := 'SET DATEFORMAT dmy'
+  + ' INSERT INTO '
+  + ' tbDados'
+  + ' (idPessoal)'
+  + ' Values ('
+  + QuotedStr(pIDP)
+  + ')';
+
+  monitorarAcoesDaSessao
+  ('ufCreateServidor', 'Retorna SQL da iclusão de dados dos servidor (SQLInsertDados)', Result);
+end;
+
+function TfrmCreateServidor.SQLInsertNotificaNupro
+    (idAlteracao, idServidorAnt, idServidorNov, dtExercicioCargoAnt
+    , dtExerciciocargoNov, dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt
+    , dtExercicioFuncaoNov, dtDesligFuncaoAnt, dtDesligFuncaoNov, dtFalecimentoAnt
+    , dtFalecimentoNov, idCargo, idFuncao, idLotacaoAnt
+    , idLotacaoNov, idUsuario, dtAlteracao: String): String;
+var wSQL: String;
 begin
 
+// deverão ser passados 19 valores para a realização desse insert
+// Obrigatóris: idAlteracao, idServidorNov, idCargoNov, idFuncaoNov,
+// idLotacaoNov, idUsuario, dtAlteracao
+
+  wSQL :=
+      'SET DATEFORMAT dmy'
+      + ' INSERT INTO '
+      + ' tbCamposAltServ'
+      //+ '(idPessoal, CPF, Nome, dt_Nascimento)'
+
+      + ' (idAlteracao, idServidorAnt, idServidorNov, dtExercicioCargoAnt'
+      + ', dtExerciciocargoNov, dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt'
+      + ', dtExercicioFuncaoNov, dtDesligFuncaoAnt, dtDesligFuncaoNov, dtFalecimentoAnt'
+      + ', dtFalecimentoNov, idCargo, idFuncao, idLotacaoAnt'
+      + ', idLotacaoNov, idUsuario, dtAlteracao)'
+
+      + ' VALUES ('
+
+      {
+       Exemplo de valores
+       000000018293, 0000111111, 0000111111, NULL,
+       NULL, NULL, NULL, NULL
+       NULL, NULL, NULL, NULL
+       NULL, AJ0000, 99999, 99999999
+       160400000000, 27949460130, 2022-08-22 18:10:22.773
+      }
+
+      
+      //1
+      + QuotedStr(idAlteracao)           + ', ';
+
+      //2
+      if idServidorAnt <> '' then
+      wSQL := wSQL + QuotedStr(idServidorAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //3
+      wSQL := wSQL +  QuotedStr(idServidorNov) + ', ';
+
+      //4
+      //+ QuotedStr(dtExercicioCargoAnt)   + ', '
+      if dtExercicioCargoAnt <> '' then
+      wSQL := wSQL + QuotedStr(dtExercicioCargoAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //5
+      //+ QuotedStr(dtExerciciocargoNov)   + ', '
+      if dtExercicioCargoNov <> '' then
+      wSQL := wSQL + QuotedStr(dtExercicioCargoNov) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //6
+      //+ QuotedStr(dtDesligCargoAnt)      + ', '
+      if dtDesligCargoAnt <> '' then
+      wSQL := wSQL + QuotedStr(dtDesligCargoAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //7
+      //wSQL := wSQL + QuotedStr(dtDesligCargoNov)  + ', '
+      if dtDesligCargoNov <> '' then
+      wSQL := wSQL + QuotedStr(dtDesligCargoNov) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //8
+      //+ QuotedStr(dtExercicioFuncaoAnt)  + ', '
+      if dtExercicioFuncaoAnt <> '' then
+      wSQL := wSQL + QuotedStr(dtExercicioFuncaoAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //9
+      //+ QuotedStr(dtExercicioFuncaoNov)  + ', '
+      if dtExercicioFuncaoNov <> '' then
+      wSQL := wSQL + QuotedStr(dtExercicioFuncaoNov) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //10
+      //+ QuotedStr(dtDesligFuncaoAnt)     + ', '
+      if dtDesligFuncaoAnt <> '' then
+      wSQL := wSQL + QuotedStr(dtDesligFuncaoAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //11
+      //+ QuotedStr(dtDesligFuncaoNov)     + ', '
+      if dtDesligFuncaoNov <> '' then
+      wSQL := wSQL + QuotedStr(dtDesligFuncaoNov) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //12
+      //+ QuotedStr(dtFalecimentoAnt)      + ', '
+      if dtFalecimentoAnt <> '' then
+      wSQL := wSQL + QuotedStr(dtFalecimentoAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //13
+      //+ QuotedStr(dtFalecimentoNov)      + ', '
+      if dtFalecimentoNov <> '' then
+      wSQL := wSQL + QuotedStr(dtFalecimentoNov) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //14
+      //+ QuotedStr(idCargo)               + ', '
+      if idCargo <> '' then
+      wSQL := wSQL + QuotedStr(idCargo) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //15
+      //+ QuotedStr(idFuncao)              + ', '
+      if idFuncao <> '' then
+      wSQL := wSQL + QuotedStr(idFuncao) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //16
+      //+ QuotedStr(idLotacaoAnt)          + ', '
+      if idLotacaoAnt <> '' then
+      wSQL := wSQL + QuotedStr(idLotacaoAnt) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //17
+      //+ QuotedStr(idLotacaoNov)          + ', '
+      if idLotacaoNov <> '' then
+      wSQL := wSQL + QuotedStr(idLotacaoNov) + ','
+      else wSQL := wSQL + ' NULL' + ',';
+
+      //18
+      wSQL := wSQL + QuotedStr(idUsuario)    + ', ';
+
+      //19
+      wSQL := wSQL + QuotedStr(dtAlteracao)  + ')';
+
+      Result := wSQL;
+
+      monitorarAcoesDaSessao
+      ('ufCreateServidor', 'SQL da inclusão de notifica nupro (SQLInsertNotificaNupro)', Result);
+
+end;
+
+function TfrmCreateServidor.SQLInsertPessoal(pIDP: String): String;
+begin
+  Result :=
+      'SET DATEFORMAT dmy'
+      + ' INSERT INTO '
+      + ' tbPessoal'
+      + '(idPessoal, CPF, Nome, dt_Nascimento)'
+      + ' VALUES ('
+      + QuotedStr(pIDP)   + ', '
+      + QuotedStr(edtCPF.Text)            + ', '
+      + QuotedStr(edtNome.Text)           + ', '
+      + QuotedStr(edtDtNascimento.Text)   + ')';
+
+      monitorarAcoesDaSessao
+      ('ufCreateServidor', 'SQL da inclusão de pessoal (SQLInsertPessoal)', Result);
+end;
+
+function TfrmCreateServidor.SQLInsertServidor(pIDP: String): String;
+begin
+  // Se não for atribuído um valor para o Cargo
+  // o banco atribuirá o valor default (999999)
+  // ídem para os campos idFuncao, idLotacao, Requisitado, etc
+
+  Result :=  'SET DATEFORMAT dmy'
+  + ' INSERT INTO '
+  + ' tbServidor'
+  + '(idPessoal, idServidor)'
+  + ' Values ('
+  + QuotedStr(pIDP)
+  + ', ' + QuotedStr(edtidServidor.Text)
+  + ')';
+
+  monitorarAcoesDaSessao
+  ('ufCreateServidor', 'SQL da iclusão de servidor (SQLInsertServidor)', Result);
+
+end;
+
+function TfrmCreateServidor.SQLNovoIDServidor(idPessoal: String): String;
+begin
+//
+end;
+
+
+function TfrmCreateServidor.SQLUpdateDatas(pIDP, pIDS: String): String;
+var SQL_Datas: String;
+begin
   SQL_Datas := 'SET DATEFORMAT dmy'
   + ' UPDATE '
   + ' tbServidor'
@@ -1104,1077 +2136,13 @@ begin
   + ' AND ID = '  + QuotedStr(pIDS);
 
   monitorarAcoesDaSessao
-  ('ufCreateServidor', 'Retorna SQL de atualização de datas (retornaSQLUpdateDatas)', SQL_Datas);
+  ('ufCreateServidor', 'Retorna SQL de atualização de datas (SQLUpdateDatas)', SQL_Datas);
 
   Result := SQL_Datas;
-  
-end;
-
-function TfrmCreateServidor.retornaSQLInsertPessoal(pIDP: String): String;
-begin
-  // txtidPessoal.Caption, edtCPF.Text, edtNome.Text, edtDtNascimento.Text
-  Result :=
-      'SET DATEFORMAT dmy'
-      + ' INSERT INTO '
-      + ' tbPessoal'
-      + '(idPessoal, CPF, Nome, dt_Nascimento)'
-      + ' VALUES ('
-      + QuotedStr(pIDP)   + ', '
-      + QuotedStr(edtCPF.Text)            + ', '
-      + QuotedStr(edtNome.Text)           + ', '
-      + QuotedStr(edtDtNascimento.Text)   + ')';
-
-      monitorarAcoesDaSessao
-      ('ufCreateServidor', 'SQL da inclusão de pessoal (retornaSQLInsertPessoal)', Result);
-
-end;
-
-function TfrmCreateServidor.retornaSQLInsertServidor_OLD(pIDP: String): String;
-var SQL_Servidor: String;
-begin
-
-  // Retiradas as datas em 30/04/2021
-  // As datas serão salvas pela função  
-
-// Ordem dos campos
-{
-...
-...
-...
-39	Dt_InicioContrato1_Estagiario
-40	Dt_TerminoContrato1_Estagiario
-41	Dt_InicioContrato2_Estagiario
-42	Dt_TerminoContrato2_Estagiario
-43	Dt_InicioContrato3_Estagiario
-44	Dt_TerminoContrato3_Estagiario
-45	Dt_InicioContrato4_Estagiario
-46	Dt_TerminoContrato4_Estagiario
-47	Supervisor_Estagiario
-48	DtNovaEstrutura
-49	CaminhoFollhaDePonto
-50	TurnoEstagio
-51	Semestre
-52	InstituicaoEnsino
-53	observacao
-54	idNucleo
-55	dtNucleoDistribuicao
-56	idOrgaoExercicioExterno
-57	dt_InicioExercicioExterno
-58	dt_TerminoExercicioExterno
-
-}
-
-  SQL_Servidor := 'SET DATEFORMAT dmy'
-  + ' INSERT INTO '
-  + ' tbServidor'
-
-  // 1	idPessoal 2	idServidor 3	Matr_Origem
-
-  + '(idPessoal, idServidor, Matr_Origem, ';
-
-  // Se não for atribuído um valor para o Cargo
-  // o banco atribuirá o valor default (999999)
-  // ídem para os campos idFuncao, idLotacao, Requisitado, etc
-
-  // 4	idCargo 5	Especialidade 6	idFuncao 7	idLotacao
-
-
-  if lkpCargo.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor + 'idCargo, ';
-
-  if lkpEspecialidade.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor + 'especialidade, ';
-
-  if lkpFuncao.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor + 'idFuncao, ';
-
-  if lkpLotacao.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor + 'idLotacao, ';
-
-  // 8	CF_Num 9	Ramal 10	Sala 11	Classe 12	Padrao (não se aplica para ramal e sala)
-
-  SQL_Servidor := SQL_Servidor
-  + 'CF_Num, Classe, Padrao, ';
-
-
-  // 13	Dt_NomeacaoCargo 14	Dt_NomeacaoCargoDODF 15	Dt_PosseCargo 16	Dt_ExercicioCargo
-
-//  if edtDt_NomeacaoCargo.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_NomeacaoCargo, ';
-
-//  if edtDt_NomeacaoCargoDODF.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_NomeacaoCargoDODF, ';
-
-//  if edtDt_PosseCargo.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_PosseCargo, ';
-
-//  if edtDt_ExercicioCargo.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_ExercicioCargo, ';
-
-  // 17	Dt_PrimeiroExercicioGDF 18	Dt_Deslig_Cargo 19	Dt_Deslig_CargoDODF 20	Dt_NomeacaoFuncao
-  // (não se aplica para Dt_Deslig_Cargo e Dt_DesligCargoDODF)
-
-
-//  if edtDt_PrimeiroExercicioGDF.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_PrimeiroExercicioGDF, ';
-
-//  if edtDt_NomeacaoFuncao.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_NomeacaoFuncao, ';
-
-
-  // 21	Dt_NomeacaoFuncaoDODF 22	Dt_PosseFuncao 23	Dt_ExercicioFuncao 24	Dt_Deslig_Funcao
-  // (não se aplica para Dt_Deslig_Funcao)
-
-
-//  if edtDt_NomeacaoFuncaoDODF.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_NomeacaoFuncaoDODF, ';
-
-//  if edtDt_PosseFuncao.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_PosseFuncao, ';
-
-//  if edtDt_ExercicioFuncao.Text <> '' then
-  SQL_Servidor := SQL_Servidor + ' Dt_ExercicioFuncao, ';
-
-  // 25	Dt_Deslig_FuncaoDODF 26	Dt_Falecimento 27	Dt_Digitacao
-  // (não se aplica para Dt_Deslig_FuncaoDODF e Dt_Falecimento )
-
-  SQL_Servidor := SQL_Servidor + ' Dt_Digitacao,  ';
-
-
-// 28	Requisitado 29	OrgaoDeOrigem 30	Dt_FimRequisicao 31	AuxTransporte
-//(não se aplica a Dt_FimRequisicao)
-
-
-  if chkRequisitado.Checked
-  then SQL_Servidor := SQL_Servidor + 'Requisitado, ';
-
-  SQL_Servidor := SQL_Servidor
-  + 'OrgaoDeOrigem, ';
-
-  if chkAuxTransporte.Checked
-  then SQL_Servidor := SQL_Servidor + 'AuxTransporte, ';
-
-// 32	idDesligamento 33	idUsuario 34	CargaHoraria 35	Dt_PromocaoCategoria2
-// (não se aplica a idDesligamento e Dt_PromocaoCategoria2
-
-  SQL_Servidor := SQL_Servidor
-  + 'idUsuario, CargaHoraria)'
-
-// 36	Dt_PromocaoSubProcurador 37	AverbacaoGDF 38	AverbacaoServPublico
-// (não se aplica a Dt_PromocaoSubProcurador
-
-// ver com a Cláudia em que situações são digitados os campos AverbacaoGDF e AverbacaoServPublico
-
-
-  + ' Values ('
-
-  // 1	idPessoal 2	idServidor 3	Matr_Origem
-
-  + QuotedStr(pIDP)   + ', '
-  + QuotedStr(edtidServidor.Text) + ', '
-  + 'NULL' + ', ';
-
-  // 4	idCargo 5	Especialidade 6	idFuncao 7	idLotacao
-
-  if lkpCargo.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor
-  + QuotedStr(lkpCargo.EditingValue) + ', ';
-
-  if lkpEspecialidade.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor
-  + QuotedStr(lkpEspecialidade.EditingValue) + ', ';
-
-  if lkpFuncao.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor
-  + QuotedStr(lkpFuncao.EditingValue) + ', ';
-
-  if lkpLotacao.EditingValue <> Null
-  then SQL_Servidor := SQL_Servidor
-  + QuotedStr(lkpLotacao.EditingValue) + ', ';
-
-  if chkRequisitado.Checked
-  then SQL_Servidor := SQL_Servidor    // se não for informado o banco atribui o valor zero
-  + '1, ';
-
-  // 8	CF_Num 9	Ramal 10	Sala 11	Classe 12	Padrao (não se aplica para ramal e sala)
-
-
-  SQL_Servidor := SQL_Servidor
-  + QuotedStr(edtCF_Num.Text) + ', '
-  + QuotedStr(cbxClasse.Text) + ', '
-  + QuotedStr(cbxPadrao.Text) + ', ';
-
-
-  // 13	Dt_NomeacaoCargo 14	Dt_NomeacaoCargoDODF 15	Dt_PosseCargo 16	Dt_ExercicioCargo
-
-
-  if edtDt_NomeacaoCargo.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_NomeacaoCargo.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  if edtDt_NomeacaoCargoDODF.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_NomeacaoCargoDODF.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  if edtDt_PosseCargo.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_PosseCargo.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  if edtDt_ExercicioCargo.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_ExercicioCargo.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-
-  // 17	Dt_PrimeiroExercicioGDF 18	Dt_Deslig_Cargo 19	Dt_Deslig_CargoDODF 20	Dt_NomeacaoFuncao
-  // (não se aplica para Dt_Deslig_Cargo e Dt_DesligCargoDODF)
-
-
-  if edtDt_PrimeiroExercicioGDF.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_PrimeiroExercicioGDF.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  if edtDt_NomeacaoFuncao.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_NomeacaoFuncao.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  // 21	Dt_NomeacaoFuncaoDODF 22	Dt_PosseFuncao 23	Dt_ExercicioFuncao 24	Dt_Deslig_Funcao
-  // (não se aplica para Dt_Deslig_Funcao)
-
-  if edtDt_NomeacaoFuncaoDODF.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_NomeacaoFuncaoDODF.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  if edtDt_PosseFuncao.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_PosseFuncao.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL, ';
-
-  if edtDt_ExercicioFuncao.Text <> '' then
-  SQL_Servidor := SQL_Servidor + QuotedStr(edtDt_ExercicioFuncao.Text) + ', '
-  else
-  SQL_Servidor := SQL_Servidor + ' NULL,';
-
-
-  // 25	Dt_Deslig_FuncaoDODF 26	Dt_Falecimento 27	Dt_Digitacao
-  // (não se aplica para Dt_Deslig_FuncaoDODF e Dt_Falecimento )
-
-
-  SQL_Servidor := SQL_Servidor + QuotedStr(RetornaData(2)) + ', ';
-
-
-  // 28	Requisitado 29	OrgaoDeOrigem 30	Dt_FimRequisicao 31	AuxTransporte
-  //(não se aplica a Dt_FimRequisicao)
-
-  if chkRequisitado.Checked
-  then SQL_Servidor := SQL_Servidor
-  + '1, ';
-
-  SQL_Servidor := SQL_Servidor
-  + QuotedStr(edtOrgaoOrigem.Text) + ', ';
-
-  if chkAuxTransporte.Checked
-  then SQL_Servidor := SQL_Servidor
-  + '1, ';
-
-// 32	idDesligamento 33	idUsuario 34	CargaHoraria 35	Dt_PromocaoCategoria2
-// (não se aplica a idDesligamento e Dt_PromocaoCategoria2
-
-  SQL_Servidor := SQL_Servidor
-  + QuotedStr(DMConexao.Usuario.CPF) + ', '
-  //+ QuotedStr(idUsuario) + ', '
-  + QuotedStr(cbxCargaHoraria.Text)
-
-  + ')';
-
-  Result := SQL_Servidor;
-
-end;
-
-procedure TfrmCreateServidor.BloquearCampos;
-var i: integer;
-begin
-  for i:= 0 to ComponentCount -1 do
-  begin
-    if (Components[i] is TcxDBTextEdit) then
-    begin
-      if Components[i].Name <> 'edtIdProcuradoria' then
-      TcxDBTextEdit(Components[i]).Enabled := false;
-    end;
-
-    if (Components[i] is TcxDBLookupComboBox) then
-      TcxDBLookupComboBox(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBComboBox) then
-      TcxDBComboBox(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBDateEdit) then
-       TcxDBDateEdit(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBMaskEdit) then
-       TcxDBMaskEdit(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBCheckBox) then
-       TcxDBCheckBox(Components[i]).Enabled := false;
-
-  end;
-
-end;
-
-procedure TfrmCreateServidor.DesbloquearCampos;
-var i: integer;
-begin
-  for i:= 0 to ComponentCount -1 do
-  begin
-    if (Components[i] is TcxDBTextEdit) then
-    begin
-      if Components[i].Name <> 'edtIdProcuradoria' then
-      TcxDBTextEdit(Components[i]).Enabled := true;
-    end;
-
-    if (Components[i] is TcxDBLookupComboBox) then
-      TcxDBLookupComboBox(Components[i]).Enabled := true;
-
-    if (Components[i] is TcxDBComboBox) then
-      TcxDBComboBox(Components[i]).Enabled := true;
-
-    if (Components[i] is TcxDBDateEdit) then
-       TcxDBDateEdit(Components[i]).Enabled := true;
-
-    if (Components[i] is TcxDBMaskEdit) then
-       TcxDBMaskEdit(Components[i]).Enabled := true;
-
-    if (Components[i] is TcxDBCheckBox) then
-       TcxDBCheckBox(Components[i]).Enabled := true;
-
-  end;
-
-
-end;
-
-procedure TfrmCreateServidor.SpeedButton2Click(Sender: TObject);
-begin
-  BloquearCampos;
-end;
-
-procedure TfrmCreateServidor.SetarStatus(prmModo: char);
-begin
-  case prmModo of
-    '1':
-    begin
-      with obStatus do
-      begin
-        idStatus := '1';
-        dscStatus := 'INCLUSÃO';
-      end;
-    end;
-    '2':
-    begin
-      with obStatus do
-      begin
-        idStatus := '2';
-        dscStatus := 'EDIÇÃO';
-      end;
-    end;
-  end;
-
-  with barServidor do
-  begin
-     Panels[0].Text := obStatus.idStatus;
-     Panels[1].Text := obStatus.dscStatus;
-     Panels[2].Text := DMConexao.Usuario.Nome;
-     Panels[3].Text := DMConexao.getNomeServidor;
-
-  end;
-end;
-
-procedure TfrmCreateServidor.SetarModoInclusao;
-begin
-  LimparCampos;
-  DesbloquearCampos;
-  SetarStatus('1');
-  DesabilitarBtnNovo;
-  HabilitarBtnGravar;
-end;
-
-procedure TfrmCreateServidor.SetarModoAlteracao;
-begin
-//  BloquearCampos;
-  SetarStatus('2');
-  setarOperacao(2); //
-  //  DesabilitarBtnGravar;
-  HabilitarBtnNovo;
 end;
 
 
-procedure TfrmCreateServidor.HabilitarBtnGravar;
-begin
-  btnGravar.Enabled := true;
-end;
-
-procedure TfrmCreateServidor.DesabilitarBtnGravar;
-begin
-  btnGravar.Enabled := false;
-end;
-
-procedure TfrmCreateServidor.DesabilitarBtnNovo;
-begin
-  btnNovo.Enabled := false;
-end;
-
-procedure TfrmCreateServidor.HabilitarBtnNovo;
-begin
-  btnNovo.Enabled := true;
-end;
-
-function TfrmCreateServidor.CPFJaCadastrado(pCPF: string): TPessoalArray;
-begin
-  SetLength(Result, 3);
-   with dmCadastroServidor.qryExecSQL do
-   begin
-     Connection := DMConexao.conPessoal;
-     SQL.Text := 'SELECT idPessoal, Nome, Dt_Nascimento FROM tbPessoal'
-     + ' WHERE tbPessoal.CPF = ' + QuotedStr(pCPF);
-     Open;
-   end;
-
-   if (dmCadastroServidor.qryExecSQL.RecordCount = 0)
-   then
-     Result[0] := '0'
-   else
-   begin
-     Result[0] := dmCadastroServidor.qryExecSQL.FieldValues['idPessoal'];
-     Result[1] := dmCadastroServidor.qryExecSQL.FieldValues['Nome'];
-     Result[2] := dmCadastroServidor.qryExecSQL.FieldValues['Dt_Nascimento'];
-   end;
-
-   dmCadastroServidor.qryExecSQL.Close;
-   
-end;
-
-procedure TfrmCreateServidor.edtCPFExit(Sender: TObject);
-var
-  Pessoal: TPessoalArray;
-  Mensagem: String;
-begin //1
-  if btnSair.Focused then Close
-  else
-  begin //2
-    if Trim(edtCPF.Text) = '' then
-    begin //3
-      ShowMessage('Você deve digitar o número do CPF');
-      edtCPF.SetFocus;
-    end   //3
-    else
-    begin //4
-      if CPF_valido(edtCPF.Text) = false then
-      begin //5
-        ShowMessage('Número de CPF inválido.');
-        edtCPF.SetFocus;
-        edtCPF.SelectAll;
-        Abort;
-      end   //5
-      else
-      begin //6
-        Setlength(Pessoal, 3);
-        Pessoal := CPFJaCadastrado(edtCPF.Text);
-
-        if (Pessoal[0] <> '0')
-        and (lbl_IDP.Caption = '0') then
-        begin //7
-          Mensagem := 'O CPF: ' + edtCPF.Text
-                      + ' já está cadastrado para: '
-                      + #13 + Pessoal[1]
-                      + #13 + 'Nascimento: ' + Pessoal[2]
-                      + #13 + #13 + 'Deseja continuar?';
-
-          if ConfirmaAcao(Mensagem, 3) = 1
-          then
-          begin //8
-            with dmCadastroServidor.qryPessoal do
-            begin //9
-              Edit;
-              lbl_IDP.Caption := Pessoal[0]; //
-              FieldByName('idPessoal').AsString := Pessoal[0]; // idPessoal txtIdPessoal.Caption
-              FieldByName('Nome').AsString := Pessoal[1]; // Nome edtNome.Text
-              FieldByName('Dt_Nascimento').AsString := Pessoal[2] // edtDtNascimento.Text
-            end;  //9
-
-            Setlength(Pessoal, 4);
-            Pessoal := servidorEstaAtivo(edtCPF.Text);
-
-            if (Pessoal[0] <> '0')
-            //and (txtIdPessoal.Caption = '0')
-            then
-            begin //10
-              Mensagem := 'Atenção!' + #13 + Pessoal[1]
-                          + #13 + 'Ainda está com o registro funcional ativo.'
-                          + #13 + 'Cargo: '   + Pessoal[2]
-                          + #13 + 'Função: '  + Pessoal[3]
-                          + #13 + 'É necessário realizar seu desligamento antes de criar um novo registro';
-
-              ShowMessage(Mensagem);
-
-              LimparCampos;
-
-              bloquearEdicao;
-              edtCPF.Clear;
-              edtCPF.SetFocus;
-            end   //10
-          end //8
-          else
-          begin //8
-            edtCPF.Clear;
-            edtCPF.SetFocus;
-          end; //8
-        end //7
-        else
-        begin //7
-          with dmCadastroServidor.qryPessoal do
-          begin //11
-            Edit;
-            lbl_IDP.Caption := '0'; //
-            FieldByName('idPessoal').Clear;
-            FieldByName('Nome').Clear;
-            FieldByName('Dt_Nascimento').Clear;
-          end; //11
-        end //7
-      end; //6
-    end; //4
-  end;//2
-end;//1
-
-function TfrmCreateServidor.UF_EValida(pUF: String): Boolean;
-begin
-   with dmCadastroServidor.qryExecSQL do
-   begin
-     Connection := DMConexao.conPessoal;
-     SQL.Text := 'SELECT idUF FROM tbUF'
-     + ' WHERE idUF = ' + QuotedStr(pUF);
-     Open;
-   end;
-
-   if (dmCadastroServidor.qryExecSQL.RecordCount = 0)
-   then
-     Result := false
-   else
-     Result := true;
-
-   dmCadastroServidor.qryExecSQL.Close;
-end;
-
-procedure TfrmCreateServidor.cbxNatural_UFExit(Sender: TObject);
-begin
-  if (cbxNatural_UF.Text <> '')
-  and (not UF_EValida(cbxNatural_UF.EditingText))
-  then
-  begin
-    ShowMessage('UF é inválida');
-    //cbxNatural_UF.Text := ''; -- Não apaga o valor
-    //cbxNatural_UF.SelectedItem := -1;
-    cbxNatural_UF.SelectAll;
-    cbxNatural_UF.SetFocus;
-  end
-end;
-
-procedure TfrmCreateServidor.cbxEnderecoUFExit(Sender: TObject);
-begin
-  if (cbxEnderecoUF.Text <> '')
-  and (not UF_EValida(cbxEnderecoUF.EditingText))
-  then
-  begin
-    ShowMessage('UF é inválida');
-    //cbxEnderecoUF.Text := ''; -- Não apaga o valor
-    //cbxEnderecoUF.SelectedItem := -1;
-    cbxEnderecoUF.SelectAll;
-    cbxEnderecoUF.SetFocus;
-  end
-
-end;
-
-procedure TfrmCreateServidor.cbxCI_UFExit(Sender: TObject);
-begin
-  if (cbxCI_UF.Text <> '')
-  and (not UF_EValida(cbxCI_UF.EditingText))
-  then
-  begin
-    ShowMessage('UF é inválida');
-    //cbxCI_UF.Text := ''; -- Não apaga o valor
-    //cbxCI_UF.SelectedItem := -1;
-    cbxCI_UF.SelectAll;
-    cbxCI_UF.SetFocus;
-  end
-
-end;
-
-procedure TfrmCreateServidor.cbxTE_UFExit(Sender: TObject);
-begin
-  if (cbxTE_UF.Text <> '')
-  and (not UF_EValida(cbxCI_UF.EditingText))
-  then
-  begin
-    ShowMessage('UF é inválida');
-    //cbxTE_UF.Text := ''; -- Não apaga o valor
-    //cbxTE_UF.SelectedItem := -1;
-    cbxTE_UF.SelectAll;
-    cbxTE_UF.SetFocus;
-  end
-
-end;
-
-procedure TfrmCreateServidor.FormKeyDown(Sender: TObject; var Key: Word;
-  Shift: TShiftState);
-begin
-  if Shift = [ssCtrl] then
-  begin
-    if key = VK_F12
-    then
-    //tshSQL.TabVisible := not tshSQL.TabVisible;
-    //gbxSQL.Visible := not gbxSQL.Visible;
-
-    //frmLogs.mmoLog.Visible := not frmLogs.mmoLog.Visible;
-
-    frmLogs.ShowModal;
-  end
-end;
-
-function TfrmCreateServidor.MatriculaCadastradaNoID(
-  pIdPessoal, pMatricula: string): TPessoalArray;
-begin
-  SetLength(Result, 3);
-   with dmCadastroServidor.qryExecSQL do
-   begin
-     Connection := DMConexao.conPessoal;
-     SQL.Text :=
-
-     {'SELECT idPessoal, Matrícula, Nome, Cargo'
-     + ' FROM vwListaServidoresCompleta'
-     + ' WHERE idPessoal = ' + QuotedStr(pIdPessoal)
-     + ' AND Matrícula = ' + QuotedStr(pMatricula); }
-
-      'SELECT pes.idPessoal, ser.ID, ser.idServidor, pes.Nome, car.Descricao'
-     + ' FROM tbPessoal pes'
-     + ' INNER JOIN tbServidor ser ON ser.idPessoal = pes.idPessoal'
-     + ' INNER JOIN tbCargo car ON car.idCargo = ser.idCargo'
-     + ' WHERE pes.idPessoal = '  + QuotedStr(pIdPessoal)
-     + ' AND ser.idServidor = '   + QuotedStr(pMatricula);
-
-
-     Open;
-     //ExecSQL;
-     frmLogs.mmoLog.Lines.Add(SQL.Text);
-   end;
-
-   if (dmCadastroServidor.qryExecSQL.RecordCount = 0)
-   then
-     Result[0] := '0'
-   else
-   begin
-     Result[0] := dmCadastroServidor.qryExecSQL.FieldValues['idServidor'];
-     Result[1] := dmCadastroServidor.qryExecSQL.FieldValues['Nome'];
-     Result[2] := dmCadastroServidor.qryExecSQL.FieldValues['Descricao'];
-   end;
-    // dmCadastroServidor.qryExecSQL.Close;
-
-end;
-
-procedure TfrmCreateServidor.edtidServidorExit(Sender: TObject);
-var
-  Pessoal: TPessoalArray;
-  Mensagem: String;
-begin //1
-  if btnSair.Focused then Close
-  else
-  begin //2
-    if Trim(edtidServidor.Text) = '' then
-    begin //3
-      ShowMessage('Olha só. Você deve digitar o número da matrícula');
-      edtidServidor.SetFocus;
-    end //3
-    else
-    begin //3
-      edtidServidor.Text := InserirZeros(edtidServidor.Text,10);
-      Setlength(Pessoal, 3);
-
-      Pessoal := MatriculaCadastradaNoID(
-      lbl_IDP.Caption, Trim(edtidServidor.Text));
-      //ShowMessage(Pessoal[0]);
-      if Pessoal[0] <> '0' then
-      begin //4
-        Mensagem := 'Já existe um registro cadastrado para esses valores: '
-                    + #13 + 'Matrícula: ' + Pessoal[0]
-                    + #13 + 'Nome: ' + Pessoal[1]
-                    + #13 + 'Cargo: ' + Pessoal[2];
-
-
-        ShowMessage(Mensagem);
-
-        bloquearEdicao;
-
-        edtidServidor.Text := '' ;
-        edtidServidor.SetFocus;
-      end //4
-      else
-      begin //4
-        DesbloquearCampos;
-        edtNome.SetFocus;
-      end; //4
-    end; //3
-  end; //2
-end; //1
-
-procedure TfrmCreateServidor.Button1Click(Sender: TObject);
-var
-  Erro: Word;
-begin
-  Erro := WinExec('.\ProgramaExterno\Iniciar.exe / MinhaSenha', SW_SHOW);
-  if Erro <= 31 then { Se ocorreu erro... }
-  ShowMessage('Erro ao executar o programa.');
-
-end;
-
-procedure TfrmCreateServidor.Button2Click(Sender: TObject);
-var edArquivo: String;
-begin
-//  ShellExecute(Application.Handle, PChar('open'), PChar('.\ProgramaExterno\Iniciar.exe'), PChar('MinhaSenha'), nil, SW_NORMAL);
-
-edArquivo := '.\ProgramaExterno\Iniciar.exe';
-
-ShellExecute(handle,'open',PChar(edArquivo), 'MinhaSenha','',SW_SHOWNORMAL)
-end;
-
-procedure TfrmCreateServidor.CarregarSessaoAnterior;
-var
-  IniFile  : TIniFile;
-  //LstUser,
-  Caminho, wArq: string;
-  APP_PATH : string;
-  //LstDate : TDateTime;
-begin
-  Caminho  := APP_PATH + '\UserPrefs\';
-
-  wArq := 'Sessao'+DMConexao.Usuario.CPF+'.INI';
-
-  IniFile := TIniFile.Create(Caminho+wArq);
-
-  //se não houver último usuário retornará uma string vazia
-  //se não houver data armazenada retornar a data atual
-
-  LstUser := IniFile.ReadString('User','Nome','');
-  LstDate := IniFile.ReadDate('User', 'Data', Date);
-
-  //ShowMessage(LstUser + ' ' + DateToStr(LstDate));
-
-  {LstEdtProcesso  := IniFile.ReadString('frmCritPesq', 'edtProcesso','');
-  lstEdtAS        := IniFile.ReadString('frmCritPesq', 'edtidAS','');
-  lstidCE         := IniFile.ReadString('frmCritPesq', 'edtidCE','');
-  lstProtocoloSAJ := IniFile.ReadString('frmCritPesq', 'edtProtocoloSAJ','');
-  lstCertidao     := IniFile.ReadString('frmCritPesq', 'edtCertidao','');
-  lstCDA          := IniFile.ReadString('frmCritPesq', 'edtCDA','');
-  lstReu          := IniFile.ReadString('frmCritPesq', 'edtReu','');
-  lstAutor        := IniFile.ReadString('frmCritPesq', 'edtAutor','');
-  lstParte        := IniFile.ReadString('frmCritPesq', 'edtParte','');
-  lstCPF          := IniFile.ReadString('frmCritPesq', 'edtCPF','');}
-
-  IniFile.Free;
-
-end;
-
-function TfrmCreateServidor.setarOperacao(tipo: Integer): boolean;
-begin
-  OPERACAO := tipo;
-
-  case OPERACAO of
-    1: lblOperacao.Caption := 'INCLUSÃO'; // Inclusão de novo registro
-    2: lblOperacao.Caption := 'EDIÇÃO';     // Edição do registro cadastrado
-  end;
-
-  Result := true;
-end;
-
-
-procedure TfrmCreateServidor.Button3Click(Sender: TObject);
-begin
-  frmLogs.mmoLog.Lines.Add(dmPessoal.registraNotificaNupro
-  (edtidServidor.Text, lkpLotacao.EditingValue, lkpCargo.EditingValue,
-  lkpFuncao.EditingValue, edtDt_ExercicioCargo.Text, DMConexao.Usuario.CPF, RetornaData(2))
-  );
-end;
-
-procedure TfrmCreateServidor.edtCPFKeyPress(Sender: TObject;
-  var Key: Char);
-begin
-  if not (key in ['0'..'9',#8, #9]) then key := #0;
-end;
-
-procedure TfrmCreateServidor.bloquearEdicao;
-var i: integer;
-begin
-  for i:= 0 to ComponentCount -1 do
-  begin
-    if (Components[i] is TcxDBTextEdit) then
-    begin
-      if (Components[i].Name <> 'edtCPF') and
-         (Components[i].Name <> 'edtidServidor')
-      then
-      TcxDBTextEdit(Components[i]).Enabled := false;
-    end;
-
-    if (Components[i] is TcxDBLookupComboBox) then
-      TcxDBLookupComboBox(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBComboBox) then
-      TcxDBComboBox(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBDateEdit) then
-      if (Components[i].Name <> 'edtDtNascimento')
-      then TcxDBDateEdit(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBMaskEdit) then
-       TcxDBMaskEdit(Components[i]).Enabled := false;
-
-    if (Components[i] is TcxDBCheckBox) then
-       TcxDBCheckBox(Components[i]).Enabled := false;
-
-  end;
-
-end;
-
-procedure TfrmCreateServidor.desbloquearEdicao;
-begin
-//
-end;
-
-procedure TfrmCreateServidor.configurarCampos;
-begin
-  //edtNome.Properties.MaxLength := 2;
-end;
-
-function TfrmCreateServidor.retornaSQLUpdateDados: String;
-var SQL_Dados: String;
-begin
-
-  SQL_Dados := 'SET DATEFORMAT dmy'
-  + ' UPDATE tbDados'
-  + ' SET ';
-
-  if edtEndereco.Text <> Null
-  then SQL_Dados := SQL_Dados
-    + ' Endereco = ' + QuotedStr(edtEndereco.Text)
-  else SQL_Dados := SQL_Dados
-    + ' Endereco = NULL';
-
-  if edtBairro.Text <> Null
-  then SQL_Dados := SQL_Dados
-    + ', Bairro = ' + QuotedStr(edtBairro.Text)
-  else SQL_Dados := SQL_Dados
-    + ', Bairro = NULL';
-
-  if edtCidade.Text <> Null
-  then SQL_Dados := SQL_Dados
-    + ', Cidade = ' + QuotedStr(edtCidade.Text)
-  else SQL_Dados := SQL_Dados
-    + ', Cidade = NULL';
-
-  if cbxEnderecoUF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-    + ', UF = ' + QuotedStr(cbxEnderecoUF.Text)
-  else SQL_Dados := SQL_Dados
-    + ', UF = NULL';
-
-  if edtCEP.Text <> Null
-  then SQL_Dados := SQL_Dados
-    + ', CEP = ' + QuotedStr(edtCEP.Text)
-  else SQL_Dados := SQL_Dados
-    + ', CEP = NULL';
-
-  if edtCI_Num.Text <> Null
-  then SQL_Dados := SQL_Dados
-    + ', CI_Num = ' + QuotedStr(edtCI_Num.Text)
-  else SQL_Dados := SQL_Dados
-    + ', CI_Num = NULL';
-
-  if cbxCI_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', CI_UF = ' + QuotedStr(cbxCI_UF.Text)
-  else SQL_Dados := SQL_Dados
-  + ', CI_UF = NULL';
-
-  if edtCI_Emissao.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', CI_Emissao = ' + QuotedStr(edtCI_Emissao.Text)
-  else SQL_Dados := SQL_Dados
-  + ', CI_Emissao = NULL';
-
-  if edtNaturalidade.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Naturalidade = ' + QuotedStr(edtNaturalidade.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Naturalidade = NULL';
-
-  if cbxNatural_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Natural_UF = ' + QuotedStr(cbxNatural_UF.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', Natural_UF = NULL';
-
-  if edtPis_Pasep.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Pis_Pasep = ' + QuotedStr(edtPis_Pasep.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Pis_Pasep = NULL';
-
-  if edtTE_Num.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', TE_Num = ' + QuotedStr(edtTE_Num.Text)
-  else SQL_Dados := SQL_Dados
-  + ', TE_Num = NULL';
-
-  if edtTE_Zona.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', TE_Zona = ' + QuotedStr(edtTE_Zona.Text)
-  else SQL_Dados := SQL_Dados
-  + ', TE_Zona = NULL';
-
-  if edtTE_Secao.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', TE_Secao = ' + QuotedStr(edtTE_Secao.Text)
-  else SQL_Dados := SQL_Dados
-  + ', TE_Secao = NULL';
-
-  if cbxTE_UF.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', TE_UF = ' + QuotedStr(cbxTE_UF.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', TE_UF = NULL';
-
-  if edtTE_Emissao.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', TE_Emissao = ' + QuotedStr(edtTE_Emissao.Text)
-  else SQL_Dados := SQL_Dados
-  + ', TE_Emissao = NULL';
-
-  if edtPai.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Pai = ' + QuotedStr(edtPai.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Pai = NULL';
-
-  if edtMae.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Mae = ' + QuotedStr(edtMae.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Mae = NULL';
-
-  if lkpEstadoCivil.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', idEstadoCivil = ' + QuotedStr(lkpEstadoCivil.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', idEstadoCivil = NULL';
-
-  if edtConjuge.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Conjuge = ' + QuotedStr(edtConjuge.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Conjuge = NULL';
-
-  if lkpBanco.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', idBanco = ' + QuotedStr(lkpBanco.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', idBanco = NULL';
-
-  if edtAgencia.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Agencia = ' + QuotedStr(edtAgencia.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Agencia = NULL';
-
-  if edtConta.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Conta = ' + QuotedStr(edtConta.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Conta = NULL';
-
-  if edtOAB_Num.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', OAB_Num = ' + QuotedStr(edtOAB_Num.Text)
-  else SQL_Dados := SQL_Dados
-  + ', OAB_Num = NULL';
-
-  if edtOAB_Secao.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', OAB_Secao = ' + QuotedStr(edtOAB_Secao.Text)
-  else SQL_Dados := SQL_Dados
-  + ', OAB_Secao = NULL';
-
-  if cbxGrauInstrucao.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Grau = ' + QuotedStr(cbxGrauInstrucao.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', Grau = NULL';
-
-  if lkpCurso.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Curso = ' + QuotedStr(lkpCurso.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', Curso = NULL';
-
-  if cbxTipoSanguineo.EditingValue <> Null
-  then SQL_Dados := SQL_Dados
-  + ', TipoSanguineo = ' + QuotedStr(cbxTipoSanguineo.EditingValue)
-  else SQL_Dados := SQL_Dados
-  + ', TipoSanguineo = NULL';
-
-  if edtEmail.Text <> Null
-  then SQL_Dados := SQL_Dados
-  + ', Email = ' + QuotedStr(edtEmail.Text)
-  else SQL_Dados := SQL_Dados
-  + ', Email = NULL';
-
-  SQL_Dados := SQL_Dados
-  + ' WHERE idPessoal = ' + QuotedStr(lbl_IDP.Caption)
-  ;
-
-  monitorarAcoesDaSessao
-  ('ufCreateServidor', 'Retorna SQL de atualização de dados do servidor (retornaSQLUpdateDados)', SQL_Dados);
-
-  Result := SQL_Dados;
-
-end;
-
-function TfrmCreateServidor.retornaSQLUpdatePessoal: String;
-var SQL_Pessoal: String;
-begin
-  SQL_Pessoal :=
-      'SET DATEFORMAT dmy'
-      + ' UPDATE tbPessoal'
-      + ' SET '
-      + ' CPF = '  + QuotedStr(edtCPF.Text)
-      + ', Nome = ' + QuotedStr(edtNome.Text);
-
-      if edtDtNascimento.Text <> '' then
-      SQL_Pessoal := SQL_Pessoal + ', dt_Nascimento = '
-      + QuotedStr(edtDtNascimento.Text)
-      else
-      SQL_Pessoal := SQL_Pessoal + ', dt_Nascimento = NULL ';
-
-      SQL_Pessoal := SQL_Pessoal
-      + ' WHERE idPessoal = ' + QuotedStr(lbl_IDP.Caption);
-
-  Result := SQL_Pessoal;
-
-  monitorarAcoesDaSessao('ufCreateServidor', 'Retornar SQL de alterção do pessoal(retornaSQLUpdatePessoal)', Result)
-
-end;
-
-function TfrmCreateServidor.retornaSQLUpdateServidor(pIDP, pIDS: String): String;
+function TfrmCreateServidor.SQLUpdateServidor(pIDP, pIDS: String): String;
 var SQL_Servidor: String;
 begin
 // Ordem dos campos
@@ -2228,17 +2196,24 @@ begin
   else SQL_Servidor := SQL_Servidor
     + ', idCargo = ' + QuotedStr('999999');
 
-  if lkpEspecialidade.EditingValue <> Null
+  {if lkpEspecialidade.EditingValue <> Null
   then SQL_Servidor := SQL_Servidor
     + ', especialidade = ' + QuotedStr(lkpEspecialidade.EditingValue)
   else SQL_Servidor := SQL_Servidor
     + ', especialidade = NULL';
+  }
+
+  if lkpEspecialidade.EditingValue <> Null
+  then SQL_Servidor := SQL_Servidor
+    + ', idEspecialidade = ' + QuotedStr(lkpEspecialidade.EditingValue)
+  else SQL_Servidor := SQL_Servidor
+    + ', idEspecialidade = NULL';
 
   if lkpFuncao.EditingValue <> Null
   then SQL_Servidor := SQL_Servidor
     + ', idFuncao = ' + QuotedStr(lkpFuncao.EditingValue)
   else SQL_Servidor := SQL_Servidor
-    + ', idFuncao  = NULL' ;
+    + ', idFuncao  = ' + QuotedStr('99999'); //NULL' 
 
   if lkpLotacao.EditingValue <> Null
   then SQL_Servidor := SQL_Servidor
@@ -2299,6 +2274,55 @@ begin
     // ver com a Cláudia em que situações são digitados
     // os campos AverbacaoGDF e AverbacaoServPublico
 
+////////////////// Dados do estágio ////////////////////////////////
+
+
+    if edtDt_InicioContrato1_Estagiario.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato1_Estagiario = ' + QuotedStr(Trim(edtDt_InicioContrato1_Estagiario.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato1_Estagiario = NULL';
+
+    if edtDt_TerminoContrato1_Estagiario.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato1_Estagiario = ' + QuotedStr(Trim(edtDt_TerminoContrato1_Estagiario.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato1_Estagiario = NULL';
+
+    if edtInstituicaoEnsino.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', InstituicaoEnsino = ' + QuotedStr(Trim(edtInstituicaoEnsino.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', InstituicaoEnsino = NULL';
+
+    if edtTurnoEstagio.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', TurnoEstagio = ' + QuotedStr(Trim(edtTurnoEstagio.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', TurnoEstagio = NULL';
+
+    if edtSemestre.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Semestre = ' + QuotedStr(Trim(edtSemestre.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', Semestre = NULL';
+
+    if mmoObservacao_Estagio.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Observacao = ' + QuotedStr(Trim(mmoObservacao_Estagio.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', Observacao = NULL';
+
+    if edtSupervisor_Estagiario.Text <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Supervisor_Estagiario = ' + QuotedStr(Trim(edtSupervisor_Estagiario.Text))
+    else SQL_Servidor := SQL_Servidor
+      + ', Supervisor_Estagiario = NULL';
+
+
+////////////////////////////////////////////////////////////////////
+
+
 
   SQL_Servidor := SQL_Servidor
     + ', idUsuario = ' + QuotedStr(DMConexao.Usuario.CPF)
@@ -2306,205 +2330,710 @@ begin
     + ' AND ID = ' + QuotedStr(pIDS);
 
   monitorarAcoesDaSessao
-  ('ufCreateServidor', 'Retorna SQL de atualização do servidor (retornaSQLUpdateServidor)', SQL_Servidor);
+  ('ufCreateServidor', 'Retorna SQL de atualização do servidor (SQLUpdateServidor)', SQL_Servidor);
 
   Result := SQL_Servidor;
-
 end;
 
-procedure TfrmCreateServidor.Button4Click(Sender: TObject);
+function TfrmCreateServidor.retornaNovoIDServidor(
+  idPessoal: String): String;
 begin
-  frmLogs.mmoLog.Lines.Add(retornaSQLUpdatePessoal);
-end;
-
-procedure TfrmCreateServidor.Button5Click(Sender: TObject);
-begin
-  frmLogs.mmoLog.Lines.Add(retornaSQLUpdateServidor(lbl_IDP.Caption, lbl_IDS.Caption));
-end;
-
-function TfrmCreateServidor.servidorEstaAtivo(pCPF: string): TPessoalArray;
-begin
-  SetLength(Result, 4);
-   with dmCadastroServidor.qryExecSQL do
-   begin
-     Connection := DMConexao.conPessoal;
-     SQL.Text :=
-
-      'SELECT pes.idPessoal, ser.ID, ser.idServidor, pes.Nome'
-     + ', car.Descricao AS descricaoCargo , fun.Descricao AS descricaoFuncao'
-     + ' FROM tbPessoal pes'
-     + ' INNER JOIN tbServidor ser ON ser.idPessoal = pes.idPessoal'
-     + ' LEFT JOIN tbCargo car ON car.idCargo = ser.idCargo'
-     + ' LEFT JOIN tbFuncao fun ON fun.idFuncao = ser.idFuncao'
-     + ' WHERE pes.CPF = '  + QuotedStr(pCPF)
-     + ' AND ser.idDesligamento IS NULL';
-
-
-     Open;
-     //ExecSQL;
-     frmLogs.mmoLog.Lines.Add('Verificar se o servidor está ativo no sistema.' + #13);
-     frmLogs.mmoLog.Lines.Add(SQL.Text);
-   end;
-
-   if (dmCadastroServidor.qryExecSQL.RecordCount = 0)
-   then
-     Result[0] := '0'
-   else
-   begin
-     Result[0] := dmCadastroServidor.qryExecSQL.FieldValues['idServidor'];
-     Result[1] := dmCadastroServidor.qryExecSQL.FieldValues['Nome'];
-     Result[2] := dmCadastroServidor.qryExecSQL.FieldValues['descricaoCargo'];
-     Result[3] := dmCadastroServidor.qryExecSQL.FieldValues['descricaoFuncao'];
-
-   end;
-    // dmCadastroServidor.qryExecSQL.Close;
-
-end;
-
-procedure TfrmCreateServidor.edtDtNascimentoExit(Sender: TObject);
-begin
-  if Trim(edtDtNascimento.Text) = '' then
-  begin
-    ShowMessage('Como assim? Você já viu alguém sem data de nascimento? Daqui eu não passarei.');
-    edtDtNascimento.SetFocus;
-  end
-end;
-
-procedure TfrmCreateServidor.GravarLog;
-var
-  F: TextFile;
-  i, wtotLinhas: integer;
-  Caminho, wNomeArquivo, wLinhaAtual, wDataHora: string;
-begin
-  wDataHora := RetornaData(2);
-
-  Caminho  := APP_PATH + '\UserPrefs\GPES\Logs\';
-  wNomeArquivo := Caminho + 'InclusaoServidor'
-  + Trim(edtCPF.Text)
-  + copy(wDataHora,7,4)
-  + copy(wDataHora,4,2)
-  + copy(wDataHora,1,2)
-  + copy(wDataHora,12,2)
-  + copy(wDataHora,15,2)
-  + '.txt';
-
-//  ShowMessage(wNomeArquivo);
-
-  AssignFile(F,(wNomeArquivo));
-  Rewrite(F);
-
-  wTotLinhas := frmLogs.mmoLog.Lines.Count;
-
-  for i:= 0 to wTotLinhas do
-  begin
-    wLinhaAtual := frmLogs.mmoLog.Lines[i];
-    Writeln(F,wLinhaAtual);
-  end;
-
-  CloseFile(F);
-
-end;
-
-function TfrmCreateServidor.retornaNovoIDServidor(idPessoal:String): String;
-begin
-  with dmPessoal.qryExecSQL do
+//  with dmPessoal.qryExecSQL do
+  with qryMaxID do
   begin
     Connection := dmConexao.conPessoal;
     Active := false;
 
+//    SQL.Text := 'SELECT MAX(ID) FROM tbServidor WHERE idPessoal = '
+
     SQL.Text := 'SELECT ID FROM tbServidor WHERE idPessoal = '
-    + QuotedStr(idPessoal);
+    + QuotedStr(idPessoal)
+    + ' ORDER BY ID DESC'
+    ;
+
+//    ShowMessage(SQL.Text);
+
+    monitorarAcoesDaSessao
+    ('ufCreateServidor', 'SQL (retornaNovoIDServidor)', SQL.Text);
 
     Active := true;
 
-    Result := FieldValues['ID'];
+//    ShowMessage(FieldByName('ID').AsString);
+    Result := FieldByName('ID').AsString;
+  end;
 
+
+end;
+
+procedure TfrmCreateServidor.btnSairClick(Sender: TObject);
+begin
+  Close;
+end;
+
+
+procedure TfrmCreateServidor.btnSelLotacaoClick(Sender: TObject);
+var wIdLotacao: String;
+begin
+  if not Assigned(frmSelLotacao) then
+  frmSelLotacao := TfrmSelLotacao.Create(Application);
+  try
+    frmSelLotacao.ShowModal;
+    if frmSelLotacao.qryLotacao.Active then
+    begin
+      wIdLotacao := frmSelLotacao.retornaIdLotacao;
+      if wIdLotacao <> '' then
+      begin
+        lkpLotacao.EditValue  := wIdLotacao;
+        //edtIdAcao.SetFocus;
+      end;
+    end;
+  finally
+    frmSelLotacao.Release;
+    frmSelLotacao := nil;
   end;
 
 end;
 
-function TfrmCreateServidor.retornaSQLInsertServidor(pIDP: String): String;
-var SQL_Servidor: String;
+
+procedure TfrmCreateServidor.btnIncluirTelefoneClick(Sender: TObject);
 begin
-  // Se não for atribuído um valor para o Cargo
-  // o banco atribuirá o valor default (999999)
-  // ídem para os campos idFuncao, idLotacao, Requisitado, etc
+  Application.CreateForm(TfrmUpdateTelefone, frmUpdateTelefone);
+  frmUpdateTelefone.setarOperacao(1);
+  frmUpdateTelefone.configurarOperacao;
+  frmUpdateTelefone.lbl_IDP.Caption := lbl_IDP.Caption;
+  frmUpdateTelefone.setFormQueChamou('frmCreateServidor');
 
-  SQL_Servidor := 'SET DATEFORMAT dmy'
-  + ' INSERT INTO '
-  + ' tbServidor'
-  + '(idPessoal, idServidor)'
-  + ' Values ('
-  + QuotedStr(pIDP)
-  + ', ' + QuotedStr(edtidServidor.Text)
-  + ')';
+  {frmUpdateTelefone.setarDadosServidor
+  (dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   dmPessoal.qryPesquisa.FieldValues['Nome'],
+   dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+  }
 
-  monitorarAcoesDaSessao
-  ('ufCreateServidor', 'SQL da iclusão de servidor (retornaSQLInsertServidor)', SQL_Servidor);
+  frmUpdateTelefone.ShowModal;
+  frmUpdateTelefone.Release;
+  frmUpdateTelefone := nil;
+end;
 
-  Result := SQL_Servidor;
+procedure TfrmCreateServidor.edtNomeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtNaturalidadeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtPaiKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtMaeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtConjugeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtEnderecoKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtBairroKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtCidadeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmCreateServidor.edtCEPKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+function TfrmCreateServidor.exibirTelefones(pidPessoal: String): Integer;
+begin
+  with qryTelefonesServidor do
+  begin
+    Active := false;
+    SQL.Text := 'SELECT'
+      + ' stel.Numero, stel.idTelefone'
+      + ',Tipo = '
+      + ' CASE idTelefone'
+      + ' WHEN ' + QuotedStr('R') + ' THEN ' + QuotedStr('RESIDENCIAL')
+      + ' WHEN ' + QuotedStr('E') + ' THEN ' + QuotedStr('ESCRITORIO')
+      + ' WHEN ' + QuotedStr('C') + ' THEN ' + QuotedStr('CELULAR')
+      + '  ELSE ' + QuotedStr('-')
+      + ' END'
+      + ' FROM tbServ_Telefone as stel'
+      + ' INNER JOIN tbPessoal pes on pes.idPessoal = stel.idPessoal'
+      + ' WHERE 1=1'
+      + ' AND sTel.idPessoal = ' + QuotedStr(lbl_IDP.Caption)
+      + ' ORDER BY sTel.idTelefone desc;';
+
+    Active := true;
+  end
+end;
+
+procedure TfrmCreateServidor.edtDtNascimentoExit(Sender: TObject);
+begin
+  if not btnSair.Focused then
+  //Close
+  begin
+    if StrToInt(Copy(edtDtNascimento.Text,7,4)) < 1754 // o menor ano ano é 1753
+    then
+    begin
+      ShowMessage('O ano de nascimento é inválido');
+      edtDtNascimento.SetFocus;
+    end
+    else lkpCargo.SetFocus;
+  end;
+end;
+
+function TfrmCreateServidor.setarRegistroAGravar: boolean;
+var registro: String;
+begin
+  // Setar variáveis para tabela tbDados
+
+  with RegistroAGravar do
+  begin
+    if edtNome.Text <> Null
+    then nome[0]  := edtNome.Text
+    else nome[0] := '';
+
+    if edtEndereco.Text <> Null
+    then endereco[0] :=  edtEndereco.Text
+    else endereco[0] := '';
+
+    if edtBairro.Text <> Null
+    then Bairro[0] := edtBairro.Text
+    else Bairro[0] := '';
+
+    if edtCidade.Text <> Null
+    then Cidade[0] := edtCidade.Text
+    else Cidade[0] := '';
+
+    if cbxEnderecoUF.EditingValue <> Null
+    then EnderecoUF[0] := cbxEnderecoUF.Text
+    else EnderecoUF[0] := '';
+
+    if edtCEP.Text <> Null
+    then CEP[0] := edtCEP.Text
+    else CEP[0] := '';
+
+    if edtCI_Num.Text <> Null
+    then ciNum[0] := edtCI_Num.Text
+    else ciNum[0] := '';
+
+    if cbxCI_UF.EditingValue <> Null
+    then ciUF[0] := cbxCI_UF.Text
+    else ciUF[0] := '';
+
+    if edtCI_Emissao.Text <> Null
+    then ciEmissao[0] := edtCI_Emissao.Text
+    else ciEmissao[0] := '';
+
+    if edtNaturalidade.Text <> Null
+    then Naturalidade[0] := edtNaturalidade.Text
+    else Naturalidade[0] := '';
+
+    if cbxNatural_UF.EditingValue <> Null
+    then naturalUF[0] := cbxNatural_UF.EditingValue
+    else naturalUF[0] := '';
+
+    if edtPis_Pasep.Text <> Null
+    then pisPasep[0] := edtPis_Pasep.Text
+    else pisPasep[0] := '';
+
+    if edtTE_Num.Text <> Null
+    then teNum[0] := edtTE_Num.Text
+    else teNum[0] := '';
+
+    if edtTE_Zona.Text <> Null
+    then teZona[0] := edtTE_Zona.Text
+    else teZona[0] := '';
+
+    if edtTE_Secao.Text <> Null
+    then teSecao[0] := edtTE_Secao.Text
+    else teSecao[0] := '';
+
+    if cbxTE_UF.EditingValue <> Null
+    then teUF[0] := cbxTE_UF.EditingValue
+    else teUF[0] := '';
+
+    if edtTE_Emissao.Text <> Null
+    then teEmissao[0] := edtTE_Emissao.Text
+    else teEmissao[0] := '';
+
+    if edtPai.Text <> Null
+    then Pai[0] := edtPai.Text
+    else Pai[0] := '';
+
+    if edtMae.Text <> Null
+    then Mae[0] := edtMae.Text
+    else Mae[0] := '';
+
+    if lkpEstadoCivil.EditingValue <> Null
+    then EstadoCivil[0] := lkpEstadoCivil.EditingValue
+    else EstadoCivil[0] := '';
+
+    if edtConjuge.Text <> Null
+    then Conjuge[0] := edtConjuge.Text
+    else Conjuge[0] := '';
+
+    if lkpBanco.EditingValue <> Null
+    then Banco[0] :=lkpBanco.EditingValue
+    else Banco[0] := '';
+
+    if edtAgencia.Text <> Null
+    then Agencia[0] := edtAgencia.Text
+    else Agencia[0] := '';
+
+    if edtConta.Text <> Null
+    then contaBanco[0] := edtConta.Text
+    else contaBanco[0] := '';
+
+    if edtOAB_Num.Text <> Null
+    then oabNum[0] := edtOAB_Num.Text
+    else oabNum[0] := '';
+
+    if edtOAB_Secao.Text <> Null
+    then oabSecao[0] := edtOAB_Secao.Text
+    else oabSecao[0] := '';
+
+    if cbxGrauInstrucao.EditingValue <> Null
+    then GrauInstrucao[0] := cbxGrauInstrucao.EditingValue
+    else GrauInstrucao[0] := '';
+
+    if lkpCurso.EditingValue <> Null
+    then Curso[0] := lkpCurso.EditingValue
+    else Curso[0] := '';
+
+    if cbxTipoSanguineo.EditingValue <> Null
+    then tipoSangue[0] := cbxTipoSanguineo.EditingValue
+    else tipoSangue[0] := '';
+
+    if edtEmail.Text <> Null
+    then Email[0] := edtEmail.Text
+    else Email[0] := '';
+
+
+    // Setar variáves par tbServidor
+
+    if edtidServidor.Text <> Null
+    then idServidor[0] := Trim(edtidServidor.Text)
+    else idServidor[0] := '';
+
+
+    if lkpCargo.EditingValue <> Null
+    then idCargo[0] := Trim(lkpCargo.EditingValue)
+    else idCargo[0] := '';
+
+    if lkpEspecialidade.EditingValue <> Null
+    then especialidade[0] := lkpEspecialidade.EditingValue
+    else especialidade[0] := '';
+
+    if lkpLotacao.EditingValue <> Null
+    then idLotacao[0] := lkpLotacao.EditingValue
+    else idLotacao[0] := '';
+
+    //ShowMessage(lotacao[0]);
+
+    // 8	CF_Num 9	Ramal 10	Sala 11	Classe
+    // 12	Padrao (não se aplica para ramal e sala)
+
+    if edtCF_Num.Text <> Null
+    then cfNum[0] := Trim(edtCF_Num.Text)
+    else cfNum[0] := '';
+
+    if cbxClasse.Text <> Null
+    then Classe[0] := Trim(cbxClasse.Text)
+    else Classe[0] := '';
+
+    if cbxPadrao.Text <> Null
+    then Padrao[0] := Trim(cbxPadrao.Text)
+    else Padrao[0] := '';
+
+
+    if chkRequisitado.Checked
+    then Requisitado[0] := '1'
+    else Requisitado[0] := '0';
+
+
+    if edtOrgaoOrigem.Text <> ''
+    then orgaoOrigem[0] := edtOrgaoOrigem.Text
+    else orgaoOrigem[0] := '';
+
+    if chkAuxTransporte.Checked
+    then AuxTransporte[0] := '1'
+    else AuxTransporte[0] := '0';
+
+
+    if cbxCargaHoraria.Text <> Null
+    then CargaHoraria[0] := Trim(cbxCargaHoraria.Text)
+    else CargaHoraria[0] := '';
+
+///////////// Dados do estágio //////////////////////////////////////
+
+    //1
+    if edtSupervisor_Estagiario.Text <> Null
+    then Supervisor_Estagiario[0] := Trim(edtSupervisor_Estagiario.Text)
+    else Supervisor_Estagiario[0] := '';
+    //2
+    if edtDt_InicioContrato1_Estagiario.Text <> Null
+    then Dt_InicioContrato1_Estagiario[0] := Trim(edtDt_InicioContrato1_Estagiario.Text)
+    else Dt_InicioContrato1_Estagiario[0] := '';
+    //3
+    {if edtDt_InicioContrato2_Estagiario.Text <> Null
+    then Dt_InicioContrato2_Estagiario[0] := Trim(edtDt_InicioContrato2_Estagiario.Text)
+    else Dt_InicioContrato2_Estagiario[0] := '';
+    //4
+    if edtDt_InicioContrato3_Estagiario.Text <> Null
+    then Dt_InicioContrato3_Estagiario[0] := Trim(edtDt_InicioContrato3_Estagiario.Text)
+    else Dt_InicioContrato3_Estagiario[0] := '';
+    //5
+    if edtDt_InicioContrato4_Estagiario.Text <> Null
+    then Dt_InicioContrato4_Estagiario[0] := Trim(edtDt_InicioContrato4_Estagiario.Text)
+    else Dt_InicioContrato4_Estagiario[0] := '';
+    //6
+    }
+    if edtDt_TerminoContrato1_Estagiario.Text <> Null
+    then Dt_TerminoContrato1_Estagiario[0] := Trim(edtDt_TerminoContrato1_Estagiario.Text)
+    else Dt_TerminoContrato1_Estagiario[0] := '';
+    //7
+    {if edtDt_TerminoContrato2_Estagiario.Text <> Null
+    then Dt_TerminoContrato2_Estagiario[0] := Trim(edtDt_TerminoContrato2_Estagiario.Text)
+    else Dt_TerminoContrato2_Estagiario[0] := '';
+    //8
+    if edtDt_TerminoContrato3_Estagiario.Text <> Null
+    then Dt_TerminoContrato3_Estagiario[0] := Trim(edtDt_TerminoContrato3_Estagiario.Text)
+    else Dt_TerminoContrato3_Estagiario[0] := '';
+    //9
+    if edtDt_TerminoContrato4_Estagiario.Text <> Null
+    then Dt_TerminoContrato4_Estagiario[0] := Trim(edtDt_TerminoContrato4_Estagiario.Text)
+    else Dt_TerminoContrato4_Estagiario[0] := '';
+    }
+    //10
+    if edtInstituicaoEnsino.Text <> Null
+    then InstituicaoEnsino[0] := Trim(edtInstituicaoEnsino.Text)
+    else InstituicaoEnsino[0] := '';
+    //11
+    if edtTurnoEstagio.Text <> Null
+    then TurnoEstagio[0] := Trim(edtTurnoEstagio.Text)
+    else TurnoEstagio[0] := '';
+    //12
+    if mmoObservacao_Estagio.Text <> Null
+    then observacao[0] := Trim(mmoObservacao_Estagio.Text)
+    else observacao[0] := '';
+    //13
+    if edtSemestre.Text <> Null
+    then Semestre[0] := Trim(edtSemestre.Text)
+    else Semestre[0] := '';
+
+///////////////////////////////////////////////////
+
+
+  end;
+
+  with RegistroAGravar do
+  begin
+    registro := nome[0] + chr(13) + idCargo[0] + chr(13);
+  end;
+
+  monitorarAcoesDaSessao('ufUpdateServidor', 'setarRegistroNovo', registro);
+
+  Result := true;
 
 end;
 
-function TfrmCreateServidor.retornaSQLInsertDados(pIDP: String): String;
-var SQL_Dados: String;
+procedure TfrmCreateServidor.lkpCargoExit(Sender: TObject);
 begin
+  if Trim(lkpCargo.Text) <> '' then
+  begin
+    if Copy(lkpCargo.EditValue,1,3) = 'EST'
+    then
+      tshEstagio.Enabled := true
+    else
+      tshEstagio.Enabled := false;
+  end
+end;
 
-  SQL_Dados := 'SET DATEFORMAT dmy'
-  + ' INSERT INTO '
-  + ' tbDados'
-  + ' (idPessoal)'
-  + ' Values ('
-  + QuotedStr(pIDP)
-  + ')';
+procedure TfrmCreateServidor.edtOrgaoOrigemExit(Sender: TObject);
+begin
+  if Length(edtOrgaoOrigem.Text) > 1 then
+    chkRequisitado.Checked := true
+  else
+    chkRequisitado.Checked := false;
+end;
 
-  monitorarAcoesDaSessao
-  ('ufCreateServidor', 'Retorna SQL da iclusão de dados dos servidor (retornaSQLInsertDados)', SQL_Dados);
+procedure TfrmCreateServidor.Button1Click(Sender: TObject);
+var NN: String;
+begin
+  NN := InserirZeros
+      (dmCadastroServidor.GerarID('tbCamposAltServ','idAlteracao'),12);
 
-  Result := SQL_Dados;
+  //ShowMessage(NN);
 
 end;
 
+procedure TfrmCreateServidor.cxButton1Click(Sender: TObject);
+var NN: String;
+begin
+  NN := InserirZeros
+      (dmCadastroServidor.GerarID('tbCamposAltServ','idAlteracao'),12);
 
-function TfrmCreateServidor.retornaSQLInsertCamposAltServ(
-  pIDP: String): String;
+  //ShowMessage(NN);
+end;
+
+function TfrmCreateServidor.SQLUpdateCamposAltServ(idAlteracao,
+  idServidorAnt, idServidorNov, dtExercicioCargoAnt, dtExerciciocargoNov,
+  dtDesligCargoAnt, dtDesligCargoNov, dtExercicioFuncaoAnt,
+  dtExercicioFuncaoNov, dtDesligFuncaoAnt, dtDesligFuncaoNov,
+  dtFalecimentoAnt, dtFalecimentoNov, idCargo, idFuncao, idLotacaoAnt,
+  idLotacaoNov, idUsuario, dtAlteracao: String): String;
 var SQL_CAS: String;
 begin
 
   SQL_CAS := 'SET DATEFORMAT dmy'
-  + ' INSERT INTO '
-  + ' tbcamposAltServ'
-  + ' (idPessoal)'
-  + ' Values ('
-  + QuotedStr(pIDP)
-  + ')';
+  + ' UPDATE '
+  + ' tbCamposAltServ'
+  + ' SET';
 
-  Result := SQL_CAS;
+  //2
+  {if idServidorAnt <> '' then
+  wSQL := wSQL + QuotedStr(idServidorAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
 
-end;
+  if idServidorAnt <> '' then
+  SQL_CAS := SQL_CAS + ' idServidorAnt = '
+  + QuotedStr(idServidorAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idServidorAnt = NULL, ';
 
-function TfrmCreateServidor.retornaSQLInsertNotificaNupro(
-  pIDP, Evento: String): String;
-var vSQL : String;
-begin
 
-  vSQL :=
-      'SET DATEFORMAT dmy'
-      + ' INSERT INTO '
-      + ' tbNotificaNupro'
-      + '(dtEvento, idPessoal, idLotacao, Evento, idOperador)'
-      + ' VALUES ('
-      + QuotedStr(RetornaData(2)) + ', '
-      + QuotedStr(pIDP)   + ', '
-      + QuotedStr(lkpLotacao.EditValue)   + ', '
-      + QuotedStr(Evento)            + ', '
-      + QuotedStr(DMConexao.Usuario.CPF) + ')';
+  //3
+  //wSQL := wSQL +  QuotedStr(idServidorNov) + ', ';
 
+  if idServidorNov <> '' then
+  SQL_CAS := SQL_CAS + ' idServidorNov = '
+  + QuotedStr(idServidorNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idServidorNov = NULL, ';
+
+  //4
+  //+ QuotedStr(dtExercicioCargoAnt)   + ', '
+  {if dtExercicioCargoAnt <> '' then
+  wSQL := wSQL + QuotedStr(dtExercicioCargoAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtExercicioCargoAnt <> '' then
+  SQL_CAS := SQL_CAS + ' dtExercicioCargoAnt = '
+  + QuotedStr(dtExercicioCargoAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtExercicioCargoAnt = NULL, ';
+
+  //5
+  //+ QuotedStr(dtExerciciocargoNov)   + ', '
+  {if dtExercicioCargoNov <> '' then
+  wSQL := wSQL + QuotedStr(dtExercicioCargoNov) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtExerciciocargoNov <> '' then
+  SQL_CAS := SQL_CAS + ' dtExerciciocargoNov = '
+  + QuotedStr(dtExerciciocargoNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtExerciciocargoNov = NULL, ';
+
+  //6
+  //+ QuotedStr(dtDesligCargoAnt)      + ', '
+  {if dtDesligCargoAnt <> '' then
+  wSQL := wSQL + QuotedStr(dtDesligCargoAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtDesligCargoAnt <> '' then
+  SQL_CAS := SQL_CAS + ' dtDesligCargoAnt = '
+  + QuotedStr(dtDesligCargoAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtDesligCargoAnt = NULL, ';
+
+  //7
+  //wSQL := wSQL + QuotedStr(dtDesligCargoNov)  + ', '
+  {if dtDesligCargoNov <> '' then
+  wSQL := wSQL + QuotedStr(dtDesligCargoNov) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtDesligCargoNov <> '' then
+  SQL_CAS := SQL_CAS + ' dtDesligCargoNov = '
+  + QuotedStr(dtDesligCargoNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtDesligCargoNov = NULL, ';
+
+  //8
+  //+ QuotedStr(dtExercicioFuncaoAnt)  + ', '
+  {if dtExercicioFuncaoAnt <> '' then
+  wSQL := wSQL + QuotedStr(dtExercicioFuncaoAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtExercicioFuncaoAnt <> '' then
+  SQL_CAS := SQL_CAS + ' dtExercicioFuncaoAnt = '
+  + QuotedStr(dtExercicioFuncaoAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtExercicioFuncaoAnt = NULL, ';
+
+  //9
+  //+ QuotedStr(dtExercicioFuncaoNov)  + ', '
+  {if dtExercicioFuncaoNov <> '' then
+  wSQL := wSQL + QuotedStr(dtExercicioFuncaoNov) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtExercicioFuncaoNov <> '' then
+  SQL_CAS := SQL_CAS + ' dtExercicioFuncaoNov = '
+  + QuotedStr(dtExercicioFuncaoNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtExercicioFuncaoNov = NULL, ';
+
+  //10
+  //+ QuotedStr(dtDesligFuncaoAnt)     + ', '
+  {if dtDesligFuncaoAnt <> '' then
+  wSQL := wSQL + QuotedStr(dtDesligFuncaoAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtDesligFuncaoAnt <> '' then
+  SQL_CAS := SQL_CAS + ' dtDesligFuncaoAnt = '
+  + QuotedStr(dtDesligFuncaoAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtDesligFuncaoAnt = NULL,';
+
+
+  //11
+  //+ QuotedStr(dtDesligFuncaoNov)     + ', '
+  {if dtDesligFuncaoNov <> '' then
+  wSQL := wSQL + QuotedStr(dtDesligFuncaoNov) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtDesligFuncaoNov <> '' then
+  SQL_CAS := SQL_CAS + ' dtDesligFuncaoNov = '
+  + QuotedStr(dtDesligFuncaoNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtDesligFuncaoNov = NULL,';
+
+
+  //12
+  //+ QuotedStr(dtFalecimentoAnt)      + ', '
+  {if dtFalecimentoAnt <> '' then
+  wSQL := wSQL + QuotedStr(dtFalecimentoAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtFalecimentoAnt <> '' then
+  SQL_CAS := SQL_CAS + ' dtFalecimentoAnt = '
+  + QuotedStr(dtFalecimentoAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtFalecimentoAnt = NULL,';
+
+  //13
+  //+ QuotedStr(dtFalecimentoNov)      + ', '
+  {if dtFalecimentoNov <> '' then
+  wSQL := wSQL + QuotedStr(dtFalecimentoNov) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if dtFalecimentoNov <> '' then
+  SQL_CAS := SQL_CAS + ' dtFalecimentoNov = '
+  + QuotedStr(dtFalecimentoNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtFalecimentoNov = NULL,';
+
+  //14
+  //+ QuotedStr(idCargo)               + ', '
+  {if idCargo <> '' then
+  wSQL := wSQL + QuotedStr(idCargo) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if idCargo <> '' then
+  SQL_CAS := SQL_CAS + ' idCargo = '
+  + QuotedStr(idCargo) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idCargo = NULL,';
+
+  //15
+  //+ QuotedStr(idFuncao)              + ', '
+  {if idFuncao <> '' then
+  wSQL := wSQL + QuotedStr(idFuncao) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if idFuncao <> '' then
+  SQL_CAS := SQL_CAS + ' idFuncao = '
+  + QuotedStr(idFuncao) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idFuncao = NULL,';
+
+  //16
+  //+ QuotedStr(idLotacaoAnt)          + ', '
+  {if idLotacaoAnt <> '' then
+  wSQL := wSQL + QuotedStr(idLotacaoAnt) + ','
+  else wSQL := wSQL + ' NULL' + ',';}
+
+  if idLotacaoAnt <> '' then
+  SQL_CAS := SQL_CAS + ' idLotacaoAnt = '
+  + QuotedStr(idLotacaoAnt) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idLotacaoAnt = NULL,';
+
+  //17
+  //+ QuotedStr(idLotacaoNov)          + ', '
+  {if idLotacaoNov <> '' then
+  wSQL := wSQL + QuotedStr(idLotacaoNov) + ','
+  else wSQL := wSQL + ' NULL' + ','}
+
+  if idLotacaoNov <> '' then
+  SQL_CAS := SQL_CAS + ' idLotacaoNov = '
+  + QuotedStr(idLotacaoNov) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idLotacaoNov = NULL,';
+
+  //18
+  //+ QuotedStr(idUsuario)             + ', '
+
+  if idUsuario <> '' then
+  SQL_CAS := SQL_CAS + ' idUsuario = '
+  + QuotedStr(idUsuario) + ', '
+  else
+  SQL_CAS := SQL_CAS + ' idUsuario = NULL,';
+
+  //19
+  //+ QuotedStr(dtAlteracao)           + ')';
+
+  if dtAlteracao <> '' then
+  SQL_CAS := SQL_CAS + ' dtAlteracao = '
+  + QuotedStr(dtAlteracao)
+  //+ ', '
+  else
+  SQL_CAS := SQL_CAS + ' dtAlteracao = NULL';
+  //+ ', ';
+
+  SQL_CAS := SQL_CAS + ' WHERE idAlteracao = '
+  + QuotedStr(idAlteracao);
 
   monitorarAcoesDaSessao
-  ('ufCreateServidor', 'Retorn SQL de registro no NotificaNupro (retornaSQLInsertNotificaNupro)', vSQL);
+  ('ufCreateServidor', 'Retorna SQL de atualização de datas (SQLUpdateDatas)', SQL_CAS);
 
-  Result := vSQL;
+  Result := SQL_CAS;
 end;
 
 initialization

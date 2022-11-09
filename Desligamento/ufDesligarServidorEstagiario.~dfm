@@ -1,7 +1,7 @@
 object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
-  Left = 192
-  Top = 117
-  Width = 1044
+  Left = 294
+  Top = 146
+  Width = 1001
   Height = 540
   Caption = 'Desligamento de servidores e estagi'#225'rios'
   Color = clBtnFace
@@ -13,12 +13,13 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
   OldCreateOrder = False
   OnActivate = FormActivate
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
-  object cxGrid1: TcxGrid
+  object grdPesquisa: TcxGrid
     Left = 0
     Top = 164
-    Width = 1036
+    Width = 993
     Height = 345
     Align = alClient
     Font.Charset = ANSI_CHARSET
@@ -28,7 +29,7 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
     Font.Style = []
     ParentFont = False
     TabOrder = 0
-    object cxGrid1DBTableView1: TcxGridDBTableView
+    object tbvPesquisa: TcxGridDBTableView
       NavigatorButtons.ConfirmDelete = False
       DataController.DataSource = dsPesquisa
       DataController.Summary.DefaultGroupSummaryItems = <>
@@ -39,30 +40,47 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
       OptionsData.Inserting = False
       OptionsView.GroupByBox = False
       Styles.ContentEven = frmPrincipal.cxStyle1
-      object cxGrid1DBTableView1Column1: TcxGridDBColumn
+      Styles.OnGetContentStyle = tbvPesquisaStylesGetContentStyle
+      object tvcNome: TcxGridDBColumn
         DataBinding.FieldName = 'Nome'
+        Width = 350
       end
-      object cxGrid1DBTableView1Column3: TcxGridDBColumn
+      object tvcMatricula: TcxGridDBColumn
         Caption = 'Matr'#237'cula'
         DataBinding.FieldName = 'idServidor'
       end
-      object cxGrid1DBTableView1Column4: TcxGridDBColumn
+      object tvcCargo: TcxGridDBColumn
         Caption = 'Cargo'
         DataBinding.FieldName = 'descricaoCargo'
+        Width = 250
       end
-      object cxGrid1DBTableView1Column5: TcxGridDBColumn
+      object tvcDtDesligamentoCargo: TcxGridDBColumn
+        Caption = 'Data de desligamento'
+        DataBinding.FieldName = 'Dt_Deslig_Cargo'
+        Width = 150
+      end
+      object tvcFormaDesligamento: TcxGridDBColumn
+        Caption = 'Forma de desligamento'
+        DataBinding.FieldName = 'desligamento'
+        Width = 250
+      end
+      object tvcLotacao: TcxGridDBColumn
         Caption = 'Lota'#231#227'o'
-        DataBinding.FieldName = 'descricaoLotacao'
+        DataBinding.FieldName = 'SiglaLotacao'
+        Width = 250
+      end
+      object tvcStatus: TcxGridDBColumn
+        DataBinding.FieldName = 'Status'
       end
     end
-    object cxGrid1Level1: TcxGridLevel
-      GridView = cxGrid1DBTableView1
+    object lvlPesquisa: TcxGridLevel
+      GridView = tbvPesquisa
     end
   end
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1036
+    Width = 993
     Height = 40
     Align = alTop
     BevelOuter = bvNone
@@ -75,13 +93,13 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
     TabOrder = 1
     object Label2: TLabel
       Left = 416
-      Top = 8
-      Width = 205
-      Height = 25
-      Caption = 'frmReadEstagiarios'
+      Top = 16
+      Width = 172
+      Height = 13
+      Caption = 'frmDesligarServidorEstagiario'
       Font.Charset = ANSI_CHARSET
       Font.Color = clGray
-      Font.Height = -21
+      Font.Height = -11
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
@@ -132,13 +150,14 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
         006F00000094000000B8000000DC000000E70000000000000000000000000000
         000000000000}
     end
-    object btnEditarMatricula: TcxButton
+    object btnDesligar: TcxButton
       Left = 2
       Top = 5
       Width = 110
       Height = 35
-      Caption = '&Editar'
+      Caption = '&Desligar'
       TabOrder = 0
+      OnClick = btnDesligarClick
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
         20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -180,7 +199,7 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
   object pnlNome: TPanel
     Left = 0
     Top = 99
-    Width = 1036
+    Width = 993
     Height = 65
     Align = alTop
     BevelOuter = bvNone
@@ -199,7 +218,7 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
       DataField = 'Nome'
       DataSource = dsPesquisa
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
+      Font.Color = clGray
       Font.Height = -27
       Font.Name = 'Verdana'
       Font.Style = []
@@ -208,7 +227,7 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
     object lblNumeroRegistros: TLabel
       Left = 0
       Top = 49
-      Width = 1036
+      Width = 993
       Height = 16
       Align = alBottom
       Alignment = taCenter
@@ -224,7 +243,7 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
   object Panel1: TPanel
     Left = 0
     Top = 40
-    Width = 1036
+    Width = 993
     Height = 59
     Align = alTop
     TabOrder = 3
@@ -241,13 +260,6 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
       Font.Style = []
       ParentFont = False
     end
-    object lblQtdServidores: TLabel
-      Left = 632
-      Top = 19
-      Width = 95
-      Height = 13
-      Caption = 'lblQtdServidores'
-    end
     object edtPesquisa: TcxTextEdit
       Left = 183
       Top = 17
@@ -259,6 +271,8 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 0
+      OnKeyDown = edtPesquisaKeyDown
+      OnKeyPress = edtPesquisaKeyPress
       Width = 355
     end
   end
@@ -272,5 +286,25 @@ object frmDesligarServidorEstagiario: TfrmDesligarServidorEstagiario
     DataSet = qryPesquisa
     Left = 112
     Top = 248
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 616
+    Top = 56
+  end
+  object StyleRepository: TcxStyleRepository
+    Left = 584
+    Top = 56
+    PixelsPerInch = 96
+    object stlAtivo: TcxStyle
+    end
+    object stlRequisitado: TcxStyle
+    end
+    object stlDesligadoCargo: TcxStyle
+    end
+    object stlDesligadoFuncao: TcxStyle
+    end
+    object stlDesligado: TcxStyle
+    end
   end
 end

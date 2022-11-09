@@ -14,7 +14,6 @@ type
     cxPageControl1: TcxPageControl;
     tshCampos: TcxTabSheet;
     cxGroupBox1: TcxGroupBox;
-    lblNumeroRegistros: TLabel;
     chkNome: TcxCheckBox;
     chkMatricula: TcxCheckBox;
     chkLotacao: TcxCheckBox;
@@ -88,7 +87,8 @@ var
 implementation
 
 uses uDMPessoal, ufSelLotacao, ufSelCargo, ufSelFuncao, uDmExibirTabelas,
-  uPesFuncoes, ufPrincipal, uAmbiente, PRG_utils, uDMConexao, ufLogs;
+  uPesFuncoes, ufPrincipal, uAmbiente, PRG_utils, uDMConexao, ufLogs,
+  ufReadServidor;
 
 {$R *.dfm}
 
@@ -252,7 +252,7 @@ end;
 
 procedure TfrmCriterioPesquisaPessoal.btnPesquisarClick(Sender: TObject);
 var
-  condicao: string;
+  condicao, lblResultado: string;
   Resultado: Integer;
 begin
 
@@ -269,9 +269,15 @@ begin
 
   Resultado := dmPessoal.pesquisarPessoal(condicao);
 
-  lblNumeroRegistros.Caption := 'Nº de registros encontrados: ' +
-  //IntToStr(dmPessoal.qryPesquisa.RecordCount);
-  IntToStr(Resultado);
+  lblResultado := 'Resultado da pesquisa: ' + IntToStr(Resultado);
+
+  if Resultado = 1 then
+    lblResultado := lblResultado + ' registro encontrado'
+  else
+    lblResultado := lblResultado + ' registros encontrados';
+
+  frmReadServidor.grdResultado.Caption := lblResultado;
+
 
   if Resultado > 0 then
   begin

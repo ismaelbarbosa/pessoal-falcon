@@ -118,7 +118,7 @@ object frmUpdateExercicioExterno: TfrmUpdateExercicioExterno
       ParentFont = False
     end
     object btnSair: TcxButton
-      Left = 144
+      Left = 127
       Top = 5
       Width = 110
       Height = 35
@@ -211,7 +211,7 @@ object frmUpdateExercicioExterno: TfrmUpdateExercicioExterno
   object lkpOrgaoEE: TcxLookupComboBox
     Left = 93
     Top = 54
-    Properties.DropDownRows = 20
+    Properties.DropDownRows = 10
     Properties.DropDownWidth = 700
     Properties.KeyFieldNames = 'idOrgaoExercicioExterno'
     Properties.ListColumns = <

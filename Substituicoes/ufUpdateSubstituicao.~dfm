@@ -1,7 +1,7 @@
 object frmUpdateSubstituicao: TfrmUpdateSubstituicao
-  Left = 281
-  Top = 118
-  Width = 1078
+  Left = 351
+  Top = 148
+  Width = 1044
   Height = 370
   Caption = 'Substitui'#231#245'es de procuradores'
   Color = clBtnFace
@@ -84,7 +84,7 @@ object frmUpdateSubstituicao: TfrmUpdateSubstituicao
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1070
+    Width = 1036
     Height = 40
     Align = alTop
     BevelOuter = bvNone
@@ -149,7 +149,7 @@ object frmUpdateSubstituicao: TfrmUpdateSubstituicao
       ParentFont = False
     end
     object btnSair: TcxButton
-      Left = 145
+      Left = 132
       Top = 5
       Width = 110
       Height = 35
@@ -302,7 +302,7 @@ object frmUpdateSubstituicao: TfrmUpdateSubstituicao
   object pnlNome: TPanel
     Left = 0
     Top = 40
-    Width = 1070
+    Width = 1036
     Height = 71
     Align = alTop
     BevelOuter = bvNone

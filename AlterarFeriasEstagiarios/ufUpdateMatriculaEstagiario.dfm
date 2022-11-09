@@ -1,8 +1,8 @@
 object frmUpdateMatriculaEstagiario: TfrmUpdateMatriculaEstagiario
   Left = 340
-  Top = 222
+  Top = 165
   Width = 929
-  Height = 236
+  Height = 219
   Caption = 'Alterar matr'#237'cula do estagi'#225'rio'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -16,60 +16,6 @@ object frmUpdateMatriculaEstagiario: TfrmUpdateMatriculaEstagiario
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
-  object txtNome: TDBText
-    Left = 19
-    Top = 60
-    Width = 865
-    Height = 31
-    DataField = 'Nome'
-    DataSource = frmReadEstagiarios.dsPesquisa
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clNavy
-    Font.Height = -27
-    Font.Name = 'Verdana'
-    Font.Style = []
-    ParentFont = False
-  end
-  object Label19: TLabel
-    Left = 751
-    Top = 139
-    Width = 21
-    Height = 13
-    Caption = 'IDP'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clGray
-    Font.Height = -11
-    Font.Name = 'Verdana'
-    Font.Style = []
-    ParentFont = False
-  end
-  object lbl_IDS: TLabel
-    Left = 852
-    Top = 139
-    Width = 7
-    Height = 13
-    Caption = '0'
-  end
-  object Label34: TLabel
-    Left = 823
-    Top = 139
-    Width = 22
-    Height = 13
-    Caption = 'IDS'
-    Font.Charset = ANSI_CHARSET
-    Font.Color = clGray
-    Font.Height = -11
-    Font.Name = 'Verdana'
-    Font.Style = []
-    ParentFont = False
-  end
-  object lbl_IDP: TLabel
-    Left = 780
-    Top = 139
-    Width = 7
-    Height = 13
-    Caption = '0'
-  end
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
@@ -198,26 +144,9 @@ object frmUpdateMatriculaEstagiario: TfrmUpdateMatriculaEstagiario
       OnClick = Button1Click
     end
   end
-  object edtidServidor: TcxTextEdit
-    Left = 23
-    Top = 129
-    ParentFont = False
-    Properties.OnChange = edtidServidorPropertiesChange
-    Style.Font.Charset = ANSI_CHARSET
-    Style.Font.Color = clWindowText
-    Style.Font.Height = -16
-    Style.Font.Name = 'Verdana'
-    Style.Font.Style = []
-    Style.IsFontAssigned = True
-    TabOrder = 1
-    Text = 'edtidServidor'
-    OnExit = edtIdServidorExit
-    OnKeyDown = edtidServidorKeyDown
-    Width = 170
-  end
   object StatusBar: TStatusBar
     Left = 0
-    Top = 186
+    Top = 169
     Width = 921
     Height = 19
     Panels = <
@@ -228,5 +157,91 @@ object frmUpdateMatriculaEstagiario: TfrmUpdateMatriculaEstagiario
         Width = 50
       end>
     Visible = False
+  end
+  object pnlNome: TPanel
+    Left = 0
+    Top = 40
+    Width = 921
+    Height = 105
+    Align = alTop
+    BevelOuter = bvNone
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -11
+    Font.Name = 'Verdana'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    object txtNome: TDBText
+      Left = 19
+      Top = 21
+      Width = 865
+      Height = 31
+      DataField = 'Nome'
+      DataSource = frmReadEstagiarios.dsPesquisa
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -27
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label19: TLabel
+      Left = 751
+      Top = 52
+      Width = 21
+      Height = 13
+      Caption = 'IDP'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lbl_IDS: TLabel
+      Left = 852
+      Top = 52
+      Width = 7
+      Height = 13
+      Caption = '0'
+    end
+    object Label34: TLabel
+      Left = 823
+      Top = 52
+      Width = 22
+      Height = 13
+      Caption = 'IDS'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lbl_IDP: TLabel
+      Left = 780
+      Top = 52
+      Width = 7
+      Height = 13
+      Caption = '0'
+    end
+    object edtidServidor: TcxTextEdit
+      Left = 15
+      Top = 63
+      ParentFont = False
+      Properties.OnChange = edtidServidorPropertiesChange
+      Style.Font.Charset = ANSI_CHARSET
+      Style.Font.Color = clWindowText
+      Style.Font.Height = -16
+      Style.Font.Name = 'Verdana'
+      Style.Font.Style = []
+      Style.IsFontAssigned = True
+      TabOrder = 0
+      Text = 'edtidServidor'
+      OnExit = edtIdServidorExit
+      OnKeyDown = edtidServidorKeyDown
+      Width = 170
+    end
   end
 end

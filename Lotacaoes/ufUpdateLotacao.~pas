@@ -33,11 +33,13 @@ type
     Label14: TLabel;
     txtLotacaoAnterior: TDBText;
     txtIdLotacao: TDBText;
+    btnSelLotacao: TcxButton;
     procedure btnSairClick(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
     procedure edtDtLotacaoExit(Sender: TObject);
+    procedure btnSelLotacaoClick(Sender: TObject);
   private
     OPERACAO: Integer;
   public
@@ -68,7 +70,8 @@ var
 implementation
 
 uses uDMConexao, uDmCadastroServidor, ufUpdateServidor, uPesFuncoes,
-  uDmExibirTabelas, Math, uDMPessoal, ufCriterioPesquisaPessoal;
+  uDmExibirTabelas, Math, uDMPessoal, ufCriterioPesquisaPessoal,
+  ufSelLotacao, ufCreateServidor;
 
 {$R *.dfm}
 
@@ -191,7 +194,7 @@ begin
   configurarOperacao;
 
   if not retornarLotacao
-  then ShowMessage('A pesquisa falhou para o campo de função');
+  then ShowMessage('A pesquisa falhou para o campo de lotação');
 
 end;
 
@@ -245,7 +248,7 @@ begin
 end;
 
 procedure TfrmUpdateLotacao.btnGravarClick(Sender: TObject);
-var condicao: String;
+var condicao, idAlteracaoNN, idLotacaoAnt: String;
 resultado : integer;
 begin
 
@@ -260,6 +263,7 @@ begin
         ShowMessage('Informe a data de lotação')
         else
         begin //4
+          idLotacaoAnt := txtIdLotacao.Caption;
           if gravarLotacao(
           frmUpdateServidor.lbl_IDP.Caption,
           frmUpdateServidor.txtMatricula.Caption,  // trocar por ID (tbServidor)
@@ -282,6 +286,8 @@ begin
               RetornaData(2),
               'tbServidor, tbHist_Lotacao',
               frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.txtMatricula.Caption,
               'TODOS',
               'Alteração da lotação: '
               + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -296,15 +302,25 @@ begin
               (frmUpdateServidor.lbl_IDP.Caption,
                frmUpdateServidor.txtMatricula.Caption, 100, 0);
 
+              // Exibir os dados do servidor após a atualização
               resultado :=
               dmPessoal.pesquisarPessoal
               (' AND pes.idPessoal = ' + QuotedStr(frmUpdateServidor.lbl_IDP.Caption)
               + ' AND serv.idServidor = ' + QuotedStr(frmUpdateServidor.txtMatricula.Caption));
 
-              ShowMessage(IntToStr(resultado));
-
               //frmUpdateLotacao.Close;
-            end
+
+            end; //8
+
+            // Criar um registro na tabela tbCamposAltServ
+
+            idAlteracaoNN := InserirZeros(dmCadastroServidor.GerarID('tbCamposAltServ','idAlteracao'),12);
+
+            dmCadastroServidor.registrarNotificaNupro
+            (frmCreateServidor.SQLInsertNotificaNupro(idAlteracaoNN, '', frmUpdateServidor.txtMatricula.Caption,
+            '', '', '', '', '', '', '', '', '', '', '', '',
+            Trim(idLotacaoAnt), Trim(lkpLotacao.EditValue), DMConexao.Usuario.CPF, RetornaData(2)));
+            
           end
         end //4
       end; //3
@@ -338,6 +354,28 @@ procedure TfrmUpdateLotacao.edtDtLotacaoExit(Sender: TObject);
 begin
   //ShowMessage(edtDtLotacao.Text);
   //ShowMessage(DateToStr(diaAnterior(StrToDate(edtDtLotacao.Text))));
+end;
+
+procedure TfrmUpdateLotacao.btnSelLotacaoClick(Sender: TObject);
+var wIdLotacao: String;
+begin
+  if not Assigned(frmSelLotacao) then
+  frmSelLotacao := TfrmSelLotacao.Create(Application);
+  try
+    frmSelLotacao.ShowModal;
+    if frmSelLotacao.qryLotacao.Active then
+    begin
+      wIdLotacao := frmSelLotacao.retornaIdLotacao;
+      if wIdLotacao <> '' then
+      begin
+        lkpLotacao.EditValue  := wIdLotacao;
+        //edtIdAcao.SetFocus;
+      end;
+    end;
+  finally
+    frmSelLotacao.Release;
+    frmSelLotacao := nil;
+  end;  
 end;
 
 end.

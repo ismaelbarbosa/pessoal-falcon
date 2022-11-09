@@ -1,0 +1,211 @@
+unit uRptRel_Conf_Ferias_Mensais;
+
+interface
+
+uses Windows, SysUtils, Messages, Classes, Graphics, Controls,
+  StdCtrls, ExtCtrls, Forms, QuickRpt, QRCtrls;
+
+type
+  TrptRel_Conf_Ferias_Mensais = class(TQuickRep)
+    bndDetalhe: TQRBand;
+    grpCabecalho: TQRGroup;
+    lblTipo: TQRLabel;
+    lblParcela: TQRLabel;
+    lblPeriodo: TQRLabel;
+    lbldtTermino: TQRLabel;
+    lbldtInicio: TQRLabel;
+    lblAdiantamento: TQRLabel;
+    lblExercicio: TQRLabel;
+    lblCargo: TQRLabel;
+    lblNome: TQRLabel;
+    lblMatricula: TQRLabel;
+    lblLotacao: TQRLabel;
+    txtLotacao: TQRDBText;
+    txtNome: TQRDBText;
+    txtMatricula: TQRDBText;
+    txtCargo: TQRDBText;
+    txtExercicio: TQRDBText;
+    txtAdiantamento: TQRDBText;
+    txtDt_Inicio: TQRDBText;
+    txtDt_Termino: TQRDBText;
+    txtPeriodo: TQRDBText;
+    txtParcela: TQRDBText;
+    txtTipo: TQRDBText;
+    lblProcuradoria: TQRLabel;
+    lblServPessoal: TQRLabel;
+    lblConfirmacao: TQRLabel;
+    lblRef: TQRLabel;
+    lblReferencia: TQRLabel;
+    txtSigla: TQRDBText;
+    QRShape1: TQRShape;
+    QRShape2: TQRShape;
+    QRShape3: TQRShape;
+    QRShape14: TQRShape;
+    QRShape15: TQRShape;
+    bndCabecalhoPag: TQRBand;
+    lblMatriculaH: TQRLabel;
+    lblNomeH: TQRLabel;
+    lblCargoH: TQRLabel;
+    lblExercicioH: TQRLabel;
+    lblAdiantamentoH: TQRLabel;
+    lblDtInicioH: TQRLabel;
+    lbldtTerminoH: TQRLabel;
+    lblPeriodoH: TQRLabel;
+    lblParcelaH: TQRLabel;
+    lblTipoH: TQRLabel;
+    PageFooterBand1: TQRBand;
+    QRSysData1: TQRSysData;
+    QRSysData2: TQRSysData;
+    procedure bndDetalheBeforePrint(Sender: TQRCustomBand;
+      var PrintBand: Boolean);
+    procedure QuickRepBeforePrint(Sender: TCustomQuickRep;
+      var PrintReport: Boolean);
+  private
+    cinza: boolean;
+  public
+
+  end;
+
+var
+  rptRel_Conf_Ferias_Mensais: TrptRel_Conf_Ferias_Mensais;
+
+implementation
+
+uses udmRelatorios, ufRptFeriasMensais;
+
+{$R *.DFM}
+
+procedure TrptRel_Conf_Ferias_Mensais.bndDetalheBeforePrint(
+  Sender: TQRCustomBand; var PrintBand: Boolean);
+begin
+{
+if frmRptFeriasMensais.chckbxSombreado.Checked then//if1
+begin
+  Cinza := not Cinza;
+  if Cinza then
+     begin
+     bndDetalhe.Color := $E6E6E6;
+     txtMatricula.Color := $E6E6E6;
+     txtNome.Color := $E6E6E6;
+     txtExercicio.Color := $E6E6E6;
+     txtAdiantamento.Color := $E6E6E6;
+     txtDt_Inicio.Color := $E6E6E6;
+     txtDt_Termino.Color := $E6E6E6;
+     txtPeriodo.Color := $E6E6E6;
+     txtParcela.Color := $E6E6E6;
+     txtTipo.Color := $E6E6E6;
+     end
+  else
+     begin
+     bndDetalhe.Color := clWhite;
+     txtMatricula.Color := clWhite;
+     txtNome.Color := clWhite;
+     txtExercicio.Color := clWhite;
+     txtAdiantamento.Color := clWhite;
+     txtDt_Inicio.Color := clWhite;
+     txtDt_Termino.Color := clWhite;
+     txtPeriodo.Color := clWhite;
+     txtParcela.Color := clWhite;
+     txtTipo.Color := clWhite;
+     end;
+end;//if1
+}
+end;
+
+procedure TrptRel_Conf_Ferias_Mensais.QuickRepBeforePrint(
+  Sender: TCustomQuickRep; var PrintReport: Boolean);
+var
+i: integer;
+begin
+
+case frmRptFeriasMensais.rdgrpTipo.ItemIndex of
+  0:
+  begin
+//  qrptRel_Conf_Ferias_Mensais.Page.LeftMargin :=
+//  qrptRel_Conf_Ferias_Mensais.Page.LeftMargin + 10;
+//  QRShape16.Pen.Color := clWhite;
+  QRShape15.Width := 920+10;
+  QRShape3.Width := 920+10;
+
+
+  txtSigla.AutoSize := false;
+  txtLotacao.AutoSize := false;
+
+  grpCabecalho.Expression := '';
+//  lblAssinatura.Caption := '';
+  lblConfirmacao.Caption := 'RELAÇÃO DE FÉRIAS MENSAL';
+  QRShape1.Width := 0;
+  QRShape2.Width := 0;
+  lblLotacao.Caption := '';
+  txtSigla.Width := 0;
+  txtLotacao.Width := 0;
+
+//  lblNome.Left := lblNome.Left + 30;
+//  lblNomeH.Left := lblNomeH.Left + 30;
+//  txtNome.Left := txtNome.Left + 30;
+{  lblCargo.Left := lblCargo.Left + 10;
+  lblCargoH.Left := lblCargoH.Left + 10;
+  txtCargo.Left := txtCargo.Left + 10;
+  lblExercicio.Left := lblExercicio.Left + 40;
+  lblExercicioH.Left := lblExercicioH.Left + 40;
+  txtExercicio.Left := txtExercicio.Left + 40;
+  lblAdiantamento.Left := lblAdiantamento.Left + 40;
+  lblAdiantamentoH.Left := lblAdiantamentoH.Left + 40;
+  txtAdiantamento.Left := txtAdiantamento.Left + 40;
+  lbldtInicio.Left := lbldtInicio.Left + 50;
+  lblDtInicioH.Left := lblDtInicioH.Left + 50;
+  txtDt_Inicio.Left := txtDt_Inicio.Left + 50;
+  lbldtTermino.Left := lbldtTermino.Left + 50;
+  lbldtTerminoH.Left := lbldtTerminoH.Left + 50;
+  txtDt_Termino.Left := txtDt_Termino.Left + 50;
+  lblPeriodo.Left := lblPeriodo.Left + 50;
+  lblPeriodoH.Left := lblPeriodoH.Left + 50;
+  txtPeriodo.Left := txtPeriodo.Left + 50;
+  lblParcela.Left := lblParcela.Left + 50;
+  lblParcelaH.Left := lblParcelaH.Left + 50;
+  txtParcela.Left := txtParcela.Left + 50;
+  lblTipo.Left := lblTipo.Left + 50;
+  lblTipoH.Left := lblTipoH.Left + 50;
+  txtTipo.Left := txtTipo.Left + 50; }
+  end;//0
+  1:
+  begin
+  bndCabecalhoPag.Height := 0;
+  end;//1
+end;//case
+
+case frmRptFeriasMensais.rdgrpFonte.ItemIndex of
+  0:
+  begin
+    rptRel_Conf_Ferias_Mensais.Font.Color := clBlack;
+    for i := 0 to ComponentCount - 1 do
+      if Components[i] is TQRLabel then
+        TQRLabel(Components[i]).Font.Color := clBlack
+      else
+      if Components[i] is TQRDBText then
+        TQRDBText(Components[i]).Font.Color := clBlack
+  end;//0
+  1:
+  begin
+    rptRel_Conf_Ferias_Mensais.Font.Color := clNavy;
+    for i := 0 to ComponentCount - 1 do
+      if Components[i] is TQRLabel then
+        TQRLabel(Components[i]).Font.Color := clNavy
+      else
+      if Components[i] is TQRDBText then
+        TQRDBText(Components[i]).Font.Color := clNavy
+      else
+      if Components[i] is TQRBand then
+         TQRBand(Components[i]).Frame.Color := clNavy
+      else
+      if Components[i] is TQRSysData then
+         TQRGroup(Components[i]).Font.Color := clNavy
+      else
+      if Components[i] is TQRGroup then
+         TQRGroup(Components[i]).Frame.Color := clNavy
+  end;//1
+end;//case
+
+end;
+
+end.

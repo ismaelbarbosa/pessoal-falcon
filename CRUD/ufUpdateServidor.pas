@@ -15,11 +15,41 @@ uses
   cxFontNameComboBox;
 
 type
-  TEstadoEdicao = record
-    Nome, CPF, dtNascimento, idServidor,
-    Cargo,
-    Lotacao,
-    DtExercicioCargo: Array[0..1] of String;
+  TPessoal = record
+    nome, cpf, dtNascimento, idPessoal, idServidor,
+    idCargo, cargo, idEspecialidade, idLotacao, lotacao,
+    dtPosseCargo, dtExercicioCargo,
+    dtNomeacaoCargo, dtNomeacaoCargoDODF,
+    requisitado, orgaoOrigem,
+    cargaHoraria, classe,
+    padrao, cfNum,
+    auxTransporte,
+    naturalidade, naturalUF,
+    pai, mae, estadoCivil,
+    tipoSangue, conjuge,
+    endereco, bairro, cidade, enderecoUF,
+    cep, email, grauInstrucao,
+    curso, ciNum, ciEmissao, ciUF,
+    teNum, teZona, teSecao, teUF,
+    teEmissao, pisPasep,
+    banco, agencia, contaBanco,
+    oabNum, oabSecao,
+    Dt_InicioContrato1_Estagiario,
+    Dt_TerminoContrato1_Estagiario,
+    Dt_InicioContrato2_Estagiario,
+    Dt_TerminoContrato2_Estagiario,
+    Dt_InicioContrato3_Estagiario,
+    Dt_TerminoContrato3_Estagiario,
+    Dt_InicioContrato4_Estagiario,
+    Dt_TerminoContrato4_Estagiario,
+    Supervisor_Estagiario,
+    TurnoEstagio,
+    Semestre,
+    InstituicaoEnsino,
+    observacao
+    {
+    }
+    : Array[0..1] of String;
 end;
 
 type
@@ -31,126 +61,11 @@ type
     btnGravarServidor: TcxButton;
     pgcPessoal: TcxPageControl;
     tshDadosFuncionais: TcxTabSheet;
-    grpbxDadosFuncionais: TGroupBox;
-    Label1: TLabel;
-    lblNome: TLabel;
-    lblCargo: TLabel;
-    lblLotacao: TLabel;
-    lblCF_Num: TLabel;
-    btnGera_CF_Numero: TSpeedButton;
-    lblEspecialidade: TLabel;
-    lblCargaHoraria: TLabel;
-    lblOrgaoOrigem: TLabel;
-    lblDt_PosseCargo: TLabel;
-    lblDt_ExercicioCargo: TLabel;
-    lblPrimeiroExercicioGDF: TLabel;
-    lblDt_Nomeacao: TLabel;
-    lblDt_NomeacaoDODF: TLabel;
-    lblAverbacaoGDF: TLabel;
-    lblAverbacaoServPublico: TLabel;
-    lblCPF: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    lblNascimento: TLabel;
-    edtAverbacaoServPublico: TDBEdit;
-    edtDt_PrimeiroExercicioGDF: TcxDBDateEdit;
-    edtAverbacaoGDF: TcxDBDateEdit;
-    chkAuxTransporte: TcxDBCheckBox;
-    edtCF_Num: TcxDBTextEdit;
     tshDadosPessoais: TcxTabSheet;
-    grpbxDados: TGroupBox;
-    lblNaturalidade: TLabel;
-    lblPai: TLabel;
-    lblEstadoCivil: TLabel;
-    lblCEP: TLabel;
-    lblBairro: TLabel;
-    lblUF: TLabel;
-    lblMae: TLabel;
-    lblConjuge: TLabel;
-    lblEndereco: TLabel;
-    lblCidade: TLabel;
-    lblUFEndereco: TLabel;
-    lblGrauInstrucao: TLabel;
-    lblCurso: TLabel;
-    lblTipoSanguineo: TLabel;
-    lblEmail: TLabel;
     tshDocumentos: TcxTabSheet;
-    grpbxDocum: TGroupBox;
-    lblRG: TLabel;
-    lblTitulo: TLabel;
-    lblCI_UF: TLabel;
-    lblCI_Emissao: TLabel;
-    lblZona: TLabel;
-    lblSecao: TLabel;
-    lblTE_UF: TLabel;
-    lblTE_Emissao: TLabel;
-    lblPis_Pasep: TLabel;
-    lblBanco: TLabel;
-    lblAgencia: TLabel;
-    lblConta: TLabel;
-    lblOAB: TLabel;
-    lblOAB_Secao: TLabel;
     tshTelefones: TcxTabSheet;
-    grpbxTelefone: TGroupBox;
-    lblTipo: TLabel;
-    btnSelTipoTelefone: TSpeedButton;
-    txtDesc_TipoTel: TDBText;
-    lblNumero: TLabel;
-    btnGravarTel: TSpeedButton;
-    btnExcluir: TSpeedButton;
-    btnEditarTel: TSpeedButton;
-    btnInserirTel: TSpeedButton;
-    btnCancelarTel: TSpeedButton;
-    edtTipoTel: TDBEdit;
-    edtNumero: TDBEdit;
-    SplitterDocumentos: TcxSplitter;
-    btnEditarServidor: TcxButton;
-    edtNome: TcxTextEdit;
-    edtCPF: TcxTextEdit;
-    lkpCargo: TcxLookupComboBox;
-    edtDtNascimento: TcxDateEdit;
-    lkpEspecialidade: TcxLookupComboBox;
-    edtidServidor: TcxTextEdit;
-    edtDt_PosseCargo: TcxDateEdit;
-    edtDt_ExercicioCargo: TcxDateEdit;
-    edtDt_NomeacaoCargo: TcxDateEdit;
-    edtDt_NomeacaoCargoDODF: TcxDateEdit;
-    chkRequisitado: TcxCheckBox;
-    edtOrgaoOrigem: TcxTextEdit;
-    cbxCargaHoraria: TcxComboBox;
-    cbxClasse: TcxComboBox;
-    cbxPadrao: TcxComboBox;
-    edtNaturalidade: TcxTextEdit;
-    edtCI_Num: TcxTextEdit;
-    cbxNatural_UF: TcxComboBox;
-    cbxTipoSanguineo: TcxComboBox;
-    cbxEnderecoUF: TcxComboBox;
-    edtPai: TcxTextEdit;
-    edtMae: TcxTextEdit;
-    edtConjuge: TcxTextEdit;
-    edtEndereco: TcxTextEdit;
-    edtBairro: TcxTextEdit;
-    edtCidade: TcxTextEdit;
-    edtCEP: TcxTextEdit;
-    edtEmail: TcxTextEdit;
-    cbxGrauInstrucao: TcxComboBox;
-    cbxCI_UF: TcxComboBox;
-    cbxTE_UF: TcxComboBox;
-    edtTE_Num: TcxTextEdit;
-    edtTE_Zona: TcxTextEdit;
-    edtTE_Secao: TcxTextEdit;
-    edtPis_Pasep: TcxTextEdit;
-    edtAgencia: TcxTextEdit;
-    edtConta: TcxTextEdit;
-    edtOAB_Num: TcxTextEdit;
-    edtOAB_Secao: TcxTextEdit;
-    lkpEstadoCivil: TcxLookupComboBox;
-    lkpCurso: TcxLookupComboBox;
-    lkpBanco: TcxLookupComboBox;
-    edtTE_Emissao: TcxDateEdit;
-    edtCI_Emissao: TcxDateEdit;
     tshFerias: TcxTabSheet;
-    cxGroupBox5: TcxGroupBox;
+    gbxFerias: TcxGroupBox;
     tshFuncoes: TcxTabSheet;
     cxGroupBox1: TcxGroupBox;
     cxGroupBox3: TcxGroupBox;
@@ -161,7 +76,7 @@ type
     cxGridDBColumn16: TcxGridDBColumn;
     cxGridDBColumn17: TcxGridDBColumn;
     cxGridDBColumn18: TcxGridDBColumn;
-    cxGridLevel3: TcxGridLevel;
+    lvlHstoricoFuncoes: TcxGridLevel;
     txtidFuncao: TDBText;
     txtFuncao: TDBText;
     Label32: TLabel;
@@ -175,55 +90,37 @@ type
     btnNovaFuncao: TcxButton;
     tshAbonos: TcxTabSheet;
     tshAfastamentos: TcxTabSheet;
-    cxGrid4: TcxGrid;
-    cxGrid4DBTableView1: TcxGridDBTableView;
-    cxGrid4DBTableView1Column1: TcxGridDBColumn;
-    cxGrid4DBTableView1Column2: TcxGridDBColumn;
-    cxGrid4Level1: TcxGridLevel;
-    cxGroupBox2: TcxGroupBox;
+    grdTelefones: TcxGrid;
+    grdTelefonesDBTableView1: TcxGridDBTableView;
+    grdTelefonesDBTableView1Column1: TcxGridDBColumn;
+    grdTelefonesDBTableView1Column2: TcxGridDBColumn;
+    lvlTelefones: TcxGridLevel;
+    gbxCRUDAbonoAnual: TcxGroupBox;
     cxGroupBox6: TcxGroupBox;
-    cxGroupBox4: TcxGroupBox;
+    gbxCRUDAfastamento: TcxGroupBox;
     cxGroupBox7: TcxGroupBox;
-    cxGrid2: TcxGrid;
-    cxGridDBTableView2: TcxGridDBTableView;
-    cxGridDBColumn8: TcxGridDBColumn;
-    cxGridDBColumn9: TcxGridDBColumn;
-    cxGridDBColumn10: TcxGridDBColumn;
-    cxGridDBColumn11: TcxGridDBColumn;
-    cxGridDBColumn12: TcxGridDBColumn;
-    cxGridDBColumn14: TcxGridDBColumn;
-    cxGridDBTableView2Column1: TcxGridDBColumn;
-    cxGridLevel2: TcxGridLevel;
+    grdAfastamentos: TcxGrid;
+    tbvAfastamentos: TcxGridDBTableView;
+    tvcTipoAfastamento: TcxGridDBColumn;
+    tvcDt_inicioAfastamento: TcxGridDBColumn;
+    tvcDt_TerminoAfastamento: TcxGridDBColumn;
+    tvcIdExercicioAfastamento: TcxGridDBColumn;
+    tvcCodigoAfastamento: TcxGridDBColumn;
+    tvcProcessoSEIAfastamento: TcxGridDBColumn;
+    tbvObservacaoAfastamento: TcxGridDBColumn;
+    lvlAfastamentos: TcxGridLevel;
     Label2: TLabel;
-    pnlBotoesFerias: TPanel;
     lblDt_NomeacaoFuncaoDODF: TLabel;
     txtDtNomeacaFuncaoDODF: TDBText;
     txtDtPosseFuncao: TDBText;
     Label5: TLabel;
     txtDtDesligFuncaoDODF: TDBText;
-    Label6: TLabel;
-    DBText1: TDBText;
-    DBText2: TDBText;
-    Label8: TLabel;
-    DBText3: TDBText;
-    Label9: TLabel;
-    Label10: TLabel;
-    DBText4: TDBText;
-    Label11: TLabel;
-    DBText5: TDBText;
-    Label12: TLabel;
-    DBText6: TDBText;
-    DBText7: TDBText;
-    Label13: TLabel;
-    DBText8: TDBText;
     Button1: TButton;
     txtDFG: TDBText;
-    DBText9: TDBText;
     tbvHistoricoFuncoesColumn1: TcxGridDBColumn;
     tshLotacoes: TcxTabSheet;
-    cxGroupBox8: TcxGroupBox;
+    gbxCRUDLotacoes: TcxGroupBox;
     btnNovaLotacao: TcxButton;
-    txtLotacao: TDBText;
     tbvHistoricoFuncoesColumn2: TcxGridDBColumn;
     Panel1: TPanel;
     txtIdFuncaoHistorico: TDBText;
@@ -244,7 +141,7 @@ type
     Label28: TLabel;
     txtIDHistorico: TDBText;
     tshExercicioExterno: TcxTabSheet;
-    cxGroupBox9: TcxGroupBox;
+    gbxCRUDExercicioExterno: TcxGroupBox;
     Label29: TLabel;
     Label30: TLabel;
     txtDtNomeacaoEE: TDBText;
@@ -255,15 +152,15 @@ type
     txtOrgaoExterno: TDBText;
     btnDesligarExercicioExterno: TcxButton;
     btnNovoExercicioExterno: TcxButton;
-    cxGroupBox10: TcxGroupBox;
-    grdFerias: TcxGrid;
-    cxGridDBTableView4: TcxGridDBTableView;
+    gbxHistoricoExercicioExterno: TcxGroupBox;
+    grdExercicioExterno: TcxGrid;
+    tbvExercicioExterno: TcxGridDBTableView;
     cxGridDBColumn13: TcxGridDBColumn;
     cxGridDBColumn19: TcxGridDBColumn;
     cxGridDBColumn20: TcxGridDBColumn;
     cxGridDBColumn21: TcxGridDBColumn;
-    cxGridLevel4: TcxGridLevel;
-    Panel2: TPanel;
+    lvlExercicioExterno: TcxGridLevel;
+    pnlHistoricoExercicioExterno: TPanel;
     Label39: TLabel;
     Label40: TLabel;
     txtDtNomeacaoEEHis: TDBText;
@@ -274,13 +171,13 @@ type
     txtOrgaoExternoHis: TDBText;
     Label46: TLabel;
     txtIDEEHis: TDBText;
-    cxGroupBox11: TcxGroupBox;
-    cxGrid5: TcxGrid;
-    cxGridDBTableView5: TcxGridDBTableView;
+    gbxHistoricoLotacoes: TcxGroupBox;
+    grdHistoricoLotacoes: TcxGrid;
+    tbvHistoricoLotacoes: TcxGridDBTableView;
     cxGridDBColumn25: TcxGridDBColumn;
     cxGridDBColumn26: TcxGridDBColumn;
-    cxGridLevel5: TcxGridLevel;
-    Panel3: TPanel;
+    lblHistoricoLotacoes: TcxGridLevel;
+    pnlHistoricoLotacoes: TPanel;
     txtDescricaoLotacaoHistorico: TDBText;
     Label48: TLabel;
     DBText50: TDBText;
@@ -290,31 +187,20 @@ type
     Label15: TLabel;
     txtDtPosseEE: TDBText;
     btnEditarHistorico: TcxButton;
-    cxGridDBTableView4Column1: TcxGridDBColumn;
+    tbvExercicioExternoColumn1: TcxGridDBColumn;
     txtSiglaOEHis: TDBText;
     txtSiglaOE: TDBText;
     Label16: TLabel;
     txtDtInicioEEHis: TDBText;
-    Label19: TLabel;
-    lbl_IDS: TLabel;
-    Label34: TLabel;
-    lbl_IDP: TLabel;
-    chkPessoal: TcxCheckBox;
-    chkServidor: TcxCheckBox;
-    chkDados: TcxCheckBox;
-    chkDatas: TcxCheckBox;
     btnExcluirFuncao: TcxButton;
     btnEditarFuncao: TcxButton;
     txtIdFun: TDBText;
     DBText11: TDBText;
-    btnIncluirFerias: TcxButton;
-    btnEditarFerias: TcxButton;
-    btnExcluirFerias: TcxButton;
     btnIncluirAbono: TcxButton;
-    cxButton2: TcxButton;
-    cxButton3: TcxButton;
-    cxGrid6: TcxGrid;
-    cxGridDBTableView6: TcxGridDBTableView;
+    btnEditarAbono: TcxButton;
+    btnExcluirAbono: TcxButton;
+    grdFerias: TcxGrid;
+    tbvFerias: TcxGridDBTableView;
     tvcExercicio: TcxGridDBColumn;
     tvcPeriodo: TcxGridDBColumn;
     tvcParcela: TcxGridDBColumn;
@@ -325,7 +211,7 @@ type
     tvcDt_InicioReagendamento: TcxGridDBColumn;
     tvcDt_TerminoReagendamento: TcxGridDBColumn;
     tvcObservacao: TcxGridDBColumn;
-    cxGridLevel6: TcxGridLevel;
+    lvlFerias: TcxGridLevel;
     grdAbonoAnual: TcxGrid;
     tbvAbonoAnual: TcxGridDBTableView;
     cxGridDBColumn1: TcxGridDBColumn;
@@ -335,7 +221,7 @@ type
     tvcDt_3: TcxGridDBColumn;
     tvcDt_4: TcxGridDBColumn;
     tvcDt_5: TcxGridDBColumn;
-    grdFeriasLevel1: TcxGridLevel;
+    lvlAbonoAnual: TcxGridLevel;
     dsControle: TDataSource;
     StatusBar: TStatusBar;
     tshSubstituicao: TcxTabSheet;
@@ -346,19 +232,18 @@ type
     cxStyleRepository1: TcxStyleRepository;
     cxStyle1: TcxStyle;
     grdSubstituicoes: TcxGrid;
-    tvSubstProcurador: TcxGridDBTableView;
-    tvSubstProcuradorinicio: TcxGridDBColumn;
-    tvSubstProcuradortermino: TcxGridDBColumn;
-    tvSubstProcuradorndias: TcxGridDBColumn;
-    tvSubstProcuradornProcessoSEI: TcxGridDBColumn;
-    lvSubstProcurador: TcxGridLevel;
-    cxGrid7: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
+    tbvSubstituicoes: TcxGridDBTableView;
+    tbvSubstituicoesinicio: TcxGridDBColumn;
+    tbvSubstituicoestermino: TcxGridDBColumn;
+    tbvSubstituicoesndias: TcxGridDBColumn;
+    tbvSubstituicoesnProcessoSEI: TcxGridDBColumn;
+    lvlSubstituicoes: TcxGridLevel;
+    grdResumoSubstituicoes: TcxGrid;
+    tbvResumoSubstituicoes: TcxGridDBTableView;
     cxGridDBColumn3: TcxGridDBColumn;
     cxGridDBColumn4: TcxGridDBColumn;
-    cxGridLevel1: TcxGridLevel;
-    tvSubstProcuradorColumn1: TcxGridDBColumn;
-    txtMatricula: TDBText;
+    lvlResumoSubstituicoes: TcxGridLevel;
+    tbvSubstituicoesColumn1: TcxGridDBColumn;
     btnIncluirAfastamento: TcxButton;
     btnEditarAfastamento: TcxButton;
     btnExcluirAfastamento: TcxButton;
@@ -366,10 +251,186 @@ type
     Label17: TLabel;
     cxFontNameComboBox1: TcxFontNameComboBox;
     tbvHistoricoFuncoesColumn3: TcxGridDBColumn;
+    tshEstagio: TcxTabSheet;
+    Button2: TButton;
+    gbxDadosFuncionais: TcxGroupBox;
+    Label1: TLabel;
+    lblNome: TLabel;
+    lblCargo: TLabel;
+    lblLotacao: TLabel;
+    lblCF_Num: TLabel;
+    btnGera_CF_Numero: TSpeedButton;
+    lblEspecialidade: TLabel;
+    lblCargaHoraria: TLabel;
+    lblOrgaoOrigem: TLabel;
+    lblDt_PosseCargo: TLabel;
+    lblDt_ExercicioCargo: TLabel;
+    lblPrimeiroExercicioGDF: TLabel;
+    lblDt_Nomeacao: TLabel;
+    lblDt_NomeacaoDODF: TLabel;
+    lblAverbacaoGDF: TLabel;
+    lblAverbacaoServPublico: TLabel;
+    lblCPF: TLabel;
+    Label3: TLabel;
+    Label4: TLabel;
+    lblNascimento: TLabel;
+    Label6: TLabel;
+    DBText1: TDBText;
+    DBText2: TDBText;
+    Label8: TLabel;
+    DBText3: TDBText;
+    Label9: TLabel;
+    Label10: TLabel;
+    DBText4: TDBText;
+    Label11: TLabel;
+    DBText5: TDBText;
+    Label12: TLabel;
+    DBText6: TDBText;
+    DBText7: TDBText;
+    Label13: TLabel;
+    DBText8: TDBText;
+    DBText9: TDBText;
+    txtLotacao: TDBText;
+    Label19: TLabel;
+    lbl_IDS: TLabel;
+    Label34: TLabel;
+    lbl_IDP: TLabel;
+    txtMatricula: TDBText;
+    edtAverbacaoServPublico: TDBEdit;
+    edtDt_PrimeiroExercicioGDF: TcxDBDateEdit;
+    edtAverbacaoGDF: TcxDBDateEdit;
+    chkAuxTransporte: TcxDBCheckBox;
+    edtCF_Num: TcxDBTextEdit;
+    edtNome: TcxTextEdit;
+    edtCPF: TcxTextEdit;
+    lkpCargo: TcxLookupComboBox;
+    edtDtNascimento: TcxDateEdit;
+    lkpEspecialidade: TcxLookupComboBox;
+    edtidServidor: TcxTextEdit;
+    edtDt_PosseCargo: TcxDateEdit;
+    edtDt_ExercicioCargo: TcxDateEdit;
+    edtDt_NomeacaoCargo: TcxDateEdit;
+    edtDt_NomeacaoCargoDODF: TcxDateEdit;
+    chkRequisitado: TcxCheckBox;
+    edtOrgaoOrigem: TcxTextEdit;
+    cbxCargaHoraria: TcxComboBox;
+    cbxClasse: TcxComboBox;
+    cbxPadrao: TcxComboBox;
+    chkPessoal: TcxCheckBox;
+    chkServidor: TcxCheckBox;
+    chkDados: TcxCheckBox;
+    chkDatas: TcxCheckBox;
+    gbxDados: TcxGroupBox;
+    lblNaturalidade: TLabel;
+    lblPai: TLabel;
+    lblEstadoCivil: TLabel;
+    lblCEP: TLabel;
+    lblBairro: TLabel;
+    lblUF: TLabel;
+    lblMae: TLabel;
+    lblConjuge: TLabel;
+    lblEndereco: TLabel;
+    lblCidade: TLabel;
+    lblUFEndereco: TLabel;
+    lblGrauInstrucao: TLabel;
+    lblCurso: TLabel;
+    lblTipoSanguineo: TLabel;
+    lblEmail: TLabel;
+    edtNaturalidade: TcxTextEdit;
+    cbxNatural_UF: TcxComboBox;
+    cbxTipoSanguineo: TcxComboBox;
+    cbxEnderecoUF: TcxComboBox;
+    edtPai: TcxTextEdit;
+    edtMae: TcxTextEdit;
+    edtConjuge: TcxTextEdit;
+    edtEndereco: TcxTextEdit;
+    edtBairro: TcxTextEdit;
+    edtCidade: TcxTextEdit;
+    edtEmail: TcxTextEdit;
+    cbxGrauInstrucao: TcxComboBox;
+    lkpEstadoCivil: TcxLookupComboBox;
+    lkpCurso: TcxLookupComboBox;
+    gbxDocumentos: TcxGroupBox;
+    lblRG: TLabel;
+    lblTitulo: TLabel;
+    lblCI_UF: TLabel;
+    lblCI_Emissao: TLabel;
+    lblZona: TLabel;
+    lblSecao: TLabel;
+    lblTE_UF: TLabel;
+    lblTE_Emissao: TLabel;
+    lblPis_Pasep: TLabel;
+    lblBanco: TLabel;
+    lblAgencia: TLabel;
+    lblConta: TLabel;
+    lblOAB: TLabel;
+    lblOAB_Secao: TLabel;
+    Label43: TLabel;
+    edtCI_Num: TcxTextEdit;
+    cbxCI_UF: TcxComboBox;
+    cbxTE_UF: TcxComboBox;
+    edtTE_Num: TcxTextEdit;
+    edtTE_Zona: TcxTextEdit;
+    edtTE_Secao: TcxTextEdit;
+    edtPis_Pasep: TcxTextEdit;
+    edtAgencia: TcxTextEdit;
+    edtConta: TcxTextEdit;
+    edtOAB_Num: TcxTextEdit;
+    edtOAB_Secao: TcxTextEdit;
+    lkpBanco: TcxLookupComboBox;
+    edtTE_Emissao: TcxDateEdit;
+    edtCI_Emissao: TcxDateEdit;
+    gbxDadosEstagio: TcxGroupBox;
+    Label14: TLabel;
+    Label18: TLabel;
+    Label20: TLabel;
+    Label21: TLabel;
+    Label31: TLabel;
+    Label36: TLabel;
+    Label38: TLabel;
+    Label41: TLabel;
+    Label45: TLabel;
+    Label47: TLabel;
+    Label49: TLabel;
+    Label50: TLabel;
+    Label51: TLabel;
+    edtSupervisor_Estagiario: TcxTextEdit;
+    edtDt_InicioContrato1_Estagiario: TcxDateEdit;
+    edtDt_InicioContrato2_Estagiario: TcxDateEdit;
+    edtDt_InicioContrato3_Estagiario: TcxDateEdit;
+    edtDt_InicioContrato4_Estagiario: TcxDateEdit;
+    edtDt_TerminoContrato1_Estagiario: TcxDateEdit;
+    edtDt_TerminoContrato2_Estagiario: TcxDateEdit;
+    edtDt_TerminoContrato3_Estagiario: TcxDateEdit;
+    edtDt_TerminoContrato4_Estagiario: TcxDateEdit;
+    edtInstituicaoEnsino: TcxTextEdit;
+    edtTurnoEstagio: TcxTextEdit;
+    edtSemestre: TcxTextEdit;
+    mmoObservacao_Estagio: TcxMemo;
+    gbxCRUDFerias: TcxGroupBox;
+    btnIncluirFerias: TcxButton;
+    btnEditarFerias: TcxButton;
+    btnExcluirFerias: TcxButton;
+    gbxCRUDTelefones: TcxGroupBox;
+    btnIncluirTelefone: TcxButton;
+    btnEditarTelefone: TcxButton;
+    edtCEP: TcxMaskEdit;
+    tbvIDAfastamento: TcxGridDBColumn;
+    tbvAbonoAnualColumn1: TcxGridDBColumn;
+    gbxPromocaoProcurador: TcxGroupBox;
+    Label52: TLabel;
+    Label53: TLabel;
+    txtDt_PromocaoCategoria2: TDBText;
+    txtDt_PromocaoSubProcurador: TDBText;
+    Label54: TLabel;
+    Label55: TLabel;
+    txtAverbacaoGDF: TDBText;
+    txtAverbacaoServPublico: TDBText;
+    txtDt_DesligamentoCargo: TDBText;
+    Label56: TLabel;
     procedure btnGravarServidorClick(Sender: TObject);
     procedure btnSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure btnEditarServidorClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
     procedure FormActivate(Sender: TObject);
@@ -408,6 +469,48 @@ type
     procedure btnIncluirSubstituicaoClick(Sender: TObject);
     procedure btnIncluirAfastamentoClick(Sender: TObject);
     procedure btnEditarAfastamentoClick(Sender: TObject);
+    procedure edtNaturalidadePropertiesChange(Sender: TObject);
+    procedure lkpEspecialidadePropertiesChange(Sender: TObject);
+    procedure edtDt_PosseCargoPropertiesChange(Sender: TObject);
+    procedure edtDt_ExercicioCargoPropertiesChange(Sender: TObject);
+    procedure edtDt_NomeacaoCargoPropertiesChange(Sender: TObject);
+    procedure edtDt_NomeacaoCargoDODFPropertiesChange(Sender: TObject);
+    procedure edtOrgaoOrigemPropertiesChange(Sender: TObject);
+    procedure cbxCargaHorariaPropertiesChange(Sender: TObject);
+    procedure cbxClassePropertiesChange(Sender: TObject);
+    procedure cbxPadraoPropertiesChange(Sender: TObject);
+    procedure edtCF_NumPropertiesChange(Sender: TObject);
+    procedure cbxNatural_UFPropertiesChange(Sender: TObject);
+    procedure edtPaiPropertiesChange(Sender: TObject);
+    procedure edtMaePropertiesChange(Sender: TObject);
+    procedure lkpEstadoCivilPropertiesChange(Sender: TObject);
+    procedure cbxTipoSanguineoPropertiesChange(Sender: TObject);
+    procedure edtConjugePropertiesChange(Sender: TObject);
+    procedure edtEnderecoPropertiesChange(Sender: TObject);
+    procedure edtBairroPropertiesChange(Sender: TObject);
+    procedure edtCidadePropertiesChange(Sender: TObject);
+    procedure cbxEnderecoUFPropertiesChange(Sender: TObject);
+    procedure edtCEPPropertiesChange(Sender: TObject);
+    procedure edtEmailPropertiesChange(Sender: TObject);
+    procedure cbxGrauInstrucaoPropertiesChange(Sender: TObject);
+    procedure lkpCursoPropertiesChange(Sender: TObject);
+    procedure edtNaturalidadeExit(Sender: TObject);
+    procedure edtSupervisor_EstagiarioPropertiesChange(Sender: TObject);
+    procedure edtDt_InicioContrato1_EstagiarioPropertiesChange(
+      Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+    procedure btnIncluirTelefoneClick(Sender: TObject);
+    procedure tshFeriasShow(Sender: TObject);
+    procedure btnExcluirAfastamentoClick(Sender: TObject);
+    procedure btnExcluirAbonoClick(Sender: TObject);
+    procedure btnEditarAbonoClick(Sender: TObject);
+    procedure edtNaturalidadeKeyPress(Sender: TObject; var Key: Char);
+    procedure edtPaiKeyPress(Sender: TObject; var Key: Char);
+    procedure edtMaeKeyPress(Sender: TObject; var Key: Char);
+    procedure edtConjugeKeyPress(Sender: TObject; var Key: Char);
+    procedure edtEnderecoKeyPress(Sender: TObject; var Key: Char);
+    procedure edtBairroKeyPress(Sender: TObject; var Key: Char);
+    procedure edtCidadeKeyPress(Sender: TObject; var Key: Char);
   private
     RegistroAlterado: boolean;
     PodeDesfazerCampo: boolean;
@@ -416,23 +519,36 @@ type
     function checarEstadoRegistro: Integer;
     procedure desabilitarEdicao;
     procedure habilitarEdicao;
+    procedure setarTamanhoCampos;
     procedure setarCampoAlterado(Campo: TComponent);
     procedure SetarAlteracaoDesfeita;
     procedure SetarEstadoDoRegistro;
     procedure desfazerAlteracaoCampo(Campo: TComponent);
 
     procedure preencherCamposUF;
-    function carregarDados:boolean;
 
-    function retornaSQLUpdatePessoal(pIDP: String): String;
-    function retornaSQLUpdateServidor(pIDP, pIDS: String): String;
-    function retornaSQLUpdateDados(pIDP: String): String;
-    function retornaSQLUpdateDatas(pIDP, pIDS: String): String;
+    function carregarDadosPessoais:boolean;
+    function carregarDadosFuncionais:boolean;
+    function carregarDocumentos: boolean;
+    function carregarDadosEstagio:boolean;
+
+
+    // Obsoletas, remover daqui pois estão no datamodule dmCadastroServidor
+    // verificar se as funções update são compatíveis para o cadastro inicial e a alteração
+    // pois são feitas em formulários diferentes
+
+    function SQLUpdateServidor(pIDP, pIDS: String): String;
+    function SQLUpdateDados(pIDP: String): String;
+    function SQLUpdateDatas(pIDP, pIDS: String): String;
 
     procedure refreshDados;
     function servidorOcupaFuncao(idPessoal, idServidor: String):boolean;
     function servidorEstaEmExercicioExterno(idPessoal, idServidor: String):boolean;
     function salvarDados:boolean;
+
+    function setarRegistroAGravar: boolean;
+    function jaExisteFerias(idPessoal, idServidor, idExercicio: String):boolean;
+    
   end;
 
 var
@@ -444,22 +560,24 @@ uses ufReadServidor, uDMPessoal, uDmCadastroServidor,
   ufUpdateFuncao, PRG_utils, uPesFuncoes, uDmExibirTabelas,
   ufUpdateHistoricoFuncao, ufUpdateExercicioExterno, uDMConexao, ufLogs,
   ufUpdateLotacao, ufUpdateFerias, ufUpdateAbonoAnual,
-  ufUpdateSubstituicao, ufPrincipal, ufUpdateAfastamento;
+  ufUpdateSubstituicao, ufPrincipal, ufUpdateAfastamento, ufUpdateTelefone,
+  uDMExcluirFeriasAbonoAfastamento, uDmFeriasAbonoAfastamento;
 
 {$R *.dfm}
 
-var EstadoEdicao: TEstadoEdicao;
+var EstadoEdicao, RegistroAGravar: TPessoal;
 
 procedure TfrmUpdateServidor.btnGravarServidorClick(Sender: TObject);
-var wMens, NIDP, NIDS: String;
-OK_Pes, OK_Ser, OK_Dad, OK_Dat: boolean;
+var wMens, NIDP, NIDS, Evento: String;
+    Registro_Setado, OK_Pes, OK_Ser, OK_Dad, OK_Dat: boolean;
+    resultado : integer;
 begin
-  wMens := 'Atenção! Confirma a inclusão deste(a) servidor(a)?' + #13 + #13
+  wMens := 'Atenção! Confirma esta alteração?' + #13 + #13
          + edtCPF.Text + #13
          + edtNome.Text;
 
-  if ConfirmaAcao(wMens,3) = 1 then
-  begin //4
+  //if ConfirmaAcao(wMens,3) = 1 then
+  //begin //4
     edtNomeExit(Self);
 
     //setarCampos;
@@ -477,30 +595,121 @@ begin
     NIDP := lbl_IDP.Caption;
     NIDS := lbl_IDS.Caption;
 
-    if dmCadastroServidor.alterarPessoal      // Tabela de Pessoal
-    (retornaSQLUpdatePessoal(NIDP))
+    //ShowMessage(NIDP + ' ' + NIDS);
+
+    {
+  //    if dmCadastroServidor.alterarPessoal
+    if dmCadastroServidor.executarSQL(SQLUpdatePessoal(NIDP))
     then
       OK_Pes := true
     else
       OK_Pes := false;
+    }
 
-    if dmCadastroServidor.alterarServidor   // Tabela de Servidor
-    (retornaSQLUpdateServidor(NIDP, NIDS))
-    then
-      OK_Ser := true
-    else
-      OK_Ser := false;
 
-    if dmCadastroServidor.alterarDados  // Tabela de Dados
-    (retornaSQLUpdateDados(NIDP))
-    then
-      OK_Dad := true
-    else
-      OK_Dad := false;
+    if setarRegistroAGravar then
+    Registro_Setado := true;
+    
+    //Abort;
+
+
+    // Tabela de Pessoal
+
+    with dmCadastroServidor do
+    begin
+      if executarSQL(SQLUpdatePessoal(NIDP, edtCPF.Text, edtNome.Text, edtDtNascimento.Text))
+      then
+        OK_Pes := true
+      else
+        OK_Pes := false;
+    end;
+
+
+  // Tabela de Dados
+
+    with dmCadastroServidor, RegistroAGravar do
+    begin
+      if executarSQL(SQLUpdateDados
+      (
+        NIDP
+        , endereco[0]
+        , bairro[0]
+        , cidade[0]
+        , enderecoUF[0]
+        , cep[0]
+        , ciNum[0]
+        , ciUF[0]
+        , ciEmissao[0]
+        , naturalidade[0]
+        , naturalUF[0]
+        , pisPasep[0]
+        , teNum[0]
+        , teZona[0]
+        , teSecao[0]
+        , teUF[0]
+        , teEmissao[0]
+        , pai[0]
+        , mae[0]
+        , estadoCivil[0]
+        , conjuge[0]
+        , banco[0]
+        , agencia[0]
+        , contaBanco[0]
+        , oabNum[0]
+        , oabSecao[0]
+        , grauInstrucao[0]
+        , curso[0]
+        , tipoSangue[0]
+        , email[0]
+      )
+      )
+      then
+        OK_Dad := true
+      else
+        OK_Dad := false;
+    end;
+
+  // Tabela de Servidor
+
+    with dmCadastroServidor, RegistroAGravar do
+    begin
+      if executarSQL(SQLUpdateServidor
+      (
+        NIDP, NIDS,
+        idServidor[0],
+        idCargo[0],
+        idEspecialidade[0],
+        cfNum[0],
+        classe[0],
+        padrao[0],
+        requisitado[0],
+        orgaoOrigem[0],
+        auxTransporte[0],
+        cargaHoraria[0],
+        Dt_InicioContrato1_Estagiario[0],
+        Dt_TerminoContrato1_Estagiario[0],
+        Dt_InicioContrato2_Estagiario[0],
+        Dt_TerminoContrato2_Estagiario[0],
+        Dt_InicioContrato3_Estagiario[0],
+        Dt_TerminoContrato3_Estagiario[0],
+        Dt_InicioContrato4_Estagiario[0],
+        Dt_TerminoContrato4_Estagiario[0],
+        Supervisor_Estagiario[0],
+        TurnoEstagio[0],
+        Semestre[0],
+        InstituicaoEnsino[0],
+        observacao[0]
+      )
+      )
+      then
+        OK_Ser := true
+      else
+        OK_Ser := false;
+    end;
 
     if dmCadastroServidor.atualizarDatas
     // Tabela tbServidor, campos do tipo data
-    (retornaSQLUpdateDatas(NIDP, NIDS))
+    (SQLUpdateDatas(NIDP, NIDS))
     then
       OK_Dat := true
     else
@@ -515,29 +724,29 @@ begin
     else
     begin //6
       chkPessoal.Checked := false;
-      frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela de Pessoal');
+      frmLogs.mmoLog.Lines.Add('Registro não alterado na tabela de Pessoal');
     end; //6
 
     if OK_Ser then
     begin //7
       chkServidor.Checked := true;
-      frmLogs.mmoLog.Lines.Add('Registro incluído na tabela de Servidor');
+      frmLogs.mmoLog.Lines.Add('Registro alterado na tabela de Servidor');
     end   //7
     else
     begin //7
       chkServidor.Checked := false;
-      frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela de Servidor');
+      frmLogs.mmoLog.Lines.Add('Registro não alterado na tabela de Servidor');
     end;  //7
 
     if OK_Dad then
     begin //8
       chkDados.Checked := true;
-      frmLogs.mmoLog.Lines.Add('Registro incluído na tabela de Dados');
+      frmLogs.mmoLog.Lines.Add('Registro alterado na tabela de Dados');
     end   //8
     else
     begin //8
       chkDados.Checked := false;
-      frmLogs.mmoLog.Lines.Add('Registro não incluído na tabela de Dados');
+      frmLogs.mmoLog.Lines.Add('Registro não alterado na tabela de Dados');
     end;  //8
 
     if OK_Dat then
@@ -554,15 +763,16 @@ begin
     if (OK_Pes) and (OK_Ser) and (OK_Dad) and (OK_Dat)
     then
     begin //10
-      if dmCadastroServidor.alterarServidor   // Tabela de Servidor
-      (retornaSQLUpdateServidor(NIDP, NIDS))
+      // comentado pois está Repetido
+      {if dmCadastroServidor.alterarServidor   // Tabela de Servidor
+      (SQLUpdateServidor(NIDP, NIDS))
       then
         OK_Ser := true
       else
         OK_Ser := false;
 
       if dmCadastroServidor.alterarDados  // Tabela de Dados
-      (retornaSQLUpdateDados(NIDP))
+      (SQLUpdateDados(NIDP))
       then
         OK_Dad := true
       else
@@ -570,11 +780,12 @@ begin
 
       if dmCadastroServidor.atualizarDatas
       // Tabela tbServidor, campos do tipo data
-      (retornaSQLUpdateDatas(NIDP, NIDS))
+      (SQLUpdateDatas(NIDP, NIDS))
       then
         OK_Dat := true
       else
         OK_Dat := false;
+      }
 
       //setarOperacao(2); // Alteração de registro
 
@@ -583,12 +794,21 @@ begin
       DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
       RetornaData(2),
       'tbPessoal, tbServidor, tbDados',
+      'NULL',
       NIDP,
+      NIDS,
       'TODOS',
       'Inclusão do servidor: '
       + 'Matrícula: ' + edtidServidor.Text
       + ' Nome: ' + edtNome.Text
       );
+
+      // Exibir os dados do servidor após a atualização
+      resultado :=
+      dmPessoal.pesquisarPessoal
+      (' AND pes.idPessoal = ' + QuotedStr(frmUpdateServidor.lbl_IDP.Caption)
+      + ' AND serv.idServidor = ' + QuotedStr(frmUpdateServidor.txtMatricula.Caption));
+
 
       // bloquear registro
 
@@ -597,15 +817,14 @@ begin
       ShowMessage('Registro gravado com sucesso.');
       //frmCreateServidor.Activate;  // atualiza a página para exibir o modo de alteraç~~ao
 
-      btnGravarServidor.Enabled := false;
-      btnEditarServidor.Enabled := true;
+      //btnGravarServidor.Enabled := false;
 
     end  //10
     else
       ShowMessage('Houve um erro no cadastro de uma das tabelas.');
 
-  end //4
-  else Abort;
+  //end //4
+  //else Abort;
 
 end;
 
@@ -614,247 +833,16 @@ begin
   Close;
 end;
 
-function TfrmUpdateServidor.carregarDados: boolean;
-begin
-  // Campos carregados no EstadoEdicao:
-  // Nome, CPF, dt_Nascimento, idServidor
-  // Cargo
-
-  with dmPessoal.qryPesquisa do
-  begin
-
-    lbl_IDP.Caption         := FieldValues['idPessoal'];
-    lbl_IDS.Caption         := FieldValues['ID'];
-
-    if FieldByName('CPF').IsNull
-    then edtCPF.Text := ''
-    else edtCPF.Text := Trim(FieldValues['CPF']);
-
-    // Manter o valor do campo Nome no registro EstadoEdicao
-    EstadoEdicao.CPF[0]  := edtCPF.Text;
-
-    if FieldByName('dt_nascimento').IsNull
-    then edtDtNascimento.Text := ''
-    else edtDtNascimento.Text := Trim(FieldValues['dt_nascimento']);
-
-    // Manter o valor do campo dt_Nascimento no registro EstadoEdicao
-    EstadoEdicao.dtNascimento[0]  := edtDtNascimento.Text;
-
-    if FieldByName('idServidor').IsNull
-    then edtidServidor.Text := ''
-    else edtidServidor.Text := Trim(FieldValues['idServidor']);
-
-    // Manter o valor do campo idServidor no registro EstadoEdicao
-    EstadoEdicao.idServidor[0]  := edtidServidor.Text;
-
-    if FieldByName('Nome').IsNull
-    then edtNome.Text := ''
-    else edtNome.Text := Trim(FieldValues['Nome']);
-
-    // Manter o valor do campo Nome no registro EstadoEdicao
-    EstadoEdicao.Nome[0]  := edtNome.Text;
-
-
-    //ShowMessage(FieldValues['descricaoCargo']);
-
-    if FieldByName('descricaoCargo').IsNull
-    then lkpCargo.Text := ''
-    else lkpCargo.Text := Trim(FieldValues['descricaoCargo']);
-
-    // Manter o valor do campo Cargo no registro EstadoEdicao
-    EstadoEdicao.Cargo[0]    := Trim(lkpCargo.Text);
-
-
-    if FieldByName('Especialidade').IsNull
-    then lkpEspecialidade.Text := ''
-    else lkpEspecialidade.Text := Trim(FieldValues['Especialidade']);
-
-    if FieldByName('Dt_PosseCargo').IsNull
-    then edtDt_PosseCargo.Text := ''
-    else edtDt_PosseCargo.Text := Trim(FieldValues['Dt_PosseCargo']);
-
-    if FieldByName('Dt_ExercicioCargo').IsNull
-    then edtDt_ExercicioCargo.Text := ''
-    else edtDt_ExercicioCargo.Text := Trim(FieldValues['Dt_ExercicioCargo']);
-
-    // Manter o valor do campo Dt_ExercicioCargo no registro EstadoEdicao
-    
-    EstadoEdicao.DtExercicioCargo[0]   := Trim(edtDt_ExercicioCargo.Text);
-
-    if FieldByName('Dt_NomeacaoCargo').IsNull
-    then edtDt_NomeacaoCargo.Text := ''
-    else edtDt_NomeacaoCargo.Text := Trim(FieldValues['Dt_NomeacaoCargo']);
-
-    if FieldByName('Dt_NomeacaoCargoDODF').IsNull
-    then edtDt_NomeacaoCargoDODF.Text := ''
-    else edtDt_NomeacaoCargoDODF.Text := Trim(FieldValues['Dt_NomeacaoCargoDODF']);
-
-    if FieldByName('descricaoLotacao').IsNull
-    then txtLotacao.Caption := '' // lkpLotacao.Text := ''
-    else txtLotacao.Caption :=    // lkpLotacao.Text :=
-    Trim(FieldValues['descricaoLotacao']);
-
-    // Manter o valor do campo Lotacao no registro EstadoEdicao
-    EstadoEdicao.Lotacao[0]  := Trim(txtLotacao.Caption);
-
-
-    //lot.idlotacao, lot.Sigla as SiglaLotacao, lot.descricao as descricaoLotacao,
-
-    if not FieldByName('requisitado').IsNull
-    then chkRequisitado.Checked := false
-    else chkRequisitado.Checked := true;
-
-    if FieldByName('OrgaoDeOrigem').IsNull
-    then edtOrgaoOrigem.Text := ''
-    else edtOrgaoOrigem.Text := Trim(FieldValues['OrgaoDeOrigem']);
-
-    if FieldByName('CargaHoraria').IsNull
-    then cbxCargaHoraria.Text := ''
-    else cbxCargaHoraria.Text := Trim(FieldValues['CargaHoraria']);
-
-    if FieldByName('Classe').IsNull
-    then cbxClasse.Text := ''
-    else cbxClasse.Text := Trim(FieldValues['Classe']);
-
-    if FieldByName('Padrao').IsNull
-    then cbxPadrao.Text := ''
-    else cbxPadrao.Text := Trim(FieldValues['Padrao']);
-
-
-    // Aba dados pessoais
-    
-    if FieldByName('Naturalidade').IsNull
-    then edtNaturalidade.Text := ''
-    else edtNaturalidade.Text := Trim(FieldValues['Naturalidade']);
-
-    if FieldByName('Natural_UF').IsNull
-    then cbxNatural_UF.Text := ''
-    else cbxNatural_UF.Text := Trim(FieldValues['Natural_UF']);
-
-    if FieldByName('Pai').IsNull
-    then edtPai.Text := ''
-    else edtPai.Text := Trim(FieldValues['Pai']);
-
-    if FieldByName('Mae').IsNull
-    then edtMae.Text := ''
-    else edtMae.Text := Trim(FieldValues['Mae']);
-
-    if FieldByName('EstadoCivil').IsNull
-    then lkpEstadoCivil.Text := ''
-    else lkpEstadoCivil.Text := Trim(FieldValues['EstadoCivil']);
-
-    if FieldByName('TipoSanguineo').IsNull
-    then cbxTipoSanguineo.Text := ''
-    else cbxTipoSanguineo.Text := Trim(FieldValues['TipoSanguineo']);
-
-    if FieldByName('Conjuge').IsNull
-    then edtConjuge.Text := ''
-    else edtConjuge.Text := Trim(FieldValues['Conjuge']);
-
-    if FieldByName('Endereco').IsNull
-    then edtEndereco.Text := ''
-    else edtEndereco.Text := Trim(FieldValues['Endereco']);
-
-    if FieldByName('Bairro').IsNull
-    then edtBairro.Text := ''
-    else edtBairro.Text := Trim(FieldValues['Bairro']);
-
-    if FieldByName('Cidade').IsNull
-    then edtCidade.Text := ''
-    else edtCidade.Text := Trim(FieldValues['Cidade']);
-
-    if FieldByName('UF').IsNull
-    then cbxEnderecoUF.Text := ''
-    else cbxEnderecoUF.Text := Trim(FieldValues['UF']);
-
-    if FieldByName('CEP').IsNull
-    then edtCEP.Text := ''
-    else edtCEP.Text := Trim(FieldValues['CEP']);
-
-    if FieldByName('Grau').IsNull
-    then cbxGrauInstrucao.Text := ''
-    else cbxGrauInstrucao.Text := Trim(FieldValues['Grau']);
-
-    if FieldByName('Email').IsNull
-    then edtEmail.Text := ''
-    else edtEmail.Text := Trim(FieldValues['Email']);
-
-    if FieldByName('Curso').IsNull
-    then lkpCurso.Text := ''
-    else lkpCurso.Text := Trim(FieldValues['Curso']);
-
-
-    // Aba documentos
-
-    if FieldByName('CI_NUM').IsNull
-    then edtCI_NUM.Text := ''
-    else edtCI_NUM.Text := Trim(FieldValues['CI_NUM']);
-
-    if FieldByName('CI_Emissao').IsNull
-    then edtCI_Emissao.Text := ''
-    else edtCI_Emissao.Text := Trim(FieldValues['CI_Emissao']);
-
-    if FieldByName('CI_UF').IsNull
-    then cbxCI_UF.Text := ''
-    else cbxCI_UF.Text := Trim(FieldValues['CI_UF']);
-
-    if FieldByName('TE_Num').IsNull
-    then edtTE_Num.Text := ''
-    else edtTE_Num.Text := Trim(FieldValues['TE_Num']);
-
-    if FieldByName('TE_Zona').IsNull
-    then edtTE_Zona.Text := ''
-    else edtTE_Zona.Text := Trim(FieldValues['TE_Zona']);
-
-    if FieldByName('TE_Secao').IsNull
-    then edtTE_Secao.Text := ''
-    else edtTE_Secao.Text := Trim(FieldValues['TE_Secao']);
-
-    if FieldByName('TE_UF').IsNull
-    then cbxTE_UF.Text := ''
-    else cbxTE_UF.Text := Trim(FieldValues['TE_UF']);
-
-    if FieldByName('TE_Emissao').IsNull
-    then edtTE_Emissao.Text := ''
-    else edtTE_Emissao.Text := Trim(FieldValues['TE_Emissao']);
-
-    if FieldByName('Pis_Pasep').IsNull
-    then edtPis_Pasep.Text := ''
-    else edtPis_Pasep.Text := Trim(FieldValues['Pis_Pasep']);
-
-    {if FieldByName('Banco').IsNull
-    then lkpBanco.Text := ''
-    else lkpBanco.Text := Trim(FieldValues['Banco']);}
-
-    if FieldByName('Agencia').IsNull
-    then edtAgencia.Text := ''
-    else edtAgencia.Text := Trim(FieldValues['Agencia']);
-
-    if FieldByName('Conta').IsNull
-    then edtConta.Text := ''
-    else edtConta.Text := Trim(FieldValues['Conta']);
-
-    if FieldByName('OAB_Num').IsNull
-    then edtOAB_Num.Text := ''
-    else edtOAB_Num.Text := Trim(FieldValues['OAB_Num']);
-
-    if FieldByName('OAB_Secao').IsNull
-    then edtOAB_Secao.Text := ''
-    else edtOAB_Secao.Text := Trim(FieldValues['OAB_Secao']);
-
-  end;
-
-  SetarAlteracaoDesfeita;
-  setarCorPadrao;
-end;
 
 procedure TfrmUpdateServidor.FormCreate(Sender: TObject);
 begin
   KeyPreview := true;
+  setarTamanhoCampos;
 
   pgcPessoal.ActivePage := tshDadosFuncionais;
+  gbxFerias.Caption := '';
 
-  desabilitarEdicao;
+  // desabilitarEdicao; -- desabilitado a pedida da Georgiana
 
   if not dmCadastroServidor.retornarCargo
   then ShowMessage('A pesquisa falhou para o campo de cargo');
@@ -879,50 +867,12 @@ begin
 
   if not dmCadastroServidor.retornarBanco
   then ShowMessage('A pesquisa falhou para o campo do Banco');
-  
 
-end;
-
-function TfrmUpdateServidor.retornaSQLUpdatePessoal(pIDP: String): String;
-var SQL_Pessoal: String;
-begin
-
-  SQL_Pessoal :=
-      'SET DATEFORMAT dmy'
-      + ' UPDATE tbPessoal'
-      + ' SET '
-      + ' CPF = '  + QuotedStr(edtCPF.Text)
-      + ', Nome = ' + QuotedStr(edtNome.Text);
-
-      if edtDtNascimento.Text <> '' then
-      SQL_Pessoal := SQL_Pessoal + ', dt_Nascimento = '
-      + QuotedStr(edtDtNascimento.Text)
-      else
-      SQL_Pessoal := SQL_Pessoal + ', dt_Nascimento = NULL ';
-
-      SQL_Pessoal := SQL_Pessoal
-      + ' WHERE idPessoal = ' + QuotedStr(pIDP);
-
-  Result := SQL_Pessoal;
-      
 end;
 
 function TfrmUpdateServidor.salvarDados: boolean;
 begin
 //
-end;
-
-procedure TfrmUpdateServidor.btnEditarServidorClick(Sender: TObject);
-var wOK: boolean;
-begin
-  {if carregarDados then
-  wOK := true
-  else wOk := false;}
-
-  habilitarEdicao;
-
-  btnEditarServidor.Enabled := false;
-  //edtCPF.SetFocus;
 end;
 
 procedure TfrmUpdateServidor.FormKeyDown(Sender: TObject; var Key: Word;
@@ -946,7 +896,7 @@ begin
         EstadoEdicao.CPF[0] + chr(13) +
         EstadoEdicao.dtNascimento[0] + chr(13) +
         EstadoEdicao.idServidor[0] + chr(13) +
-        EstadoEdicao.Cargo[0] + chr(13) +
+        //EstadoEdicao.Cargo[0] + chr(13) +
 
         nomeMudou
         );
@@ -1000,20 +950,47 @@ end;
 procedure TfrmUpdateServidor.FormActivate(Sender: TObject);
 var wOK: boolean;
 begin
+  lkpBanco.Enabled := false;
+  {
   if carregarDados then
   wOK := true
   else wOk := false;
-
+  }
+  carregarDadosPessoais;
+  carregarDadosFuncionais;
+  carregarDocumentos;
+  carregarDadosEstagio;
+  
   WindowState := wsMaximized;
 
   if not dmPessoal.qryPesquisa.FieldByName('idCargo').IsNull then
   begin
     if dmPessoal.VerificarSeEProcurador(Copy(dmPessoal.qryPesquisa.FieldValues['idCargo'],1,2))
     then
-      tshSubstituicao.TabVisible := true
-    else tshSubstituicao.TabVisible := false;
+    begin
+      tshSubstituicao.TabVisible := true;
+      gbxPromocaoProcurador.Visible := true;
+    end
+    else
+    begin
+      tshSubstituicao.TabVisible := false;
+      gbxPromocaoProcurador.Visible := false;
+    end
   end;
-  
+
+  {
+  if dmPessoal.VerificarSeEServidor(Copy(dmPessoal.qryPesquisa.FieldValues['idCargo'],1,2))
+  then
+  begin
+    tshAbonoAnual.TabVisible := true;
+    tshEstagio.TabVisible := false;
+    tshExercicioExterno.TabVisible := true;
+    tshFerias.TabVisible := true;
+    tshSubstituicao.TabVisible := false;
+    gbxPromocaoProcurador.Visible := false;
+    frmUpdateServidor.gbxPromocaoProcurador.Visible := false;
+  end;
+  }
 
 //  edtCPF.SetFocus;
 
@@ -1044,7 +1021,9 @@ begin
   if not dmCadastroServidor.retornarBanco
   then ShowMessage('A pesquisa falhou para o campo do Banco');
   }
+
   preencherCamposUF;
+
 
   //cbxNatural_UF.Properties.Items := dmCadastroServidor.ListaCliente;
 
@@ -1060,11 +1039,31 @@ begin
   frmUpdateFerias.configurarOperacao;
   frmUpdateFerias.setFormQueChamou('frmUpdateServidor');
 
-  frmUpdateFerias.setarDadosServidor
+  {frmUpdateFerias.setarDadosServidor
   (dmPessoal.qryPesquisa.FieldValues['idServidor'],
    dmPessoal.qryPesquisa.FieldValues['Nome'],
    dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+  }
 
+  {ShowMessage
+  (dmPessoal.qryPesquisa.FieldValues['idServidor'] + ', ' +
+   dmPessoal.qryPesquisa.FieldValues['Nome'] + ', ' +
+   dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);}
+
+  {
+  dmExibirTabelas.setarCabecalhoPessoal
+  ('', dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   '', dmPessoal.qryPesquisa.FieldValues['Nome'],
+   '', '', dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+  }
+  
+  with dmPessoal do
+  begin
+    frmUpdateFerias.setarDadosServidor
+    (qryPesquisa.FieldValues['idServidor'],
+     qryPesquisa.FieldValues['Nome'],
+     qryPesquisa.FieldValues['descricaoCargo']);
+  end;
 
   frmUpdateFerias.ShowModal;
   frmUpdateFerias.Release;
@@ -1146,9 +1145,119 @@ procedure TfrmUpdateServidor.btnEditarFeriasClick(Sender: TObject);
 begin
   Application.CreateForm(TfrmUpdateFerias, frmUpdateFerias);
   frmUpdateFerias.setarOperacao(2);
+
+  //with DMFeriasAbonoAfastamento.qryPesquisa do
+  //begin
+
+  //dmExibirTabelas.qryAfastamentoServidor
+
+    {frmUpdateFerias.exibeFeriasNoPeriodo
+    (DMFeriasAbonoAfastamento.qryPesquisa.FieldValues['idPessoal'],
+    DMFeriasAbonoAfastamento.qryPesquisa.FieldValues['idServidor'],
+    DMFeriasAbonoAfastamento.qryFerias.FieldValues['idExercicio']);
+    }
+
+    {frmUpdateFerias.exibeFeriasNoPeriodo
+    (dmExibirTabelas.qryFeriasServidor.FieldValues['idPessoal'],
+    dmExibirTabelas.qryFeriasServidor.FieldValues['idServidor'],
+    dmExibirTabelas.qryFeriasServidor.FieldValues['idExercicio'],
+    dmExibirTabelas.qryFeriasServidor.FieldValues['idPeriodo']
+    }
+
+    dmFeriasAbonoAfastamento.exibeFeriasNoPeriodo
+    (dmExibirTabelas.qryFeriasServidor.FieldValues['idPessoal'],
+    dmExibirTabelas.qryFeriasServidor.FieldValues['idServidor'],
+    dmExibirTabelas.qryFeriasServidor.FieldValues['idExercicio'],
+    dmExibirTabelas.qryFeriasServidor.FieldValues['idPeriodo']
+
+    );
+
+  //end;
+
+  frmUpdateFerias.configurarOperacao;
+  frmUpdateFerias.carregarFeriasParaEdicao;
+
+
+  frmUpdateFerias.bloquearCampos;
+  //frmUpdateFerias.edtProcessoSEI.SetFocus;
+
+
+  {with DMFeriasAbonoAfastamento.qryPesquisa do
+  begin
+    frmUpdateFerias.setarDadosServidor
+    (FieldValues['idServidor'],
+     FieldValues['Nome'],
+     FieldValues['Cargo']);
+  end;
+  }
+
+  frmUpdateFerias.setarDadosServidor
+  (dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   dmPessoal.qryPesquisa.FieldValues['Nome'],
+   dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+
+  {dmExibirTabelas.setarCabecalhoPessoal
+  ('', dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   '', dmPessoal.qryPesquisa.FieldValues['Nome'],
+   '', '', dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);}
+
+
+  frmUpdateFerias.setFormQueChamou('frmUpdateUpdateServidor');
+
   frmUpdateFerias.ShowModal;
   frmUpdateFerias.Release;
   frmUpdateFerias := nil;
+
+
+{  Application.CreateForm(TfrmUpdateAbonoAnual, frmUpdateAbonoAnual);
+  frmUpdateAbonoAnual.setarOperacao(2);
+
+  frmUpdateAbonoAnual.configurarOperacao;
+  frmUpdateAbonoAnual.setFormQueChamou('frmUpdateServidor');
+
+  with dmPessoal.qryPesquisa do
+  begin
+    frmUpdateAbonoAnual.setarDadosServidor
+    (FieldValues['idServidor'],
+     FieldValues['Nome'],
+     FieldValues['descricaoCargo']);
+  end;
+
+
+  with dmExibirTabelas.qryAbonoServidor do
+  begin
+    idExercicio := FieldValues['idExercicio'];
+
+    if not FieldByName('nProcessoSEI').IsNull then
+    ProcessoSEI := FieldValues['nProcessoSEI']
+    //  else ProcessoSEI := ''
+    ;
+    if not FieldByName('Dt_1').IsNull then
+    dt_1 := FieldValues['Dt_1'];
+
+    if not FieldByName('Dt_2').IsNull then
+    dt_2 := FieldValues['Dt_2'];
+
+    if not FieldByName('Dt_3').IsNull then
+    dt_3 := FieldValues['Dt_3'];
+
+    if not FieldByName('Dt_4').IsNull then
+    dt_4 := FieldValues['Dt_4'];
+
+    if not FieldByName('Dt_5').IsNull then
+    dt_5 := FieldValues['Dt_5'];
+  end;
+
+
+  frmUpdateAbonoAnual.configurarOperacao;
+  frmUpdateAbonoAnual.carregarAbonoParaEdicao(idExercicio, ProcessoSEI, dt_1, dt_2, dt_3, dt_4, dt_5);
+
+  frmUpdateAbonoAnual.bloquearCampos;
+
+  frmUpdateAbonoAnual.ShowModal;
+  frmUpdateAbonoAnual.Release;
+  frmUpdateAbonoAnual := nil;
+}  
 end;
 
 procedure TfrmUpdateServidor.edtNomeKeyPress(Sender: TObject;
@@ -1555,7 +1664,7 @@ begin
   end;
 end;
 
-function TfrmUpdateServidor.retornaSQLUpdateDados(pIDP: String): String;
+function TfrmUpdateServidor.SQLUpdateDados(pIDP: String): String;
 var SQL_Dados: String;
 begin
 
@@ -1741,13 +1850,15 @@ begin
   + ' WHERE idPessoal = ' + QuotedStr(pIDP)
   ;
 
-  frmLogs.mmoLog.Lines.Add(SQL_Dados);
+//  frmLogs.mmoLog.Lines.Add(SQL_Dados);
+
+  monitorarAcoesDaSessao
+  ('ufCreateServidor', 'Retorna SQL de atualização de dados do servidor (retornaSQLUpdateDados)', SQL_Dados);
 
   Result := SQL_Dados;
-
 end;
 
-function TfrmUpdateServidor.retornaSQLUpdateServidor(pIDP,
+function TfrmUpdateServidor.SQLUpdateServidor(pIDP,
   pIDS: String): String;
 var SQL_Servidor: String;
 begin
@@ -1802,11 +1913,17 @@ begin
   else SQL_Servidor := SQL_Servidor
     + ', idCargo = ' + QuotedStr('999999');
 
-  if lkpEspecialidade.EditingValue <> Null
+  {if lkpEspecialidade.EditingValue <> Null
   then SQL_Servidor := SQL_Servidor
     + ', especialidade = ' + QuotedStr(lkpEspecialidade.EditingValue)
   else SQL_Servidor := SQL_Servidor
-    + ', especialidade = NULL';
+    + ', especialidade = NULL';}
+
+  if lkpEspecialidade.EditingValue <> Null
+  then SQL_Servidor := SQL_Servidor
+    + ', idEspecialidade = ' + QuotedStr(lkpEspecialidade.EditingValue)
+  else SQL_Servidor := SQL_Servidor
+    + ', idEspecialidade = NULL';
 
   {if lkpFuncao.EditingValue <> Null
   then SQL_Servidor := SQL_Servidor
@@ -1870,10 +1987,17 @@ begin
     + ', CargaHoraria = NULL';
 
 
+  if edtSupervisor_Estagiario.Text <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', Supervisor_Estagiario = ' + QuotedStr(edtSupervisor_Estagiario.Text)
+  else SQL_Servidor := SQL_Servidor
+    + ', Supervisor_Estagiario = NULL';
+
+
     // ver com a Cláudia em que situações são digitados
     // os campos AverbacaoGDF e AverbacaoServPublico
 
-    
+
   SQL_Servidor := SQL_Servidor
     + ', idUsuario = ' + QuotedStr(DMConexao.Usuario.CPF)
     + ' WHERE idPessoal = ' + QuotedStr(pIDP)
@@ -1884,7 +2008,7 @@ begin
 
 end;
 
-function TfrmUpdateServidor.retornaSQLUpdateDatas(pIDP,
+function TfrmUpdateServidor.SQLUpdateDatas(pIDP,
   pIDS: String): String;
 var SQL_Datas: String;
 begin
@@ -1986,7 +2110,9 @@ begin
       DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
       RetornaData(2),
       'tbServidor, tbHist_Funcao',
+      'NULL',
       frmUpdateServidor.lbl_IDP.Caption,
+      frmUpdateServidor.edtidServidor.Text, // bloquear a edição desse campo neste formulário
       'TODOS',
       'Exclusão da função: '
       + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -2044,8 +2170,51 @@ begin
 end;
 
 procedure TfrmUpdateServidor.btnExcluirFeriasClick(Sender: TObject);
+var wMens, wOperacao, wEvento: String;
 begin
-//
+  wMens := 'Atenção! Confirma esta';
+  wOperacao := 'EXCLUSÃO';
+  wMens := wMens + ' ' + wOperacao + '?';
+
+  if ConfirmaAcao(wMens, 3) = 1 then
+  begin
+    with dmExibirTabelas.qryFeriasServidor do
+    begin
+      wEvento := UpperCase(wOperacao)+ ' de férias.'
+      + ' Exercício: ' + FieldValues['idExercicio']
+      + ' Data de início: ';
+
+      if not FieldByName('Dt_Inicio').IsNull then
+      wEvento := wEvento + DateToStr(FieldValues['Dt_Inicio'])
+
+      + ', Data de término: ';
+
+      if not FieldByName('Dt_Termino').IsNull then
+      wEvento := wEvento + DateToStr(FieldValues['Dt_Termino']);
+    end;
+
+    if DMExcluirFeriasAbonoAfastamento.excluirFerias(dmExibirTabelas.qryFeriasServidor.FieldValues['ID'])
+    then
+    begin
+      IncluirLog
+      (
+      DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+      RetornaData(2),
+      'tbFerias',
+      //'NULL',
+      dmPessoal.qryPesquisa.FieldValues['idPessoal'],
+      dmPessoal.qryPesquisa.FieldValues['idPessoal'],
+      dmPessoal.qryPesquisa.FieldValues['idServidor'],
+      'TODOS',
+      wEvento
+      );
+
+      ShowMessage('Registro excluído.');
+    end;
+
+    dmExibirTabelas.qryFeriasServidor.Active := false;
+    dmExibirTabelas.qryFeriasServidor.Active := true;
+  end
 end;
 
 procedure TfrmUpdateServidor.btnIncluirAbonoClick(Sender: TObject);
@@ -2070,7 +2239,7 @@ end;
 procedure TfrmUpdateServidor.SetarAlteracaoDesfeita;
 begin
   RegistroAlterado := false;
-  btnGravarServidor.Enabled := false;
+//  btnGravarServidor.Enabled := false;
 
   with StatusBar do
   begin
@@ -2086,7 +2255,7 @@ begin
   0:
   begin
     RegistroAlterado := false;
-    btnGravarServidor.Enabled := false;
+//    btnGravarServidor.Enabled := false;
   //  SetarStatus('2');
 
     with StatusBar do
@@ -2099,7 +2268,7 @@ begin
   1:
   begin
     RegistroAlterado := true;
-    btnGravarServidor.Enabled := true;
+//    btnGravarServidor.Enabled := true;
   //  SetarStatus('2');
 
     with StatusBar do
@@ -2137,7 +2306,7 @@ end;
 procedure TfrmUpdateServidor.FormCloseQuery(Sender: TObject;
   var CanClose: Boolean);
 begin
-  if btnGravarServidor.Enabled then
+  {if btnGravarServidor.Enabled then
 
   case ConfirmaAcao
   ('O registro não foi gravado, ainda. Deseja gravá-lo antes de sair?',3) of
@@ -2167,11 +2336,11 @@ begin
       end
       else CanClose := True;
       }
-    end;
+  {  end;
   0: CanClose := True;
   2: CanClose := False;
   end;
-
+  }
 end;
 
 function TfrmUpdateServidor.setarCorPadrao: boolean;
@@ -2223,8 +2392,40 @@ begin
   if (edtNome.Text <> EstadoEdicao.Nome[0])
   or (edtCPF.Text <> EstadoEdicao.CPF[0])
   or (edtDtNascimento.Text <> EstadoEdicao.dtNascimento[0])
-  or (lkpCargo.Text <> EstadoEdicao.Cargo[0])
+  or (lkpCargo.EditValue <> EstadoEdicao.idCargo[0])
   or (edtidServidor.Text <> EstadoEdicao.idServidor[0])
+
+  //  or (lkpEspecialidade.Text <> EstadoEdicao.especialidade[0])
+  or (lkpEspecialidade.EditValue <> EstadoEdicao.idEspecialidade[0])
+
+  or (edtDt_PosseCargo.Text <> EstadoEdicao.dtPosseCargo[0])
+  or (edtDt_ExercicioCargo.Text <> EstadoEdicao.dtExercicioCargo[0])
+  or (edtDt_NomeacaoCargo.Text <> EstadoEdicao.dtNomeacaoCargo[0])
+
+  //or (chkRequisitado.Text <> EstadoEdicao.requisitado[0]) -- verificar pelo chequed ou por outra forma
+
+  or (edtOrgaoOrigem.Text <> EstadoEdicao.orgaoOrigem[0])
+  or (cbxCargaHoraria.Text <> EstadoEdicao.cargaHoraria[0])
+  or (cbxClasse.Text <> EstadoEdicao.classe[0])
+  or (cbxPadrao.Text <> EstadoEdicao.padrao[0])
+  or (edtCF_Num.Text <> EstadoEdicao.cfNum[0])
+
+  or (edtNaturalidade.Text <> EstadoEdicao.naturalidade[0])
+  or (cbxNatural_UF.Text <> EstadoEdicao.naturalUF[0])
+  or (edtPai.Text <> EstadoEdicao.pai[0])
+  or (edtMae.Text <> EstadoEdicao.mae[0])
+  or (lkpEstadoCivil.Text <> EstadoEdicao.estadoCivil[0])
+  or (cbxTipoSanguineo.Text <> EstadoEdicao.tipoSangue[0])
+  or (edtConjuge.Text <> EstadoEdicao.conjuge[0])
+  or (edtEndereco.Text <> EstadoEdicao.endereco[0])
+  or (edtBairro.Text <> EstadoEdicao.bairro[0])
+
+  or (edtCidade.Text <> EstadoEdicao.cidade[0])
+  or (cbxEnderecoUF.Text <> EstadoEdicao.enderecoUF[0])
+  or (edtCEP.Text <> EstadoEdicao.cep[0])
+  or (edtEmail.Text <> EstadoEdicao.email[0])
+  or (cbxGrauInstrucao.Text <> EstadoEdicao.grauInstrucao[0])
+  or (lkpCurso.Text <> EstadoEdicao.curso[0])
 
   //or (lblLotacao.Caption <> EstadoEdicao.Lotacao[0])
   then
@@ -2262,7 +2463,7 @@ procedure TfrmUpdateServidor.setarCampoAlterado(Campo: TComponent);
 begin
   PodeDesfazerCampo := true;
   SetarEstadoDoRegistro;
-
+  {
   if Campo.ClassType = TcxTextEdit then
   TcxTextEdit(Campo).Style.Font.Color := clRed;
 
@@ -2272,6 +2473,9 @@ begin
   if Campo.ClassType = TcxLookupComboBox then
   TcxLookupComboBox(Campo).Style.Font.Color := clRed;
 
+  if Campo.ClassType = TcxComboBox then
+  TcxComboBox(Campo).Style.Font.Color := clRed;
+  }
 end;
 
 procedure TfrmUpdateServidor.edtDtNascimentoPropertiesChange(
@@ -2371,7 +2575,7 @@ begin
   (dmPessoal.qryPesquisa.FieldValues['idServidor'],
    dmPessoal.qryPesquisa.FieldValues['Nome'],
    dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
-  
+
   frmUpdateAfastamento.ShowModal;
   frmUpdateAfastamento.Release;
   frmUpdateAfastamento := nil;
@@ -2379,8 +2583,1260 @@ begin
 end;
 
 procedure TfrmUpdateServidor.btnEditarAfastamentoClick(Sender: TObject);
+var
+    idExercicio,
+    nProcessoSEI,
+    idAfastamento,
+    dt_Inicio,
+    dt_Termino,
+    Observacao,
+    ID: String;
 begin
-  ShowMessage('Em desenvolvimento');
+  Application.CreateForm(TfrmUpdateAfastamento, frmUpdateAfastamento);
+  frmUpdateAfastamento.setarOperacao(2);
+
+  frmUpdateAfastamento.configurarOperacao;
+  frmUpdateAfastamento.setFormQueChamou('frmUpdateServidor');
+
+  with dmExibirTabelas.qryAfastamentoServidor do
+  begin
+    if FieldByName('idExercicio').IsNull
+    then idExercicio := ''
+    else idExercicio := FieldValues['idExercicio'];
+
+    if FieldByName('nProcessoSEI').IsNull
+    then nProcessoSEI := ''
+    else nProcessoSEI := FieldValues['nProcessoSEI'];
+
+    if FieldByName('idAfastamento').IsNull
+    then idAfastamento := ''
+    else idAfastamento := FieldValues['idAfastamento'];
+
+    if FieldByName('dt_Inicio').IsNull
+    then dt_Inicio := ''
+    else dt_Inicio := FieldValues['dt_Inicio'];
+
+    if FieldByName('dt_Termino').IsNull
+    then dt_Termino := ''
+    else dt_Termino := FieldValues['dt_Termino'];
+
+    if (FieldByName('Observacao').IsNull) or (Trim(FieldValues['Observacao']) = '')
+    then Observacao := ''
+    else Observacao := FieldValues['Observacao'];
+
+    //ShowMessage(FieldByName('Observacao').AsString);
+
+    if FieldByName('ID').IsNull
+    then ID := ''
+    else ID := FieldValues['ID'];
+
+    //ShowMessage(ID);
+  end;
+
+
+  with dmExibirTabelas.qryAfastamentoServidor do
+  begin
+    frmUpdateAfastamento.carregarAfastamento
+    (
+      idExercicio,
+      nProcessoSEI,
+      idAfastamento,
+      dt_Inicio,
+      dt_Termino,
+      Observacao,
+      ID
+    );
+  end;
+
+  frmUpdateAfastamento.setarDadosServidor
+  (dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   dmPessoal.qryPesquisa.FieldValues['Nome'],
+   dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+
+  frmUpdateAfastamento.ShowModal;
+  frmUpdateAfastamento.Release;
+  frmUpdateAfastamento := nil;
+
+end;
+
+procedure TfrmUpdateServidor.edtNaturalidadePropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtNaturalidade);
+end;
+
+procedure TfrmUpdateServidor.lkpEspecialidadePropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(lkpEspecialidade);
+end;
+
+procedure TfrmUpdateServidor.edtDt_PosseCargoPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtDt_PosseCargo);
+end;
+
+procedure TfrmUpdateServidor.edtDt_ExercicioCargoPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtDt_ExercicioCargo);
+end;
+
+procedure TfrmUpdateServidor.edtDt_NomeacaoCargoPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtDt_NomeacaoCargo);
+end;
+
+procedure TfrmUpdateServidor.edtDt_NomeacaoCargoDODFPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtDt_NomeacaoCargoDODF);
+end;
+
+procedure TfrmUpdateServidor.edtOrgaoOrigemPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtOrgaoOrigem);
+end;
+
+procedure TfrmUpdateServidor.cbxCargaHorariaPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(cbxCargaHoraria);
+end;
+
+procedure TfrmUpdateServidor.cbxClassePropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(cbxClasse);
+end;
+
+procedure TfrmUpdateServidor.cbxPadraoPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(cbxPadrao);
+end;
+
+procedure TfrmUpdateServidor.edtCF_NumPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtCF_Num);
+end;
+
+procedure TfrmUpdateServidor.cbxNatural_UFPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(cbxNatural_UF);
+end;
+
+procedure TfrmUpdateServidor.edtPaiPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtPai);
+end;
+
+procedure TfrmUpdateServidor.edtMaePropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtMae);
+end;
+
+procedure TfrmUpdateServidor.lkpEstadoCivilPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(lkpEstadoCivil);
+end;
+
+procedure TfrmUpdateServidor.cbxTipoSanguineoPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(cbxTipoSanguineo);
+end;
+
+procedure TfrmUpdateServidor.edtConjugePropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtConjuge);
+end;
+
+procedure TfrmUpdateServidor.edtEnderecoPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtEndereco);
+end;
+
+procedure TfrmUpdateServidor.edtBairroPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtBairro);
+end;
+
+procedure TfrmUpdateServidor.edtCidadePropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtCidade);
+end;
+
+procedure TfrmUpdateServidor.cbxEnderecoUFPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(cbxEnderecoUF);
+end;
+
+procedure TfrmUpdateServidor.edtCEPPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtCEP);
+end;
+
+procedure TfrmUpdateServidor.edtEmailPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(edtEmail);
+end;
+
+procedure TfrmUpdateServidor.cbxGrauInstrucaoPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(cbxGrauInstrucao);
+end;
+
+procedure TfrmUpdateServidor.lkpCursoPropertiesChange(Sender: TObject);
+begin
+  setarCampoAlterado(lkpCurso);
+end;
+
+function TfrmUpdateServidor.setarRegistroAGravar: boolean;
+var registro: String;
+begin
+  // Setar variáveis para tabela tbDados
+
+  with RegistroAGravar do
+  begin
+    if edtNome.Text <> Null
+    then nome[0]  := edtNome.Text
+    else nome[0] := '';
+
+    if edtEndereco.Text <> Null
+    then endereco[0] :=  edtEndereco.Text
+    else endereco[0] := '';
+
+    if edtBairro.Text <> Null
+    then Bairro[0] := edtBairro.Text
+    else Bairro[0] := '';
+
+    if edtCidade.Text <> Null
+    then Cidade[0] := edtCidade.Text
+    else Cidade[0] := '';
+
+    if cbxEnderecoUF.EditingValue <> Null
+    then EnderecoUF[0] := cbxEnderecoUF.Text
+    else EnderecoUF[0] := '';
+
+    if edtCEP.Text <> Null
+    then CEP[0] := edtCEP.Text
+    else CEP[0] := '';
+
+    if edtCI_Num.Text <> Null
+    then ciNum[0] := edtCI_Num.Text
+    else ciNum[0] := '';
+
+    if cbxCI_UF.EditingValue <> Null
+    then ciUF[0] := cbxCI_UF.Text
+    else ciUF[0] := '';
+
+    if edtCI_Emissao.Text <> Null
+    then ciEmissao[0] := edtCI_Emissao.Text
+    else ciEmissao[0] := '';
+
+    if edtNaturalidade.Text <> Null
+    then Naturalidade[0] := edtNaturalidade.Text
+    else Naturalidade[0] := '';
+
+    if cbxNatural_UF.EditingValue <> Null
+    then naturalUF[0] := cbxNatural_UF.EditingValue
+    else naturalUF[0] := '';
+
+    if edtPis_Pasep.Text <> Null
+    then pisPasep[0] := edtPis_Pasep.Text
+    else pisPasep[0] := '';
+
+    if edtTE_Num.Text <> Null
+    then teNum[0] := edtTE_Num.Text
+    else teNum[0] := '';
+
+    if edtTE_Zona.Text <> Null
+    then teZona[0] := edtTE_Zona.Text
+    else teZona[0] := '';
+
+    if edtTE_Secao.Text <> Null
+    then teSecao[0] := edtTE_Secao.Text
+    else teSecao[0] := '';
+
+    if cbxTE_UF.EditingValue <> Null
+    then teUF[0] := cbxTE_UF.EditingValue
+    else teUF[0] := '';
+
+    if edtTE_Emissao.Text <> Null
+    then teEmissao[0] := edtTE_Emissao.Text
+    else teEmissao[0] := '';
+
+    if edtPai.Text <> Null
+    then Pai[0] := edtPai.Text
+    else Pai[0] := '';
+
+    if edtMae.Text <> Null
+    then Mae[0] := edtMae.Text
+    else Mae[0] := '';
+
+    if lkpEstadoCivil.EditingValue <> Null
+    then EstadoCivil[0] := lkpEstadoCivil.EditingValue
+    else EstadoCivil[0] := '';
+
+    if edtConjuge.Text <> Null
+    then Conjuge[0] := edtConjuge.Text
+    else Conjuge[0] := '';
+
+    if lkpBanco.EditingValue <> Null
+    then Banco[0] :=lkpBanco.EditingValue
+    else Banco[0] := '';
+
+    if edtAgencia.Text <> Null
+    then Agencia[0] := edtAgencia.Text
+    else Agencia[0] := '';
+
+    if edtConta.Text <> Null
+    then contaBanco[0] := edtConta.Text
+    else contaBanco[0] := '';
+
+    if edtOAB_Num.Text <> Null
+    then oabNum[0] := edtOAB_Num.Text
+    else oabNum[0] := '';
+
+    if edtOAB_Secao.Text <> Null
+    then oabSecao[0] := edtOAB_Secao.Text
+    else oabSecao[0] := '';
+
+    if cbxGrauInstrucao.EditingValue <> Null
+    then GrauInstrucao[0] := cbxGrauInstrucao.EditingValue
+    else GrauInstrucao[0] := '';
+
+    if lkpCurso.EditingValue <> Null
+    then Curso[0] := lkpCurso.EditingValue
+    else Curso[0] := '';
+
+    if cbxTipoSanguineo.EditingValue <> Null
+    then tipoSangue[0] := cbxTipoSanguineo.EditingValue
+    else tipoSangue[0] := '';
+
+    if edtEmail.Text <> Null
+    then Email[0] := edtEmail.Text
+    else Email[0] := '';
+
+
+    // Setar variáves par tbServidor
+
+    if edtidServidor.Text <> Null
+    then idServidor[0] := Trim(edtidServidor.Text)
+    else idServidor[0] := '';
+
+
+    if lkpCargo.EditingValue <> Null
+    then idCargo[0] := Trim(lkpCargo.EditingValue)
+    else idCargo[0] := '';
+
+    if lkpEspecialidade.EditingValue <> Null
+//    then especialidade[0] := lkpEspecialidade.EditingValue
+//    else especialidade[0] := '';
+
+    then idEspecialidade[0] := lkpEspecialidade.EditingValue
+    else idEspecialidade[0] := '';
+
+    // 8	CF_Num 9	Ramal 10	Sala 11	Classe
+    // 12	Padrao (não se aplica para ramal e sala)
+
+    if edtCF_Num.Text <> Null
+    then cfNum[0] := Trim(edtCF_Num.Text)
+    else cfNum[0] := '';
+
+    if cbxClasse.Text <> Null
+    then Classe[0] := Trim(cbxClasse.Text)
+    else Classe[0] := '';
+
+    if cbxPadrao.Text <> Null
+    then Padrao[0] := Trim(cbxPadrao.Text)
+    else Padrao[0] := '';
+
+
+    if chkRequisitado.Checked
+    then Requisitado[0] := '1'
+    else Requisitado[0] := '0';
+
+
+    if edtOrgaoOrigem.Text <> ''
+    then orgaoOrigem[0] := edtOrgaoOrigem.Text
+    else orgaoOrigem[0] := '';
+
+    if chkAuxTransporte.Checked
+    then AuxTransporte[0] := '1'
+    else AuxTransporte[0] := '0';
+
+
+    if cbxCargaHoraria.Text <> Null
+    then CargaHoraria[0] := Trim(cbxCargaHoraria.Text)
+    else CargaHoraria[0] := '';
+
+///////////// Dados do estágio //////////////////////////////////////
+
+    //1
+    if edtSupervisor_Estagiario.Text <> Null
+    then Supervisor_Estagiario[0] := Trim(edtSupervisor_Estagiario.Text)
+    else Supervisor_Estagiario[0] := '';
+    //2
+    if edtDt_InicioContrato1_Estagiario.Text <> Null
+    then Dt_InicioContrato1_Estagiario[0] := Trim(edtDt_InicioContrato1_Estagiario.Text)
+    else Dt_InicioContrato1_Estagiario[0] := '';
+    //3
+    if edtDt_InicioContrato2_Estagiario.Text <> Null
+    then Dt_InicioContrato2_Estagiario[0] := Trim(edtDt_InicioContrato2_Estagiario.Text)
+    else Dt_InicioContrato2_Estagiario[0] := '';
+    //4
+    if edtDt_InicioContrato3_Estagiario.Text <> Null
+    then Dt_InicioContrato3_Estagiario[0] := Trim(edtDt_InicioContrato3_Estagiario.Text)
+    else Dt_InicioContrato3_Estagiario[0] := '';
+    //5
+    if edtDt_InicioContrato4_Estagiario.Text <> Null
+    then Dt_InicioContrato4_Estagiario[0] := Trim(edtDt_InicioContrato4_Estagiario.Text)
+    else Dt_InicioContrato4_Estagiario[0] := '';
+    //6
+    if edtDt_TerminoContrato1_Estagiario.Text <> Null
+    then Dt_TerminoContrato1_Estagiario[0] := Trim(edtDt_TerminoContrato1_Estagiario.Text)
+    else Dt_TerminoContrato1_Estagiario[0] := '';
+    //7
+    if edtDt_TerminoContrato2_Estagiario.Text <> Null
+    then Dt_TerminoContrato2_Estagiario[0] := Trim(edtDt_TerminoContrato2_Estagiario.Text)
+    else Dt_TerminoContrato2_Estagiario[0] := '';
+    //8
+    if edtDt_TerminoContrato3_Estagiario.Text <> Null
+    then Dt_TerminoContrato3_Estagiario[0] := Trim(edtDt_TerminoContrato3_Estagiario.Text)
+    else Dt_TerminoContrato3_Estagiario[0] := '';
+    //9
+    if edtDt_TerminoContrato4_Estagiario.Text <> Null
+    then Dt_TerminoContrato4_Estagiario[0] := Trim(edtDt_TerminoContrato4_Estagiario.Text)
+    else Dt_TerminoContrato4_Estagiario[0] := '';
+    //10
+    if edtInstituicaoEnsino.Text <> Null
+    then InstituicaoEnsino[0] := Trim(edtInstituicaoEnsino.Text)
+    else InstituicaoEnsino[0] := '';
+    //11
+    if edtTurnoEstagio.Text <> Null
+    then TurnoEstagio[0] := Trim(edtTurnoEstagio.Text)
+    else TurnoEstagio[0] := '';
+    //12
+    if mmoObservacao_Estagio.Text <> Null
+    then observacao[0] := Trim(mmoObservacao_Estagio.Text)
+    else observacao[0] := '';
+    //13
+    if edtSemestre.Text <> Null
+    then Semestre[0] := Trim(edtSemestre.Text)
+    else Semestre[0] := '';
+
+///////////////////////////////////////////////////
+
+  end;
+
+  with RegistroAGravar do
+  begin
+    registro := nome[0] + chr(13) + idCargo[0] + chr(13);
+  end;
+
+  monitorarAcoesDaSessao('ufUpdateServidor', 'setarRegistroNovo', registro);
+
+  Result := true;
+end;
+
+procedure TfrmUpdateServidor.edtNaturalidadeExit(Sender: TObject);
+begin
+  edtNaturalidade.Text :=
+  AnsiUpperCase(RemoveEspaco(edtNaturalidade.Text));
+end;
+
+function TfrmUpdateServidor.carregarDadosEstagio: boolean;
+begin
+  with dmPessoal.qryPesquisa do
+  begin
+    if FieldByName('Dt_InicioContrato1_Estagiario').IsNull
+    then edtDt_InicioContrato1_Estagiario.Text := ''
+    else edtDt_InicioContrato1_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato1_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato1_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_InicioContrato1_Estagiario[0]   := Trim(edtDt_InicioContrato1_Estagiario.Text);
+
+    if FieldByName('Dt_InicioContrato2_Estagiario').IsNull
+    then edtDt_InicioContrato2_Estagiario.Text := ''
+    else edtDt_InicioContrato2_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato2_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato2_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_InicioContrato2_Estagiario[0]   := Trim(edtDt_InicioContrato2_Estagiario.Text);
+
+    if FieldByName('Dt_InicioContrato3_Estagiario').IsNull
+    then edtDt_InicioContrato3_Estagiario.Text := ''
+    else edtDt_InicioContrato3_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato3_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato3_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_InicioContrato3_Estagiario[0]   := Trim(edtDt_InicioContrato3_Estagiario.Text);
+
+    if FieldByName('Dt_InicioContrato4_Estagiario').IsNull
+    then edtDt_InicioContrato4_Estagiario.Text := ''
+    else edtDt_InicioContrato4_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato4_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato4_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_InicioContrato4_Estagiario[0]   := Trim(edtDt_InicioContrato4_Estagiario.Text);
+
+
+    if FieldByName('Dt_TerminoContrato1_Estagiario').IsNull
+    then edtDt_TerminoContrato1_Estagiario.Text := ''
+    else edtDt_TerminoContrato1_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato1_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato1_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_TerminoContrato1_Estagiario[0]   := Trim(edtDt_TerminoContrato1_Estagiario.Text);
+
+
+    if FieldByName('Dt_TerminoContrato2_Estagiario').IsNull
+    then edtDt_TerminoContrato2_Estagiario.Text := ''
+    else edtDt_TerminoContrato2_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato2_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato2_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_TerminoContrato2_Estagiario[0]   := Trim(edtDt_TerminoContrato2_Estagiario.Text);
+
+    if FieldByName('Dt_TerminoContrato3_Estagiario').IsNull
+    then edtDt_TerminoContrato3_Estagiario.Text := ''
+    else edtDt_TerminoContrato3_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato3_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato3_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_TerminoContrato3_Estagiario[0]   := Trim(edtDt_TerminoContrato3_Estagiario.Text);
+
+    if FieldByName('Dt_TerminoContrato4_Estagiario').IsNull
+    then edtDt_TerminoContrato4_Estagiario.Text := ''
+    else edtDt_TerminoContrato4_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato4_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato4_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Dt_TerminoContrato4_Estagiario[0]   := Trim(edtDt_TerminoContrato4_Estagiario.Text);
+
+    if FieldByName('Supervisor_Estagiario').IsNull
+    then edtSupervisor_Estagiario.Text := ''
+    else edtSupervisor_Estagiario.Text := Trim(FieldValues['Supervisor_Estagiario']);
+
+    // Manter o valor do campo Supervisor_Estagiario no registro EstadoEdicao
+    EstadoEdicao.Supervisor_Estagiario[0]   := Trim(edtSupervisor_Estagiario.Text);
+
+    if FieldByName('InstituicaoEnsino').IsNull
+    then edtInstituicaoEnsino.Text := ''
+    else edtInstituicaoEnsino.Text := Trim(FieldValues['InstituicaoEnsino']);
+
+    // Manter o valor do campo Supervisor_Estagiario no registro EstadoEdicao
+    EstadoEdicao.InstituicaoEnsino[0]   := Trim(edtInstituicaoEnsino.Text);
+
+
+    if FieldByName('TurnoEstagio').IsNull
+    then edtTurnoEstagio.Text := ''
+    else edtTurnoEstagio.Text := Trim(FieldValues['TurnoEstagio']);
+
+    // Manter o valor do campo TurnoEstagio no registro EstadoEdicao
+    EstadoEdicao.TurnoEstagio[0]   := Trim(edtTurnoEstagio.Text);
+
+    if FieldByName('Semestre').IsNull
+    then edtSemestre.Text := ''
+    else edtSemestre.Text := Trim(FieldValues['Semestre']);
+
+    // Manter o valor do campo Semestre no registro EstadoEdicao
+    EstadoEdicao.Semestre[0]   := Trim(edtSemestre.Text);
+
+    if FieldByName('Observacao').IsNull
+    then mmoObservacao_Estagio.Text := ''
+    else mmoObservacao_Estagio.Text := Trim(FieldValues['Observacao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.observacao[0]   := Trim(mmoObservacao_Estagio.Text);
+  end;
+end;
+
+function TfrmUpdateServidor.carregarDadosFuncionais: boolean;
+begin
+  with dmPessoal.qryPesquisa do
+  begin
+
+    if FieldByName('idServidor').IsNull
+    then edtidServidor.Text := ''
+    else edtidServidor.Text := Trim(FieldValues['idServidor']);
+
+    // Manter o valor do campo idServidor no registro EstadoEdicao
+    EstadoEdicao.idServidor[0]  := edtidServidor.Text;
+
+
+    if FieldByName('descricaoCargo').IsNull
+    then lkpCargo.Text := ''
+    else lkpCargo.Text := Trim(FieldValues['descricaoCargo']);
+
+    // Manter o valor do campo Cargo no registro EstadoEdicao
+    EstadoEdicao.idCargo[0]    := Trim(lkpCargo.Text);
+
+
+    {if FieldByName('Especialidade').IsNull
+    then lkpEspecialidade.Text := ''
+    else lkpEspecialidade.Text := Trim(FieldValues['Especialidade']);}
+
+    //ShowMessage(FieldByName('idEspecialidade').AsString);
+    //abort;
+
+    if FieldByName('idEspecialidade').IsNull
+    then
+      lkpEspecialidade.Text := ''
+    else
+    begin
+      lkpEspecialidade.Text := Trim(FieldValues['Especialidade']);
+      EstadoEdicao.idEspecialidade[0] := Trim(lkpEspecialidade.EditValue);
+    end;
+
+    // Manter o valor do campo Especialidade no registro EstadoEdicao
+//    EstadoEdicao.especialidade[0]    := Trim(lkpEspecialidade.Text);
+
+
+
+
+    if FieldByName('Dt_PosseCargo').IsNull
+    then edtDt_PosseCargo.Text := ''
+    else edtDt_PosseCargo.Text := Trim(FieldValues['Dt_PosseCargo']);
+
+    // Manter o valor do campo Dt_PosseCargo no registro EstadoEdicao
+    EstadoEdicao.dtPosseCargo[0]    := Trim(edtDt_PosseCargo.Text);
+
+    if FieldByName('Dt_ExercicioCargo').IsNull
+    then edtDt_ExercicioCargo.Text := ''
+    else edtDt_ExercicioCargo.Text := Trim(FieldValues['Dt_ExercicioCargo']);
+
+    // Manter o valor do campo Dt_ExercicioCargo no registro EstadoEdicao
+    EstadoEdicao.dtExercicioCargo[0]   := Trim(edtDt_ExercicioCargo.Text);
+
+    if FieldByName('Dt_NomeacaoCargo').IsNull
+    then edtDt_NomeacaoCargo.Text := ''
+    else edtDt_NomeacaoCargo.Text := Trim(FieldValues['Dt_NomeacaoCargo']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.dtNomeacaoCargo[0]   := Trim(edtDt_NomeacaoCargo.Text);
+
+    if FieldByName('Dt_NomeacaoCargoDODF').IsNull
+    then edtDt_NomeacaoCargoDODF.Text := ''
+    else edtDt_NomeacaoCargoDODF.Text := Trim(FieldValues['Dt_NomeacaoCargoDODF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.dtNomeacaoCargoDODF[0]   := Trim(edtDt_NomeacaoCargoDODF.Text);
+
+    if FieldByName('descricaoLotacao').IsNull
+    then txtLotacao.Caption := '' // lkpLotacao.Text := ''
+    else txtLotacao.Caption :=    // lkpLotacao.Text :=
+    Trim(FieldValues['descricaoLotacao']);
+
+    // Manter o valor do campo Lotacao no registro EstadoEdicao
+    EstadoEdicao.idLotacao[0]  := Trim(txtLotacao.Caption);
+
+
+    //lot.idlotacao, lot.Sigla as SiglaLotacao, lot.descricao as descricaoLotacao,
+
+    if not FieldByName('requisitado').IsNull
+    then chkRequisitado.Checked := false
+    else chkRequisitado.Checked := true;
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+//    EstadoEdicao.[0]   := Trim();
+
+    if FieldByName('OrgaoDeOrigem').IsNull
+    then edtOrgaoOrigem.Text := ''
+    else edtOrgaoOrigem.Text := Trim(FieldValues['OrgaoDeOrigem']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.orgaoOrigem[0]   := Trim(edtOrgaoOrigem.Text);
+
+    if FieldByName('CargaHoraria').IsNull
+    then cbxCargaHoraria.Text := ''
+    else cbxCargaHoraria.Text := Trim(FieldValues['CargaHoraria']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.cargaHoraria[0]   := Trim(cbxCargaHoraria.Text);
+
+    if FieldByName('Classe').IsNull
+    then cbxClasse.Text := ''
+    else cbxClasse.Text := Trim(FieldValues['Classe']);
+
+        // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.classe[0]   := Trim(cbxClasse.Text);
+
+    if FieldByName('Padrao').IsNull
+    then cbxPadrao.Text := ''
+    else cbxPadrao.Text := Trim(FieldValues['Padrao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.padrao[0]   := Trim(cbxPadrao.Text);
+
+
+    if FieldByName('Supervisor_Estagiario').IsNull
+    then edtSupervisor_Estagiario.Text := ''
+    else edtSupervisor_Estagiario.Text := Trim(FieldValues['Supervisor_Estagiario']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.Supervisor_Estagiario[0]   := Trim(edtSupervisor_Estagiario.Text);
+
+  end;
+end;
+
+function TfrmUpdateServidor.carregarDadosPessoais: boolean;
+begin
+  with dmPessoal.qryPesquisa do
+  begin
+
+    if FieldByName('ID').IsNull then
+    begin
+      ShowMessage('Erro crítico');
+      Application.Terminate;
+    end;
+
+    lbl_IDP.Caption         := FieldValues['idPessoal'];
+    lbl_IDS.Caption         := FieldValues['ID'];
+
+
+    if FieldByName('CPF').IsNull
+    then edtCPF.Text := ''
+    else edtCPF.Text := Trim(FieldValues['CPF']);
+
+    // Manter o valor do campo Nome no registro EstadoEdicao
+    EstadoEdicao.cpf[0]  := edtCPF.Text;
+
+    if FieldByName('dt_nascimento').IsNull
+    then edtDtNascimento.Text := ''
+    else edtDtNascimento.Text := Trim(FieldValues['dt_nascimento']);
+
+    // Manter o valor do campo dt_Nascimento no registro EstadoEdicao
+    EstadoEdicao.dtNascimento[0]  := edtDtNascimento.Text;
+
+    if FieldByName('Nome').IsNull
+    then edtNome.Text := ''
+    else edtNome.Text := Trim(FieldValues['Nome']);
+
+    // Manter o valor do campo Nome no registro EstadoEdicao
+    EstadoEdicao.nome[0]  := edtNome.Text;
+
+
+    // Aba dados pessoais
+
+    if FieldByName('Naturalidade').IsNull
+    then edtNaturalidade.Text := ''
+    else edtNaturalidade.Text := Trim(FieldValues['Naturalidade']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.naturalidade[0]   := Trim(edtNaturalidade.Text);
+
+    // Manter o valor do campo Naturalidade no registro EstadoEdicao
+    EstadoEdicao.naturalidade[0]  := edtNaturalidade.Text;
+
+    if FieldByName('Natural_UF').IsNull
+    then cbxNatural_UF.Text := ''
+    else cbxNatural_UF.Text := Trim(FieldValues['Natural_UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.naturalUF[0]   := Trim(cbxNatural_UF.Text);
+
+    if FieldByName('Pai').IsNull
+    then edtPai.Text := ''
+    else edtPai.Text := Trim(FieldValues['Pai']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.pai[0]   := Trim(edtPai.Text);
+
+    if FieldByName('Mae').IsNull
+    then edtMae.Text := ''
+    else edtMae.Text := Trim(FieldValues['Mae']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.mae[0]   := Trim(edtMae.Text);
+
+    if FieldByName('EstadoCivil').IsNull
+    then lkpEstadoCivil.Text := ''
+    else lkpEstadoCivil.Text := Trim(FieldValues['EstadoCivil']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.estadoCivil[0]   := Trim(lkpEstadoCivil.Text);
+
+    if FieldByName('TipoSanguineo').IsNull
+    then cbxTipoSanguineo.Text := ''
+    else cbxTipoSanguineo.Text := Trim(FieldValues['TipoSanguineo']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.tipoSangue[0]   := Trim(cbxTipoSanguineo.Text);
+
+    if FieldByName('Conjuge').IsNull
+    then edtConjuge.Text := ''
+    else edtConjuge.Text := Trim(FieldValues['Conjuge']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.conjuge[0]   := Trim(edtConjuge.Text);
+
+    if FieldByName('Endereco').IsNull
+    then edtEndereco.Text := ''
+    else edtEndereco.Text := Trim(FieldValues['Endereco']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.endereco[0]   := Trim(edtEndereco.Text);
+
+    if FieldByName('Bairro').IsNull
+    then edtBairro.Text := ''
+    else edtBairro.Text := Trim(FieldValues['Bairro']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.bairro[0]   := Trim(edtBairro.Text);
+
+    if FieldByName('Cidade').IsNull
+    then edtCidade.Text := ''
+    else edtCidade.Text := Trim(FieldValues['Cidade']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.cidade[0]   := Trim(edtCidade.Text);
+
+    if FieldByName('UF').IsNull
+    then cbxEnderecoUF.Text := ''
+    else cbxEnderecoUF.Text := Trim(FieldValues['UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.enderecoUF[0]   := Trim(cbxEnderecoUF.Text);
+
+    if FieldByName('CEP').IsNull
+    then edtCEP.Text := ''
+    else edtCEP.Text := Trim(FieldValues['CEP']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.cep[0]   := Trim(edtCEP.Text);
+
+    if FieldByName('Grau').IsNull
+    then cbxGrauInstrucao.Text := ''
+    else cbxGrauInstrucao.Text := Trim(FieldValues['Grau']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.grauInstrucao[0]   := Trim(cbxGrauInstrucao.Text);
+
+    if FieldByName('Email').IsNull
+    then edtEmail.Text := ''
+    else edtEmail.Text := Trim(FieldValues['Email']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.email[0]   := Trim(edtEmail.Text);
+
+    if FieldByName('Curso').IsNull
+    then lkpCurso.Text := ''
+    else lkpCurso.Text := Trim(FieldValues['Curso']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.curso[0]   := Trim(lkpCurso.Text);
+  end;
+
+  SetarAlteracaoDesfeita;
+  setarCorPadrao;
+end;
+
+function TfrmUpdateServidor.carregarDocumentos: boolean;
+begin
+  with dmPessoal.qryPesquisa do
+  begin
+    // Aba documentos
+
+    if FieldByName('CI_NUM').IsNull
+    then edtCI_NUM.Text := ''
+    else edtCI_NUM.Text := Trim(FieldValues['CI_NUM']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.ciNum[0]   := Trim(edtCI_Num.Text);
+
+    if FieldByName('CI_Emissao').IsNull
+    then edtCI_Emissao.Text := ''
+    else edtCI_Emissao.Text := Trim(FieldValues['CI_Emissao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.ciEmissao[0]   := Trim(edtCI_Emissao.Text);
+
+    if FieldByName('CI_UF').IsNull
+    then cbxCI_UF.Text := ''
+    else cbxCI_UF.Text := Trim(FieldValues['CI_UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.ciUF[0]   := Trim(cbxCI_UF.Text);
+
+    if FieldByName('TE_Num').IsNull
+    then edtTE_Num.Text := ''
+    else edtTE_Num.Text := Trim(FieldValues['TE_Num']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teNum[0]   := Trim(edtTE_Num.Text);
+
+    if FieldByName('TE_Zona').IsNull
+    then edtTE_Zona.Text := ''
+    else edtTE_Zona.Text := Trim(FieldValues['TE_Zona']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teZona[0]   := Trim(edtTE_Zona.Text);
+
+    if FieldByName('TE_Secao').IsNull
+    then edtTE_Secao.Text := ''
+    else edtTE_Secao.Text := Trim(FieldValues['TE_Secao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teSecao[0]   := Trim(edtTE_Secao.Text);
+
+    if FieldByName('TE_UF').IsNull
+    then cbxTE_UF.Text := ''
+    else cbxTE_UF.Text := Trim(FieldValues['TE_UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teUF[0]   := Trim(cbxTE_UF.Text);
+
+    if FieldByName('TE_Emissao').IsNull
+    then edtTE_Emissao.Text := ''
+    else edtTE_Emissao.Text := Trim(FieldValues['TE_Emissao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teEmissao[0]   := Trim(edtTE_Emissao.Text);
+
+    if FieldByName('Pis_Pasep').IsNull
+    then edtPis_Pasep.Text := ''
+    else edtPis_Pasep.Text := Trim(FieldValues['Pis_Pasep']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.pisPasep[0]   := Trim(edtPis_Pasep.Text);
+
+    {
+    if FieldByName('EstadoCivil').IsNull
+    then lkpEstadoCivil.Text := ''
+    else lkpEstadoCivil.Text := Trim(FieldValues['EstadoCivil']);
+    }
+
+    //ShowMessage(FieldValues['Banco']);
+    //ShowMessage(FieldByName('idBanco').AsString);
+
+    {
+    if FieldByName('idBanco').IsNull
+    then lkpBanco.Text := ''
+    else lkpBanco.Text := FieldValues['Banco']; // Falhou quando usou a função Trim -> Trim(FieldValues['Banco']);
+
+    lkpNomeBanco.Text := FieldValues['Banco'];
+    }
+
+    // Definir o banco como BRB
+    lkpBanco.EditValue := '070';
+
+    if FieldByName('Agencia').IsNull
+    then edtAgencia.Text := ''
+    else edtAgencia.Text := Trim(FieldValues['Agencia']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.agencia[0]   := Trim(edtAgencia.Text);
+
+    if FieldByName('Conta').IsNull
+    then edtConta.Text := ''
+    else edtConta.Text := Trim(FieldValues['Conta']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.contaBanco[0]   := Trim(edtConta.Text);
+
+    if FieldByName('OAB_Num').IsNull
+    then edtOAB_Num.Text := ''
+    else edtOAB_Num.Text := Trim(FieldValues['OAB_Num']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.oabNum[0]   := Trim(edtOAB_Num.Text);
+
+    if FieldByName('OAB_Secao').IsNull
+    then edtOAB_Secao.Text := ''
+    else edtOAB_Secao.Text := Trim(FieldValues['OAB_Secao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.oabSecao[0]   := Trim(edtOAB_Secao.Text);
+  end;
+end;
+
+procedure TfrmUpdateServidor.edtSupervisor_EstagiarioPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtSupervisor_Estagiario);
+end;
+
+procedure TfrmUpdateServidor.edtDt_InicioContrato1_EstagiarioPropertiesChange(
+  Sender: TObject);
+begin
+  setarCampoAlterado(edtDt_InicioContrato1_Estagiario);
+end;
+
+procedure TfrmUpdateServidor.Button2Click(Sender: TObject);
+begin
+//  ShowMessage(SQLUpdateServidor(lbl_IDP.Caption, lbl_IDS.Caption ));
+end;
+
+procedure TfrmUpdateServidor.btnIncluirTelefoneClick(Sender: TObject);
+begin
+  Application.CreateForm(TfrmUpdateTelefone, frmUpdateTelefone);
+  frmUpdateTelefone.setarOperacao(1);
+  frmUpdateTelefone.configurarOperacao;
+  frmUpdateTelefone.lbl_IDP.Caption := lbl_IDP.Caption;
+  
+  frmUpdateTelefone.setFormQueChamou('frmUpdateServidor');
+
+  {frmUpdateTelefone.setarDadosServidor
+  (dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   dmPessoal.qryPesquisa.FieldValues['Nome'],
+   dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+  }
+
+  frmUpdateTelefone.ShowModal;
+  frmUpdateTelefone.Release;
+  frmUpdateTelefone := nil;
+end;
+
+procedure TfrmUpdateServidor.tshFeriasShow(Sender: TObject);
+begin
+  with dmExibirTabelas.qryFeriasServidor do
+  begin
+    if (Active) and (RecordCount > 0)
+    then btnEditarFerias.Enabled := true
+    else btnEditarFerias.Enabled := false;
+  end
+end;
+
+procedure TfrmUpdateServidor.btnExcluirAfastamentoClick(Sender: TObject);
+var wMens, wOperacao, wEvento: String;
+begin
+  wMens := 'Atenção! Confirma esta';
+  wOperacao := 'exclusão';
+  wMens := wMens + ' ' + wOperacao + '?';
+
+  if ConfirmaAcao(wMens, 3) = 1 then
+  begin
+    if frmUpdateAfastamento.excluirAfastamento
+    (dmExibirTabelas.qryAfastamentoServidor.FieldValues['ID'])
+    then
+    begin
+      ShowMessage('Registro excluído.');
+
+      wEvento := UpperCase(wOperacao)+ ' de afastamento.';
+
+      with dmExibirTabelas.qryAfastamentoServidor do
+      begin
+       if not FieldByName('descricao').IsNull
+       then
+        wEvento := wEvento + ' '
+        + FieldValues['idAfastamento']
+        + ' - ' + FieldValues['descricao'];
+
+        if not FieldByName('idExercicio').IsNull then
+        wEvento := wEvento
+        + ', Exercício: '
+        + FieldValues['idExercicio'];
+
+        if not FieldByName('Dt_Inicio').IsNull then
+        wEvento := wEvento
+        + ', Data de início: ' + DateToStr(FieldValues['Dt_Inicio']);
+
+        if not FieldByName('Dt_Termino').IsNull then
+        wEvento := wEvento
+        + ', Data de término: ' + DateToStr(FieldValues['Dt_Termino']);
+
+        IncluirLog
+        (
+          DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+          RetornaData(2),
+          'tbAfastamento',
+          'NULL',
+          lbl_IDP.Caption, // FieldValues['idPessoal'],
+          edtidServidor.Text, //FieldValues['idServidor'], // desabilitar este campo para edição
+          'TODOS',
+          wEvento
+        );
+
+        ShowMessage('Registrado no log de alterações.');
+
+      end;
+
+    end;
+
+    dmExibirTabelas.qryAfastamentoServidor.Active := false;
+    dmExibirTabelas.qryAfastamentoServidor.Active := true;
+  end                                                     
+end;
+
+procedure TfrmUpdateServidor.btnExcluirAbonoClick(Sender: TObject);
+var wMens, wOperacao, wEvento: String;
+begin
+  wMens := 'Atenção! Confirma esta';
+  wOperacao := 'exclusão';
+  wMens := wMens + ' ' + wOperacao + '?';
+
+  if ConfirmaAcao(wMens, 3) = 1 then
+  begin
+    wEvento := UpperCase(wOperacao)+ ' de abono.'
+    + ' Exercício: ' + dmExibirTabelas.qryAbonoServidor.FieldValues['idExercicio']
+    + ' Datas: ';
+
+    with dmExibirTabelas.qryAbonoServidor do
+    begin
+      if not FieldByName('Dt_1').IsNull then
+      wEvento := wEvento + DateToStr(FieldValues['dt_1']);
+
+      if not FieldByName('Dt_2').IsNull then
+      wEvento := wEvento + ', ' + DateToStr(FieldValues['dt_2']);
+
+      if not FieldByName('Dt_3').IsNull then
+      wEvento := wEvento + ', ' + DateToStr(FieldValues['dt_3']);
+
+      if not FieldByName('Dt_4').IsNull then
+      wEvento := wEvento + ', ' + DateToStr(FieldValues['dt_4']);
+
+      if not FieldByName('Dt_5').IsNull then
+      wEvento := wEvento + ', ' + DateToStr(FieldValues['dt_5']);
+    end;
+
+    if DMExcluirFeriasAbonoAfastamento.excluirAbono
+    (dmExibirTabelas.qryAbonoServidor.FieldValues['ID'])
+    then
+    begin
+      IncluirLog
+      (
+      DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+      RetornaData(2),
+      'tbAbono',
+      'NULL',
+      dmPessoal.qryPesquisa.FieldValues['idPessoal'],
+      dmPessoal.qryPesquisa.FieldValues['idServidor'],
+      'TODOS',
+      wEvento
+      );
+
+      ShowMessage('Registro excluído.');
+    end;
+
+    dmExibirTabelas.qryAbonoServidor.Active := false;
+    dmExibirTabelas.qryAbonoServidor.Active := true;
+
+    //frmUpdateAbonoAnualGeral.Close;
+  end                                   
+end;
+
+procedure TfrmUpdateServidor.btnEditarAbonoClick(Sender: TObject);
+var ID, idExercicio, ProcessoSEI, dt_1, dt_2, dt_3, dt_4, dt_5: String;
+begin
+  Application.CreateForm(TfrmUpdateAbonoAnual, frmUpdateAbonoAnual);
+  frmUpdateAbonoAnual.setarOperacao(2); // Alteração
+
+
+  with dmExibirTabelas.qryAbonoServidor do
+  begin
+    ID := FieldValues['ID'];
+
+    if not FieldByName('idExercicio').IsNull then
+    idExercicio := FieldValues['idExercicio'];
+
+    if not FieldByName('nProcessoSEI').IsNull then
+    ProcessoSEI := FieldValues['nProcessoSEI']
+    //  else ProcessoSEI := ''
+    ;
+    if not FieldByName('Dt_1').IsNull then
+    dt_1 := FieldValues['Dt_1'];
+
+    if not FieldByName('Dt_2').IsNull then
+    dt_2 := FieldValues['Dt_2'];
+
+    if not FieldByName('Dt_3').IsNull then
+    dt_3 := FieldValues['Dt_3'];
+
+    if not FieldByName('Dt_4').IsNull then
+    dt_4 := FieldValues['Dt_4'];
+
+    if not FieldByName('Dt_5').IsNull then
+    dt_5 := FieldValues['Dt_5'];
+  end;
+
+
+  frmUpdateAbonoAnual.configurarOperacao;
+  frmUpdateAbonoAnual.carregarAbonoParaEdicao(ID, idExercicio, ProcessoSEI, dt_1, dt_2, dt_3, dt_4, dt_5);
+
+  //frmUpdateAbonoAnual.bloquearCampos;
+  //frmUpdateAbonoAnual.edtProcessoSEI.SetFocus;
+
+  frmUpdateAbonoAnual.setarDadosServidor
+  (dmPessoal.qryPesquisa.FieldValues['idServidor'],
+   dmPessoal.qryPesquisa.FieldValues['Nome'],
+   dmPessoal.qryPesquisa.FieldValues['descricaoCargo']);
+
+
+  frmUpdateAbonoAnual.setFormQueChamou('frmUpdateServidor');
+
+  frmUpdateAbonoAnual.ShowModal;
+  frmUpdateAbonoAnual.Release;
+  frmUpdateAbonoAnual := nil;
+end;
+
+function TfrmUpdateServidor.jaExisteFerias(idPessoal, idServidor,
+  idExercicio: String): boolean;
+begin
+
+end;
+
+procedure TfrmUpdateServidor.edtNaturalidadeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.edtPaiKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.edtMaeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.edtConjugeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.edtEnderecoKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.edtBairroKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.edtCidadeKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmUpdateServidor.setarTamanhoCampos;
+begin
+  edtNaturalidade.Properties.MaxLength := 30;
+  edtPai.Properties.MaxLength := 50;
+  edtMae.Properties.MaxLength := 50;
+  edtConjuge.Properties.MaxLength := 50;
+  edtBairro.Properties.MaxLength := 30;
+  edtEndereco.Properties.MaxLength := 100;
+  edtEmail.Properties.MaxLength := 40;
+
+  edtCI_Num.Properties.MaxLength := 16;
+  edtTE_Num.Properties.MaxLength := 12;
+  edtTE_Zona.Properties.MaxLength := 3;
+  edtTE_Secao.Properties.MaxLength := 5;
+  edtPis_Pasep.Properties.MaxLength := 11;
+  edtAgencia.Properties.MaxLength := 4;
+  edtConta.Properties.MaxLength := 7;
+  edtOAB_Num.Properties.MaxLength := 10;
+  edtOAB_Secao.Properties.MaxLength := 3;
 end;
 
 end.

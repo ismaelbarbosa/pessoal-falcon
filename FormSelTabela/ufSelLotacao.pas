@@ -18,19 +18,20 @@ type
     tmrSelLotacao: TTimer;
     gbxLotacao: TcxGroupBox;
     grpbxSelLotacaoBotoes: TcxGroupBox;
-    lblLotacao: TLabel;
-    edtLotacao: TcxTextEdit;
-    lblDataLotacao: TLabel;
-    dtEdtDataLotacao: TcxDateEdit;
     qryLotacao: TADOQuery;
     dsLotacao: TDataSource;
     btnOK: TcxButton;
     btnCancela: TcxButton;
-    cxGrid1: TcxGrid;
-    cxGrid1DBTableView1: TcxGridDBTableView;
-    cxGrid1DBTableView1Column1: TcxGridDBColumn;
-    cxGrid1DBTableView1Column2: TcxGridDBColumn;
-    cxGrid1Level1: TcxGridLevel;
+    grdLotacao: TcxGrid;
+    tbvLotacao: TcxGridDBTableView;
+    tbvDescricao: TcxGridDBColumn;
+    tbvSigla: TcxGridDBColumn;
+    lvlLotacao: TcxGridLevel;
+    lblQtd: TLabel;
+    Label1: TLabel;
+    edtPesquisa: TcxTextEdit;
+    tbvIdLotacao: TcxGridDBColumn;
+    tbvSuperLotacao: TcxGridDBColumn;
     procedure tmrSelLotacaoTimer(Sender: TObject);
     procedure edtLotacaoChange(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
@@ -40,15 +41,21 @@ type
       Shift: TShiftState);
     procedure FormCreate(Sender: TObject);
     procedure cxTextEdit1PropertiesChange(Sender: TObject);
-    procedure cxGrid1DBTableView1DblClick(Sender: TObject);
+    procedure tbvLotacaoDblClick(Sender: TObject);
+    procedure edtPesquisaKeyPress(Sender: TObject; var Key: Char);
+    procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
     pesquisa: string;
     FCriadoPor: CriadoPor;
+    wIdLotacao: string;
     procedure SetCriadoPor(const Value: CriadoPor);
   public
     { Public declarations }
     property CriadoPor: CriadoPor read FCriadoPor write SetCriadoPor;
+    function pesquisarLotacao(valor:String):Integer;
+    function retornaIdLotacao: String;
   end;
 
 var
@@ -62,7 +69,7 @@ uses udmPessoal
   DateUtils,
 }
   , ufCriterioPesquisaPessoal,
-  ufPrincipal, uDMConexao;
+  ufPrincipal, uDMConexao, PRG_utils, uPesFuncoes, ufLogs;
 
 var
 SQL_Param, SQL: string;
@@ -71,24 +78,8 @@ SQL_Param, SQL: string;
 
 procedure TfrmSelLotacao.tmrSelLotacaoTimer(Sender: TObject);
 begin
-
-//with dmPessoal do
-//  begin
-  pesquisa := ' Select tblotacao.idlotacao, tblotacao.sigla, ' +
-             'tblotacao.descricao, tbLotacao.Sala, tbLotacao.Ramal ' +
-             'from tblotacao ' +
-             'where tblotacao.nova_estrutura = ''1'' and ' +
-             'tblotacao.descricao like ' +
-             QuotedStr(Trim(AnsiUpperCase(edtLotacao.Text) + '%')) +
-             'Order by tbLotacao.Descricao';
-  qryLotacao.Active := false;
-  qryLotacao.SQL.Clear;
-  qryLotacao.SQL.Add(pesquisa);
-  qryLotacao.Active := true;
-//end;//with
-
-tmrSelLotacao.Enabled := false;
-
+  lblQtd.Caption := IntToStr(pesquisarLotacao(edtPesquisa.Text));
+  tmrSelLotacao.Enabled := false;
 end;
 
 procedure TfrmSelLotacao.edtLotacaoChange(Sender: TObject);
@@ -100,6 +91,16 @@ end;
 
 procedure TfrmSelLotacao.btnOKClick(Sender: TObject);
 begin
+  with qryLotacao do
+  begin
+    if (Active = true) and (RecordCount <> 0) then
+    begin
+      wIdLotacao  := FieldByName('idLotacao').AsString;
+      frmSelLotacao.Close;
+    end;
+  end;
+
+
   Case CriadoPor of
   cpfrmCritPesqPessoal:
   begin
@@ -286,9 +287,63 @@ begin
   tmrSelLotacao.Enabled := true;
 end;
 
-procedure TfrmSelLotacao.cxGrid1DBTableView1DblClick(Sender: TObject);
+procedure TfrmSelLotacao.tbvLotacaoDblClick(Sender: TObject);
 begin
   btnOKClick(Sender);
+end;
+
+function TfrmSelLotacao.retornaIdLotacao: String;
+begin
+  Result := wIdLotacao;
+end;
+
+function TfrmSelLotacao.pesquisarLotacao(valor: String): Integer;
+var wSQL: String;
+begin
+  with qryLotacao do
+  begin
+    Connection := DMConexao.conPessoal;
+    Active := false;
+    SQL.Clear;
+
+    wSQL := 'SELECT lot.idlotacao, lot.sigla, '
+          + ' lot.descricao, lot.superLotacao, lot.Sala, lot.Ramal '
+          + ' FROM tblotacao AS lot'
+
+          + ' WHERE '
+          + ' Nova_Estrutura = 1'
+
+          + ' AND ('
+          + Gera_SQL(RemoveIndesejadas(valor), 'lot.Descricao')
+          + ' OR '
+          + Gera_SQL(RemoveIndesejadas(valor), 'lot.sigla')
+          + ' OR '
+          + Gera_SQL(RemoveIndesejadas(valor), 'lot.idLotacao')
+          + ' OR '
+          + Gera_SQL(RemoveIndesejadas(valor), 'lot.superLotacao')
+
+          + ')'
+          + 'Order by lot.Descricao';
+
+
+    SQL.Add(wSQL);
+
+    frmLogs.mmoLog.Lines.Add(wSQL);
+    Active := true;
+    Result := RecordCount;
+  end;
+end;
+
+procedure TfrmSelLotacao.edtPesquisaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmSelLotacao.edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+  Shift: TShiftState);
+begin
+  tmrSelLotacao.Enabled := true;
 end;
 
 end.

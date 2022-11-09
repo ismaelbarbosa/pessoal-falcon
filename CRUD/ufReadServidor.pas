@@ -9,12 +9,25 @@ uses
   cxContainer, cxEdit, Grids, DBGrids, cxGroupBox, cxStyles, cxCustomData,
   cxFilter, cxData, cxDataStorage, DB, cxDBData, cxMaskEdit, cxGridLevel,
   cxGridCustomTableView, cxGridTableView, cxGridDBTableView, cxClasses,
-  cxGridCustomView, cxGrid, DBCtrls, cxPC, cxSplitter, cxCheckBox, cxDBEdit;
+  cxGridCustomView, cxGrid, DBCtrls, cxPC, cxSplitter, cxCheckBox, cxDBEdit,
+  ADODB, cxGridExportLink,
+
+///
+  ActnList, cxGridStrs,  cxCalendar, cxDBExtLookupComboBox,
+  cxGridBandedTableView, cxGridDBBandedTableView, cxDBLookupComboBox, cxDropDownEdit,
+  cxDBFilterControl,
+  cxButtonEdit, cxFilterControlDialog, cxFilterControlStrs, cxFilterConsts, cxEditConsts,
+  cxProgressBar, cxDBProgressBar,
+  cxTextEdit,
+  cxFilterControl, cxRadioGroup;
+///
+
+const
+  CM_EXPANDGROUPS = WM_USER + 1002;
 
 type
   TfrmReadServidor = class(TForm)
     pnlBotoes: TPanel;
-    btnAbrir: TcxButton;
     btnSair: TcxButton;
     btnNovo: TcxButton;
     btnPesquisar: TcxButton;
@@ -156,7 +169,7 @@ type
     btnExportar: TcxButton;
     edtPesquisar: TEdit;
     btnEmitirRelatorio: TcxButton;
-    rdgrpSelecionaRelatorio: TRadioGroup;
+    rgpSelecionaRelatorio: TRadioGroup;
     grpbxRelPersonalizado: TcxGroupBox;
     grdRelPersonalizado: TcxGrid;
     tvRelPersonalizadoServidor: TcxGridDBTableView;
@@ -235,14 +248,14 @@ type
     lvgrdRelPersonalizadoServidor: TcxGridLevel;
     dsPesquisa: TDataSource;
     tbvPessoal: TcxGridDBTableView;
-    grdPessoalLevel1: TcxGridLevel;
+    lvlPessoal: TcxGridLevel;
     grdPessoal: TcxGrid;
-    tvcNome: TcxGridDBColumn;
-    tbvPessoalColumn2: TcxGridDBColumn;
-    tbvPessoalColumn3: TcxGridDBColumn;
-    tbvPessoalColumn4: TcxGridDBColumn;
-    tbvPessoalColumn5: TcxGridDBColumn;
-    tbvPessoalColumn6: TcxGridDBColumn;
+    tbcNome: TcxGridDBColumn;
+    tbcMatricula: TcxGridDBColumn;
+    tbcCPF: TcxGridDBColumn;
+    tbcSiglaLotacao: TcxGridDBColumn;
+    tbcCargo: TcxGridDBColumn;
+    tbcFuncao: TcxGridDBColumn;
     StyleRepository: TcxStyleRepository;
     stlAtivo: TcxStyle;
     stlRequisitado: TcxStyle;
@@ -255,17 +268,17 @@ type
     txtNome: TDBText;
     dsAbonoServidor: TDataSource;
     dsAfastamentoServidor: TDataSource;
-    cxGrid2: TcxGrid;
-    cxGridDBTableView2: TcxGridDBTableView;
-    cxGridDBColumn8: TcxGridDBColumn;
-    cxGridDBColumn9: TcxGridDBColumn;
-    cxGridDBColumn10: TcxGridDBColumn;
-    cxGridDBColumn11: TcxGridDBColumn;
-    cxGridDBColumn12: TcxGridDBColumn;
-    cxGridDBColumn14: TcxGridDBColumn;
-    cxGridLevel2: TcxGridLevel;
-    cxGridDBTableView2Column1: TcxGridDBColumn;
-    tbvPessoalColumn7: TcxGridDBColumn;
+    grdAfastamentos: TcxGrid;
+    tbvAfastamentos: TcxGridDBTableView;
+    tvcTipoAfastamento: TcxGridDBColumn;
+    tvcDt_InicioAfastamento: TcxGridDBColumn;
+    tvcDt_TerminoAfastamento: TcxGridDBColumn;
+    tvcExercicioAfastamento: TcxGridDBColumn;
+    tvclCodigoAfastamento: TcxGridDBColumn;
+    tvcProcessoSEIAfastamento: TcxGridDBColumn;
+    lvlAfastamentos: TcxGridLevel;
+    tvcObservacaoAfastamento: TcxGridDBColumn;
+    tbcDataDesligCargo: TcxGridDBColumn;
     txtOrgaoDeOrigem: TDBText;
     Label4: TLabel;
     dsHistoricoFuncoes: TDataSource;
@@ -277,14 +290,14 @@ type
     cxGridDBColumn16: TcxGridDBColumn;
     cxGridDBColumn17: TcxGridDBColumn;
     cxGridDBColumn18: TcxGridDBColumn;
-    cxGridLevel3: TcxGridLevel;
+    lvlHistoricoFuncoes: TcxGridLevel;
     dsTelefonesServidor: TDataSource;
-    cxGrid4DBTableView1: TcxGridDBTableView;
-    cxGrid4Level1: TcxGridLevel;
-    cxGrid4: TcxGrid;
-    cxGrid4DBTableView1Column1: TcxGridDBColumn;
-    cxGrid4DBTableView1Column2: TcxGridDBColumn;
-    tvcStatus: TcxGridDBColumn;
+    tbvTelefones: TcxGridDBTableView;
+    lblTelefones: TcxGridLevel;
+    grdTelefones: TcxGrid;
+    tbvTelefonesColumn1: TcxGridDBColumn;
+    tbvTelefonesColumn2: TcxGridDBColumn;
+    tbcStatus: TcxGridDBColumn;
     btnStatus: TcxButton;
     btnFlag: TcxButton;
     txtDFG: TDBText;
@@ -302,20 +315,15 @@ type
     tshExercicioExterno: TcxTabSheet;
     tshLotacoes: TcxTabSheet;
     cxGroupBox1: TcxGroupBox;
-    cxGrid5: TcxGrid;
-    cxGridDBTableView4: TcxGridDBTableView;
+    grdLotacoes: TcxGrid;
+    tbvLotacoes: TcxGridDBTableView;
     cxGridDBColumn19: TcxGridDBColumn;
     cxGridDBColumn20: TcxGridDBColumn;
-    cxGridLevel4: TcxGridLevel;
-    cxGrid6: TcxGrid;
-    cxGridDBTableView5: TcxGridDBTableView;
-    cxGridDBColumn21: TcxGridDBColumn;
-    cxGridDBColumn22: TcxGridDBColumn;
-    cxGridLevel5: TcxGridLevel;
+    lvlLotacoes: TcxGridLevel;
     dsHistoricoExercicioExterno: TDataSource;
     txtSiglaOrgaoExterno: TDBText;
     grdFerias: TcxGrid;
-    cxGridDBTableView6: TcxGridDBTableView;
+    tbvFerias: TcxGridDBTableView;
     tvcExercicio: TcxGridDBColumn;
     tvcPeriodo: TcxGridDBColumn;
     tvcParcela: TcxGridDBColumn;
@@ -326,28 +334,28 @@ type
     tvcDt_InicioReagendamento: TcxGridDBColumn;
     tvcDt_TerminoReagendamento: TcxGridDBColumn;
     tvcObservacao: TcxGridDBColumn;
-    cxGridLevel6: TcxGridLevel;
-    cxGrid7: TcxGrid;
-    grdFeriasDBTableView1: TcxGridDBTableView;
-    cxGridDBColumn1: TcxGridDBColumn;
-    cxGridDBColumn2: TcxGridDBColumn;
+    lvlFerias: TcxGridLevel;
+    grdAbonoAnual: TcxGrid;
+    tbvAbonoAnual: TcxGridDBTableView;
+    tvcExercicioAbono: TcxGridDBColumn;
+    tvcProcessoSEIAbono: TcxGridDBColumn;
     tvcDt_1: TcxGridDBColumn;
     tvcDt_2: TcxGridDBColumn;
     tvcDt_3: TcxGridDBColumn;
     tvcDt_4: TcxGridDBColumn;
     tvcDt_5: TcxGridDBColumn;
-    grdFeriasLevel1: TcxGridLevel;
+    lvlAbonoAnual: TcxGridLevel;
     dsTotalDiasSubstituidos: TDataSource;
     dsProcuradorSubstituido: TDataSource;
     txtMatricula: TDBText;
     Label2: TLabel;
     tshSubstituicao: TcxTabSheet;
     cxGroupBox10: TcxGroupBox;
-    cxGrid8: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
+    grdTotalSubstituicoes: TcxGrid;
+    tvbTotalSubstituicoes: TcxGridDBTableView;
     cxGridDBColumn3: TcxGridDBColumn;
     cxGridDBColumn4: TcxGridDBColumn;
-    cxGridLevel1: TcxGridLevel;
+    lvlTotalSubstituicoes: TcxGridLevel;
     grdSubstituicoes: TcxGrid;
     tvSubstProcurador: TcxGridDBTableView;
     tvSubstProcuradorColumn1: TcxGridDBColumn;
@@ -357,7 +365,82 @@ type
     tvSubstProcuradornProcessoSEI: TcxGridDBColumn;
     lvSubstProcurador: TcxGridLevel;
     tbvHistoricoFuncoesColumn2: TcxGridDBColumn;
-    cxTabSheet1: TcxTabSheet;
+    tshEstagio: TcxTabSheet;
+    tshLogHistorico: TcxTabSheet;
+    dsLogHistorico: TDataSource;
+    gbxLogHistorico: TcxGroupBox;
+    tbvLogHistorico: TcxGridDBTableView;
+    lvlLogHistorico: TcxGridLevel;
+    grdLogHistorico: TcxGrid;
+    tbvData: TcxGridDBColumn;
+    tbvOperador: TcxGridDBColumn;
+    tbvEvento: TcxGridDBColumn;
+    Label19: TLabel;
+    Label34: TLabel;
+    txtIdPessoal: TDBText;
+    txtID: TDBText;
+    btnEditarServidor: TcxButton;
+    Label5: TLabel;
+    Label6: TLabel;
+    Label7: TLabel;
+    txtDt_InicioContrato1_Estagiario: TDBText;
+    txtDt_TerminoContrato1_Estagiario: TDBText;
+    Label8: TLabel;
+    Label9: TLabel;
+    txtDt_InicioContrato2_Estagiario: TDBText;
+    txtDt_TerminoContrato2_Estagiario: TDBText;
+    Label10: TLabel;
+    Label11: TLabel;
+    txtDt_InicioContrato3_Estagiario: TDBText;
+    txtDt_TerminoContrato3_Estagiario: TDBText;
+    Label12: TLabel;
+    txtDt_InicioContrato4_Estagiario: TDBText;
+    txtDt_TerminoContrato4_Estagiario: TDBText;
+    Label13: TLabel;
+    Label14: TLabel;
+    Label15: TLabel;
+    Label16: TLabel;
+    Label17: TLabel;
+    txtInstituicaoEnsino: TDBText;
+    txtTurnoEstagio: TDBText;
+    txtSemestre: TDBText;
+    txtObservacao: TDBText;
+    Label18: TLabel;
+    txtSupervisor_Estagiario: TDBText;
+    qryPesqPessoal_Old: TADOQuery;
+    dsqryPesqPessoal: TDataSource;
+    tmrPesqPessoal: TTimer;
+    SaveDialogExportarExcel: TSaveDialog;
+    SaveDialog1: TSaveDialog;
+    rdgrpSelecionaRelatorio: TcxRadioGroup;
+    cxGroupBox11: TcxGroupBox;
+    grdExercicioExterno: TcxGrid;
+    tbvExercicioExterno: TcxGridDBTableView;
+    cxGridDBColumn21: TcxGridDBColumn;
+    cxGridDBColumn22: TcxGridDBColumn;
+    lvlExercicioExterno: TcxGridLevel;
+    cxGroupBox12: TcxGroupBox;
+    Label20: TLabel;
+    edtPesquisa: TcxTextEdit;
+    lblQtdServidores: TLabel;
+    Timer1: TTimer;
+    DBText1: TDBText;
+    tvcIDAfastamento: TcxGridDBColumn;
+    Label21: TLabel;
+    stlDesligado: TcxStyle;
+    tvcID: TcxGridDBColumn;
+    rgpSituacao: TcxRadioGroup;
+    qryPesqPessoal: TADOQuery;
+    lblTotal: TLabel;
+    gbxPromocaoProcurador: TcxGroupBox;
+    Label22: TLabel;
+    Label23: TLabel;
+    txtDt_PromocaoCategoria2: TDBText;
+    txtDt_PromocaoSubProcurador: TDBText;
+    lblAverbacaoGDF: TLabel;
+    lblAverbacaoServPublico: TLabel;
+    txtAverbacaoGDF: TDBText;
+    txtAverbacaoServPublico: TDBText;
     procedure FormActivate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
@@ -371,16 +454,27 @@ type
     procedure cxGrid1DBTableView1StylesGetContentStyle(
       Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
       AItem: TcxCustomGridTableItem; out AStyle: TcxStyle);
-    procedure btnAbrirClick(Sender: TObject);
+    procedure btnEditarServidorClick(Sender: TObject);
     procedure dsPesquisaDataChange(Sender: TObject; Field: TField);
     function abrirDataSources:boolean;
     function fecharDataSources:boolean;
     procedure tbvPessoalDblClick(Sender: TObject);
     procedure btnNovoClick(Sender: TObject);
+    procedure rgpSelecionaRelatorioClick(Sender: TObject);
+    procedure btnExportarClick(Sender: TObject);
+    procedure tvRelPersonalizadoServidorDataControllerGroupingChanged(
+      Sender: TObject);
+    procedure rdgrpSelecionaRelatorioClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure edtPesquisaKeyPress(Sender: TObject; var Key: Char);
+    procedure tshRelatorioPersonalizadoShow(Sender: TObject);
+    procedure tbvPessoalKeyPress(Sender: TObject; var Key: Char);
   private
-    { Private declarations }
+    procedure CMExpandGroups(var Msg: TMessage); message CM_EXPANDGROUPS;
   public
-    { Public declarations }
+    function pesquisar: Integer;
   end;
 
 var
@@ -389,7 +483,8 @@ var
 implementation
 
 uses udmPesComplemento, uDMPessoal, ufCriterioPesquisaPessoal, ufPrincipal,
-  uDmExibirTabelas, ufUpdateServidor, ufCreateServidor, ufLogs;
+  uDmExibirTabelas, ufUpdateServidor, ufCreateServidor, ufLogs, uDMConexao,
+  PRG_utils, uPesFuncoes;
 
 var
 SQL_Cargo, SQL_Lotacao, SQL_Desligamento,
@@ -400,6 +495,8 @@ indice_dbgrdPesquisa: integer;
 
 procedure TfrmReadServidor.FormActivate(Sender: TObject);
 begin
+  edtPesquisa.SetFocus;
+  
   SQL_Cargo :=  'Select tbcargo.idCargo, tbcargo.Descricao ' +
                 'from tbCargo ' +
                 'where tbcargo.idCargo = :idCargo;';
@@ -428,14 +525,17 @@ procedure TfrmReadServidor.FormClose(Sender: TObject;
   var Action: TCloseAction);
 var OK: boolean;
 begin
-
+  {
   if fecharDataSources
   then OK := true;
+  }
 
+  // comentado em 25/03/2022
 end;
 
 procedure TfrmReadServidor.FormCreate(Sender: TObject);
 begin
+  Timer1.Enabled := false;
   KeyPreview := true;
 
   indice_dbgrdPesquisa := 0;
@@ -490,8 +590,8 @@ end;
 procedure TfrmReadServidor.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
-  if Key = VK_ESCAPE then btnSairClick(Sender)
-  else if Key = VK_RETURN then btnPesquisarClick(Sender);
+  if Key = VK_ESCAPE then btnSairClick(Sender);
+  //else if Key = VK_RETURN then btnPesquisarClick(Sender);
 
   if Shift = [ssCtrl] then
   begin
@@ -565,13 +665,14 @@ begin
     stlRequisitado.TextColor := clGreen;
     stlDesligadoCargo.TextColor := clRed;
     stlDesligadoFuncao.TextColor := clBlue;
+    stlDesligado.TextColor := clRed;
   end;
 
   //Ativos
 
   if
   (ARecord is TcxGridDataRow) And Not (ARecord.Selected) And
-  (ARecord.Values[tvcStatus.Index] = 'ATIVO')
+  (ARecord.Values[tbcStatus.Index] = 'ATIVO')
   then
   begin
   AStyle := stlAtivo;
@@ -579,8 +680,9 @@ begin
 
   //Requisitados
 
-  if (ARecord is TcxGridDataRow) And Not (ARecord.Selected) And
-  (ARecord.Values[tvcStatus.Index] = 'REQUISITADO')
+  if (ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tbcStatus.Index] = 'REQUISITADO')
   then
   begin
   AStyle := stlRequisitado;
@@ -588,30 +690,37 @@ begin
 
   //Inativos
 
-  if (ARecord is TcxGridDataRow) And Not (ARecord.Selected) And
-  (ARecord.Values[tvcStatus.Index] = 'DESLIGADO DO CARGO')
+  if ((ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tbcStatus.Index] = 'DESLIGADO DO CARGO'))
+  OR ((ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tbcStatus.Index] = 'DEVOLVIDO'))
   then
   begin
-  AStyle := stlDesligadoCargo;
+    //AStyle := stlDesligadoCargo;
+    AStyle := stlDesligado;
   end;
 
   //Desligados da função (comissionados)
 
-  if (ARecord is TcxGridDataRow) And Not (ARecord.Selected) And
-  (ARecord.Values[tvcStatus.Index] = 'DESLIGADO DA FUNÇÃO')
+  if (ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tbcStatus.Index] = 'DESLIGADO DA FUNÇÃO')
   then
   begin
-  AStyle := stlDesligadoFuncao;
+    //AStyle := stlDesligadoFuncao;
+    AStyle := stlDesligado;
   end;
 
 end;
 
-procedure TfrmReadServidor.btnAbrirClick(Sender: TObject);
+procedure TfrmReadServidor.btnEditarServidorClick(Sender: TObject);
 begin
   Application.CreateForm(TfrmUpdateServidor, frmUpdateServidor);
   frmUpdateServidor.ShowModal;
   frmUpdateServidor.Release;
-  frmUpdateServidor := nil;  
+  frmUpdateServidor := nil;
 end;
 
 procedure TfrmReadServidor.dsPesquisaDataChange(Sender: TObject;
@@ -650,8 +759,34 @@ begin
   begin
     if dmPessoal.VerificarSeEProcurador(Copy(dmPessoal.qryPesquisa.FieldValues['idCargo'],1,2))
     then
-      tshSubstituicao.TabVisible := true
-    else tshSubstituicao.TabVisible := false;
+    begin
+      tshAbonoAnual.TabVisible := false;
+      tshEstagio.TabVisible := false;
+      tshExercicioExterno.TabVisible := true;
+      tshFerias.TabVisible := true;
+      tshSubstituicao.TabVisible := true;
+      gbxPromocaoProcurador.Visible := true;
+    end;
+    if dmPessoal.VerificarSeEServidor(Copy(dmPessoal.qryPesquisa.FieldValues['idCargo'],1,2))
+    then
+    begin
+      tshAbonoAnual.TabVisible := true;
+      tshEstagio.TabVisible := false;
+      tshExercicioExterno.TabVisible := true;
+      tshFerias.TabVisible := true;
+      tshSubstituicao.TabVisible := false;
+      gbxPromocaoProcurador.Visible := false;
+    end;
+    if dmPessoal.VerificarSeEEstagiario(Copy(dmPessoal.qryPesquisa.FieldValues['idCargo'],1,2))
+    then
+    begin
+      tshAbonoAnual.TabVisible := false;
+      tshEstagio.TabVisible := true;
+      tshExercicioExterno.TabVisible := false;
+      tshFerias.TabVisible := false;
+      tshSubstituicao.TabVisible := false;
+      gbxPromocaoProcurador.Visible := false;
+    end
   end;
 end;
 
@@ -676,16 +811,17 @@ begin
 
     with dmExibirTabelas do
     begin
-      dsTelefonesServidor.DataSet   := qryTelefonesServidor;
-      dsFeriasServidor.DataSet      := qryFeriasServidor;
-      dsAbonoServidor.DataSet       := qryAbonoServidor;
-      dsAfastamentoServidor.DataSet := qryAfastamentoServidor;
-      dsHistoricoFuncoes.DataSet    := qryHistoricoFuncoes;
-      dsHistoricoLotacoes.DataSet   := qryHistoricoLotacoes;
+      dsTelefonesServidor.DataSet         := qryTelefonesServidor;
+      dsFeriasServidor.DataSet            := qryFeriasServidor;
+      dsAbonoServidor.DataSet             := qryAbonoServidor;
+      dsAfastamentoServidor.DataSet       := qryAfastamentoServidor;
+      dsHistoricoFuncoes.DataSet          := qryHistoricoFuncoes;
+      dsHistoricoLotacoes.DataSet         := qryHistoricoLotacoes;
       dsHistoricoExercicioExterno.DataSet := qryHistoricoExercicioExterno;
+      dsLogHistorico.DataSet              := qryLogHistorico;
 
-      dsTotalDiasSubstituidos.DataSet := qryTotalDiasSubstituidos;
-      dsProcuradorSubstituido.DataSet := qryProcuradorSubstituido;
+      dsTotalDiasSubstituidos.DataSet     := qryTotalDiasSubstituidos;
+      dsProcuradorSubstituido.DataSet     := qryProcuradorSubstituido;
     end;
 
     Result := true;
@@ -727,22 +863,268 @@ begin
     qryTelefonesServidor.Active := false;
     qryHistoricoLotacoes.Active := false;
     qryHistoricoFuncoes.Active := false;
+    qryBanco.Active := false;
   end;
 
 end;
 
 procedure TfrmReadServidor.tbvPessoalDblClick(Sender: TObject);
 begin
-  btnAbrirClick(Nil);
+  btnEditarServidorClick(Nil);
 end;
 
 procedure TfrmReadServidor.btnNovoClick(Sender: TObject);
 begin
   Application.CreateForm(TfrmCreateServidor, frmCreateServidor);
-  frmCreateServidor.setarOperacao(1); // Inclusão de novo registro
+  frmCreateServidor.setarOperacao(1); // Inclusão de novo registro (tbPessoal, tbServidor, tbDados)
   frmCreateServidor.ShowModal;
   frmCreateServidor.Release;
   frmCreateServidor := nil;
+end;
+
+procedure TfrmReadServidor.rgpSelecionaRelatorioClick(Sender: TObject);
+begin
+
+  case rdgrpSelecionaRelatorio.ItemIndex of
+  0: begin
+      qryPesqPessoal.Active := False;
+      qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'SERVIDOR';
+
+      if lvgrdRelPersonalizadoServidor.GridView <> tvRelPersonalizadoServidor then
+      begin
+        lvgrdRelPersonalizadoServidor.GridView := tvRelPersonalizadoServidor;
+      end;
+
+      tvRelPersonalizadoServidor.Controller.Customization := true;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Left := 5;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Top := grdRelPersonalizado.Top + tvRelPersonalizadoServidor.Controller.CustomizationForm.Height-50;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Left := Screen.Width - tvRelPersonalizadoServidor.Controller.CustomizationForm.Width-10;
+     end;
+  1: begin
+      qryPesqPessoal.Active := False;
+      qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'FERIAS';
+
+      if lvgrdRelPersonalizadoServidor.GridView <> tvRelPersonalizadoFerias then
+      begin
+        lvgrdRelPersonalizadoServidor.GridView := tvRelPersonalizadoFerias;
+      end;
+
+      tvRelPersonalizadoFerias.Controller.Customization := true;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Left := 5;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Top := grdRelPersonalizado.Top + tvRelPersonalizadoFerias.Controller.CustomizationForm.Height-50;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Left := Screen.Width - tvRelPersonalizadoFerias.Controller.CustomizationForm.Width-10;
+     end;
+  end;//case
+
+
+
+
+  qryPesqPessoal.Active := true;
+
+
+end;
+
+procedure TfrmReadServidor.btnExportarClick(Sender: TObject);
+var
+  FileExt: String;
+begin
+    if SaveDialogExportarExcel.Execute then//if2
+    begin
+    FileExt := LowerCase(ExtractFileExt(SaveDialogExportarExcel.FileName));
+//      DiretorioParecer := ExtractFilePath(OpenDlgAnexarParecer.FileName);
+      ExportGridToExcel(SaveDialogExportarExcel.FileName, grdRelPersonalizado, True, True, False, 'xls');
+
+      ShowMessage('A pesquisa atual foi exportada com êxito para o arquivo "' + SaveDialogExportarExcel.FileName + ' ".');
+    end//if2
+    else ShowMessage('Não foi possível exportar o arquivo.');
+
+end;
+
+procedure TfrmReadServidor.tvRelPersonalizadoServidorDataControllerGroupingChanged(
+  Sender: TObject);
+begin
+  PostMessage(Handle, CM_EXPANDGROUPS, Integer(Sender), 0);
+end;
+
+procedure TfrmReadServidor.CMExpandGroups(var Msg: TMessage);
+begin
+  TcxGridDataController(Msg.WParam).Groups.FullExpand;
+end;
+
+procedure TfrmReadServidor.rdgrpSelecionaRelatorioClick(Sender: TObject);
+begin
+
+  case rdgrpSelecionaRelatorio.ItemIndex of
+  0: begin
+      qryPesqPessoal.Active := False;
+      qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'SERVIDOR';
+
+      if lvgrdRelPersonalizadoServidor.GridView <> tvRelPersonalizadoServidor then
+      begin
+        lvgrdRelPersonalizadoServidor.GridView := tvRelPersonalizadoServidor;
+      end;
+
+      tvRelPersonalizadoServidor.Controller.Customization := true;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Left := 5;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Top := grdRelPersonalizado.Top + tvRelPersonalizadoServidor.Controller.CustomizationForm.Height-50;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Left := Screen.Width - tvRelPersonalizadoServidor.Controller.CustomizationForm.Width-10;
+     end;
+  1: begin
+      qryPesqPessoal.Active := False;
+      qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'FERIAS';
+
+      if lvgrdRelPersonalizadoServidor.GridView <> tvRelPersonalizadoFerias then
+      begin
+        lvgrdRelPersonalizadoServidor.GridView := tvRelPersonalizadoFerias;
+      end;
+
+      tvRelPersonalizadoFerias.Controller.Customization := true;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Left := 5;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Top := grdRelPersonalizado.Top + tvRelPersonalizadoFerias.Controller.CustomizationForm.Height-50;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Left := Screen.Width - tvRelPersonalizadoFerias.Controller.CustomizationForm.Width-10;
+     end;
+  end;//case
+
+
+
+
+  qryPesqPessoal.Active := true;
+
+
+
+end;
+
+procedure TfrmReadServidor.Timer1Timer(Sender: TObject);
+var condicao: String;
+resultado: Integer;
+begin
+  if length(Trim(edtPesquisa.Text)) > 3 then
+  begin
+    condicao := ' AND '
+    + '('
+    + Gera_SQL(RemoveIndesejadas(edtPesquisa.Text), 'pes.Nome')
+    + ' OR '
+    + Gera_SQL(RemoveIndesejadas(edtPesquisa.Text), 'pes.CPF')
+    + ' OR '
+    + Gera_SQL(RemoveIndesejadas(edtPesquisa.Text), 'serv.idServidor')
+    + ')';
+
+    //resultado := DMEstagiario.pesquisarEstagiarios(condicao);
+    resultado := dmPessoal.pesquisarPessoal(condicao);
+
+    if resultado > 0 then
+    begin
+      with dmExibirTabelas do
+      begin
+        if not ExibirTabelasRelacionadas
+        then ShowMessage('Não foram exibidas todas as tabelas');
+      end;
+    end;
+
+    {case resultado of
+      0:
+      begin
+        desabilitaPnlDadosEstagio;
+        //focarNaEdicao;
+      end;
+      1:
+      begin
+        habilitaPnlDadosEstagio;
+        focarNaEdicao;
+      end;
+    end;
+    }
+
+    {if resultado > 1 then habilitaPnlDadosEstagio;
+    }
+
+    lblQtdServidores.Caption := IntToStr(resultado);
+
+    Timer1.Enabled := false;
+  end;
+end;
+
+procedure TfrmReadServidor.edtPesquisaKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  Timer1.Enabled := true;
+end;
+
+procedure TfrmReadServidor.edtPesquisaKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+procedure TfrmReadServidor.tshRelatorioPersonalizadoShow(Sender: TObject);
+begin
+  lblTotal.Caption := 'Total de registros: ' +
+  FormatFloat(',0', pesquisar);
+end;
+
+function TfrmReadServidor.pesquisar: Integer;
+begin
+  qryPesqPessoal.Connection := DMConexao.conPessoal;
+
+{  qryPesqPessoal.Active := false;
+  qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'SERVIDOR';
+  qryPesqPessoal.Active := true;
+
+      case rgpSituacao.ItemIndex of
+      0: qryPesqPessoal.Parameters.ParamValues['Ativos'] := 1;
+      1: qryPesqPessoal.Parameters.ParamValues['Ativos'] := 0;
+      2: qryPesqPessoal.Parameters.ParamValues['Ativos'] := 3;
+      end;
+}
+
+  case rgpSelecionaRelatorio.ItemIndex of
+  0: begin
+      qryPesqPessoal.Active := False;
+      qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'SERVIDOR';
+
+      case rgpSituacao.ItemIndex of
+      0: qryPesqPessoal.Parameters.ParamValues['Ativos'] := 1;
+      1: qryPesqPessoal.Parameters.ParamValues['Ativos'] := 0;
+      2: qryPesqPessoal.Parameters.ParamValues['Ativos'] := 3;
+      end;
+
+      if lvgrdRelPersonalizadoServidor.GridView <> tvRelPersonalizadoServidor then
+      begin
+        lvgrdRelPersonalizadoServidor.GridView := tvRelPersonalizadoServidor;
+      end;
+
+      tvRelPersonalizadoServidor.Controller.Customization := true;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Left := 5;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Top := grdRelPersonalizado.Top + tvRelPersonalizadoServidor.Controller.CustomizationForm.Height-50;
+      tvRelPersonalizadoServidor.Controller.CustomizationForm.Left := Screen.Width - tvRelPersonalizadoServidor.Controller.CustomizationForm.Width-10;
+     end;
+  1: begin
+      qryPesqPessoal.Active := False;
+      qryPesqPessoal.Parameters.ParamValues['tipoRelatorio'] := 'FERIAS';
+
+      if lvgrdRelPersonalizadoServidor.GridView <> tvRelPersonalizadoFerias then
+      begin
+        lvgrdRelPersonalizadoServidor.GridView := tvRelPersonalizadoFerias;
+      end;
+
+      tvRelPersonalizadoFerias.Controller.Customization := true;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Left := 5;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Top := grdRelPersonalizado.Top + tvRelPersonalizadoFerias.Controller.CustomizationForm.Height-50;
+      tvRelPersonalizadoFerias.Controller.CustomizationForm.Left := Screen.Width - tvRelPersonalizadoFerias.Controller.CustomizationForm.Width-10;
+     end;
+  end;//case
+
+  qryPesqPessoal.Active := true;
+
+  Result := qryPesqPessoal.recordcount;
+  
+end;
+
+procedure TfrmReadServidor.tbvPessoalKeyPress(Sender: TObject;
+  var Key: Char);
+begin
+  if Key = chr(13) then
+  btnEditarServidorClick(Nil);
 end;
 
 end.

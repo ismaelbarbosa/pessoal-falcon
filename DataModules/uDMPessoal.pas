@@ -16,9 +16,6 @@ type
     qryPesquisaIDPESSOAL: TStringField;
     qryPesquisaCPF: TStringField;
     qryPesquisaNOME: TStringField;
-    qryPesquisaidpessoal_1: TStringField;
-    qryPesquisacpf_1: TStringField;
-    qryPesquisanome_1: TStringField;
     qryPesquisadt_nascimento: TDateTimeField;
     qryPesquisaidServidor: TStringField;
     qryPesquisaID: TAutoIncField;
@@ -99,6 +96,7 @@ type
     qryPesquisaMae: TStringField;
     qryPesquisaidEstadoCivil: TStringField;
     qryPesquisaEstadoCivil: TStringField;
+    qryPesquisaBanco: TStringField;
     qryPesquisaConjuge: TStringField;
     qryPesquisaidBanco: TStringField;
     qryPesquisaAgencia: TStringField;
@@ -116,14 +114,19 @@ type
     qryPesquisadescricaoCargo: TStringField;
     qryPesquisadescricaoFuncao: TStringField;
     qryPesquisadesligamento: TStringField;
+    qryPesquisaObservacao: TStringField;
+    qryPesquisaidEspecialidade: TIntegerField;
     procedure DataModuleCreate(Sender: TObject);
   private
     { Private declarations }
   public
-    function retornaSQLPesquisaServidor
+    function SQLPesquisaServidor
     (condicao: String): String;
     function pesquisarPessoal(condicao: String): integer;
     function VerificarSeEProcurador(idCargo: string): boolean;
+    function VerificarSeEServidor(idCargo: string): boolean;
+    function VerificarSeEEstagiario(idCargo: string): boolean;
+
     function registraNotificaNupro
     (idServidor, idLotacao, idCargo, idFuncao, dtExercicioCargo,
     idUsuario, dtAlteracao: String):String;
@@ -134,7 +137,8 @@ var
 
 implementation
 
-uses uDMConexao, ufCriterioPesquisaPessoal, ufLogs, PRG_utils, uPesFuncoes;
+uses uDMConexao, ufCriterioPesquisaPessoal, ufLogs, PRG_utils, uPesFuncoes,
+  ufReadServidor;
 
 {$R *.dfm}
 
@@ -147,24 +151,18 @@ end;
 
 function TdmPessoal.VerificarSeEProcurador(idCargo: string): boolean;
 begin
-  if idCargo = 'PA'
-    then Result := true
-  else  if idCargo = 'PB'
-    then Result := true
-  else  if idCargo = 'PF'
-    then Result := true
-  else  if idCargo = 'SP'
-    then Result := true
-  else  if idCargo = 'JS'
-    then Result := true
-  else  if idCargo = 'JA'
-    then Result := true
-  else  if idCargo = 'JB'
-    then Result := true
-  else  if idCargo = 'SJ'
-    then Result := true
-  else Result := false;
-
+  if (idCargo = 'PA') or
+  (idCargo = 'PB') or
+  (idCargo = 'PF') or
+  (idCargo = 'SP') or
+  (idCargo = 'JS') or
+  (idCargo = 'JA') or
+  (idCargo = 'JB') or
+  (idCargo = 'SJ')
+  then
+    Result := true
+  else
+    Result := false;
 end;
 
 function TdmPessoal.pesquisarPessoal(condicao: String): integer;
@@ -173,7 +171,7 @@ begin
   begin
     Active := False;
     Sql.Clear;
-    Sql.Add(retornaSQLPesquisaServidor(condicao));
+    Sql.Add(SQLPesquisaServidor(condicao));
     Active := True;
   end;
 
@@ -222,7 +220,7 @@ serv.CaminhoFollhaDePonto, serv.TurnoEstagio, serv.Semestre, serv.InstituicaoEns
 dados.Endereco, dados.Bairro, dados.Cidade, dados.UF, dados.CEP, dados.CI_Num, dados.CI_UF, 
 dados.CI_Emissao, dados.Nacionalidade, dados.Naturalidade, dados.Natural_UF, 
 dados.Pis_Pasep, dados.TE_Num, dados.TE_Zona, dados.TE_Secao, dados.TE_UF, 
-dados.TE_Emissao, dados.Pai, dados.Mae, dados.idEstadoCivil,  
+dados.TE_Emissao, dados.Pai, dados.Mae, dados.idEstadoCivil,
 CASE  WHEN civil.Descricao != '' THEN civil.Descricao  
 ELSE 'NÃO INFORMADO' END AS EstadoCivil , dados.Conjuge, dados.idBanco, dados.Agencia, 
 dados.Conta, dados.OAB_Num, dados.OAB_Secao, dados.Aspro_Opc, dados.Grau, dados.Curso, 
@@ -242,7 +240,7 @@ WHERE 1=1 and pes.nome like '%ana%'  ORDER BY pes.nome; }
 
 end;
 
-function TdmPessoal.retornaSQLPesquisaServidor
+function TdmPessoal.SQLPesquisaServidor
 (condicao: String): String;
 var pesquisa: String;
 begin
@@ -251,9 +249,16 @@ begin
 
   + ' CASE'
   + ' WHEN serv.idCargo != ''999999'' AND Dt_Deslig_Cargo IS NULL THEN ''ATIVO'''
-  + ' WHEN serv.idCargo = ''999999'' AND Dt_Deslig_Cargo IS NOT NULL THEN ''DESLIGADO DA FUNÇÃO'''
-  + ' WHEN serv.Requisitado = 1 THEN ''REQUISITADO'''
+//  + ' WHEN serv.idCargo = ''999999'' AND Dt_Deslig_Cargo IS NOT NULL THEN ''DESLIGADO DA FUNÇÃO'''
+  + ' WHEN serv.idCargo = ''999999'' AND Dt_Deslig_Funcao IS NOT NULL THEN ''DESLIGADO DA FUNÇÃO'''
+  + ' WHEN serv.Requisitado = 1 AND Dt_Deslig_Cargo IS NULL THEN ''REQUISITADO'''
+  + ' WHEN serv.Requisitado = 1 AND Dt_Deslig_Cargo IS NOT NULL THEN ''DEVOLVIDO'''   
   + ' WHEN serv.Dt_Deslig_Cargo is NOT NULL THEN ''DESLIGADO DO CARGO'''
+
+// Incluir opção "Devolvido"
+
+
+
   + ' ELSE ''-'''
   + ' END AS Status'
 
@@ -261,9 +266,9 @@ begin
 //  + ' serv.idUsuario, pes1.Nome AS Operador, '
   + ', Operador=dbo.F_RetornaOperador(serv.idUsuario)'
   + ', OEE.Descricao as ExercicioExterno, OEE.Sigla as siglaOrgaoExterno'
-  + ', PES.IDPESSOAL, PES.CPF, PES.NOME,'
+//  + ', PES.IDPESSOAL, PES.CPF, PES.NOME,'
 
-  + ' pes.idpessoal, pes.cpf, pes.nome, pes.dt_nascimento,'
+  + ', pes.idpessoal, pes.cpf, pes.nome, pes.dt_nascimento,'
 
   //+ ' serv.*,' -- tabela Servidor
 
@@ -271,7 +276,11 @@ begin
   + ' serv.ID,'
   + ' serv.Matr_Origem,'
   + ' serv.idCargo,'
-  + ' serv.Especialidade,'
+
+  //  + ' serv.Especialidade,'
+  + ' serv.idEspecialidade,'
+  + ' esp.Descricao as Especialidade,'
+
   + ' serv.idFuncao,'
   + ' fun.idDFG as SimboloDFG,'
   + ' fun.id as idFun,'
@@ -322,6 +331,8 @@ begin
   + ' serv.Semestre,'
   + ' serv.InstituicaoEnsino,'
 
+  + ' serv.observacao,' 
+
   + ' serv.dt_InicioExercicioExterno,'
   + ' serv.dt_TerminoExercicioExterno,'
   + ' serv.dt_NomeacaoExercicioExterno,'
@@ -329,7 +340,6 @@ begin
 
 
 
- // + ' serv.observacao,' -- Este campo não está na table tbServidor do banco PGSRV19
  // + ' serv.idNucleo,' -- ídem acima
  // + ' serv.dtNucleoDistribuicao,' -- ídem acima
 
@@ -359,7 +369,12 @@ begin
   + ' CASE'
   + '  WHEN civil.Descricao != ' + QuotedStr('') + ' THEN civil.Descricao'
   + '  ELSE ' + QuotedStr('NÃO INFORMADO')
-  + ' END AS EstadoCivil ,'
+  + ' END AS EstadoCivil,'
+
+  + ' CASE'
+  + '  WHEN banco.Descricao != ' + QuotedStr('') + ' THEN banco.Descricao'
+  + '  ELSE ' + QuotedStr('NÃO INFORMADO')
+  + ' END AS Banco,'
 
   + ' dados.Conjuge,'
   + ' dados.idBanco,'
@@ -384,7 +399,11 @@ begin
   + ' LEFT JOIN tbLotacao as lot ON lot.idLotacao = serv.idLotacao'
   + ' LEFT JOIN tbCargo as car ON car.idCargo = serv.idCargo'
   + ' LEFT JOIN tbFuncao as fun ON fun.idFuncao = serv.idFuncao'
+
+  + ' LEFT JOIN tbEspecialidade as esp ON esp.idEspecialidade = serv.idEspecialidade'
+
   + ' LEFT JOIN tbEstadoCivil as civil ON civil.idEstadoCivil = dados.idEstadoCivil'
+  + ' LEFT JOIN tbBanco as banco ON banco.idBanco = dados.idBanco'
   + ' LEFT JOIN tbDesligamento as desl ON desl.idDesligamento = serv.idDesligamento'
   + ' LEFT JOIN tbOrgaoExercicioExterno oee'
   + ' ON oee.idOrgaoExercicioExterno = serv.idOrgaoExercicioExterno'
@@ -397,7 +416,10 @@ begin
 
   + ' ' + condicao
 
-  + ' ORDER BY pes.nome;';
+  + ' ORDER BY pes.nome, status, Dt_ExercicioCargo desc';
+
+     
+  // frmReadServidor.Memo1.Lines.Add(pesquisa);
 
   monitorarAcoesDaSessao
   ('uDMPessoal', 'Retorna SQL da pesquisa do servidor (retornaSQLPesquisaServidor)', pesquisa);
@@ -442,6 +464,32 @@ begin
 
   Result := vSQL;
 
+end;
+
+function TdmPessoal.VerificarSeEEstagiario(idCargo: string): boolean;
+begin
+  if (idCargo = 'ES')
+  then
+    Result := true
+  else
+    Result := false;
+end;
+
+function TdmPessoal.VerificarSeEServidor(idCargo: string): boolean;
+begin
+  if (idCargo <> 'PA') and
+    (idCargo <> 'PB') and
+    (idCargo <> 'PF') and
+    (idCargo <> 'SP') and
+    (idCargo <> 'JS') and
+    (idCargo <> 'JA') and
+    (idCargo <> 'JB') and
+    (idCargo <> 'SJ') and
+    (idCargo <> 'ES')
+  then
+    Result := true
+  else
+    Result := false;
 end;
 
 end.

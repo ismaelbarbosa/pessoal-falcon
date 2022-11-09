@@ -3,7 +3,32 @@ unit uDmCadastroServidor;
 interface
 
 uses
-  SysUtils, Classes, DB, ADODB;
+  SysUtils, Classes, DB, ADODB, Dialogs;
+
+type TDadosPessoal = array of String;
+
+type
+  TPessoal = record
+    nome, cpf, dtNascimento, idPessoal, idServidor,
+    cargo, especialidade, lotacao,
+    dtPosseCargo, dtExercicioCargo,
+    dtNomeacaoCargo, dtNomeacaoCargoDODF,
+    requisitado, orgaoOrigem,
+    cargaHoraria, classe,
+    padrao, cfNum,
+    auxTransporte,
+    naturalidade, naturalUF,
+    pai, mae, estadoCivil,
+    tipoSangue, conjuge,
+    endereco, bairro, cidade, enderecoUF,
+    cep, email, grauInstrucao,
+    curso, ciNum, ciEmissao, ciUF,
+    teNum, teZona, teSecao, teUF,
+    teEmissao, pisPasep,
+    banco, agencia, contaBanco,
+    oabNum, oabSecao
+    : Array[0..1] of String;
+end;
 
 type
   TdmCadastroServidor = class(TDataModule)
@@ -50,26 +75,13 @@ type
     function incluirPessoal(vSQL: String): boolean;
     function alterarPessoal(vSQL: String): boolean;
 
-    function incluirDados_OLD
-    (idPessoal, Endereco, Bairro, Cidade, UF,
-    CEP, CI_Num, CI_UF, CI_Emissao,
-    Naturalidade, Natural_UF, Pis_Pasep, TE_Num, TE_Zona,
-    TE_Secao, TE_UF, TE_Emissao, Pai, Mae, idEstadoCivil,
-    Conjuge, idBanco, Agencia, Conta, OAB_Num,
-    OAB_Secao, Aspro_Opc, Grau, Curso, TipoSanguineo,
-    Email: String): boolean;
-
     function incluirDados(vSQL: String): boolean;
     function alterarDados(vSQL: String): boolean;
 
-    function incluirServidor_OLD
-    (idPessoal, idServidor, Matr_Origem, idCargo, Especialidade,
-    idFuncao, idLotacao, CF_Num, Ramal, Sala,
-    Classe, Padrao, Requisitado, OrgaoDeOrigem, AuxTransporte,
-    idUsuario, CargaHoraria: String): boolean;
-
     function incluirServidor(vSQL: String): boolean;
     function alterarServidor(vSQL: String): boolean;
+
+    function executarSQL(vSQL: String): boolean;
 
     function incluirDatas_OLD
     (idPessoal, idServidor, Dt_NomeacaoCargo,
@@ -85,6 +97,35 @@ type
 
     function registrarNotificaNupro(vSQL: String):Boolean;
 
+    function SQLUpdatePessoal(pIDP, pCPF, pNome, pDtNascimento: String): String;
+
+    function SQLUpdateDados
+    //(Dados: TDadosPessoal)
+
+    (idPessoal, Endereco, Bairro, Cidade, EnderecoUF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade
+    , Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao
+    , Pai, Mae, EstadoCivil, Conjuge, Banco, Agencia, Conta, OAB_Num, OAB_Secao, GrauInstrucao
+    , Curso, TipoSanguineo, Email: String)
+
+    : String;
+
+    function SQLUpdateServidor
+    (pIDP, pIDS, idServidor, idCargo, idEspecialidade, CF_Num, Classe,
+    Padrao, Requisitado, OrgaoDeOrigem, AuxTransporte, CargaHoraria,
+    Dt_InicioContrato1_Estagiario,
+    Dt_TerminoContrato1_Estagiario,
+    Dt_InicioContrato2_Estagiario,
+    Dt_TerminoContrato2_Estagiario,
+    Dt_InicioContrato3_Estagiario,
+    Dt_TerminoContrato3_Estagiario,
+    Dt_InicioContrato4_Estagiario,
+    Dt_TerminoContrato4_Estagiario,
+    Supervisor_Estagiario,
+    TurnoEstagio,
+    Semestre,
+    InstituicaoEnsino,
+    observacao
+    : String): String;
 
   end;
 
@@ -131,76 +172,6 @@ begin
 
 end;
 
-function TdmCadastroServidor.incluirDados_OLD(idPessoal, Endereco, Bairro,
-  Cidade, UF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade,
-  Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao, Pai,
-  Mae, idEstadoCivil, Conjuge, idBanco, Agencia, Conta, OAB_Num, OAB_Secao,
-  Aspro_Opc, Grau, Curso, TipoSanguineo, Email: String): boolean;
-
-begin
-  try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
-        SQL.Text := 'Set dateformat dmy'
-            + ' Insert into '
-            + ' tbDados'
-            + ' (idPessoal, Endereco, Bairro, Cidade, UF,'
-            + 'CEP, CI_Num, CI_UF, CI_Emissao,'
-            + 'Naturalidade, Natural_UF, Pis_Pasep, TE_Num, TE_Zona,'
-            + 'TE_Secao, TE_UF, TE_Emissao, Pai, Mae, idEstadoCivil,'
-            + 'Conjuge, idBanco, Agencia, Conta, OAB_Num,'
-            + 'OAB_Secao, Aspro_Opc, Grau, Curso, TipoSanguineo,'
-            + 'Email)'
-
-            + ' Values ('
-
-            + QuotedStr(idPessoal)+ ', '
-            + QuotedStr(Endereco) + ', '
-            + QuotedStr(Bairro)   + ', '
-            + QuotedStr(Cidade)   + ', '
-            + QuotedStr(UF)       + ', '
-            + QuotedStr(CEP)      + ', '
-            + QuotedStr(CI_Num)   + ', '
-            + QuotedStr(CI_UF)    + ', '
-            + QuotedStr(CI_Emissao)    + ', '
-            + QuotedStr(Naturalidade) + ', '
-            + QuotedStr(Natural_UF)    + ', '
-            + QuotedStr(Pis_Pasep)     + ', '
-            + QuotedStr(TE_Num)        + ', '
-            + QuotedStr(TE_Zona)       + ', '
-            + QuotedStr(TE_Secao)      + ', '
-            + QuotedStr(TE_UF)         + ', '
-            + QuotedStr(TE_Emissao)     + ', '
-            + QuotedStr(Pai)            + ', '
-            + QuotedStr(Mae)            + ', '
-            + QuotedStr(idEstadoCivil)  + ', '
-            + QuotedStr(Conjuge)        + ', '
-            + QuotedStr(idBanco)        + ', '
-            + QuotedStr(Agencia)        + ', '
-            + QuotedStr(Conta)          + ', '
-            + QuotedStr(OAB_Num)        + ', '
-            + QuotedStr(OAB_Secao)      + ', '
-            + QuotedStr(Aspro_Opc)      + ', '
-            + QuotedStr(Grau)          + ', '
-            + QuotedStr(Curso)          + ', '
-            + QuotedStr(TipoSanguineo)  + ', '
-            + QuotedStr(Email)
-            + ')';
-
-
-        monitorarAcoesDaSessao
-        ('uDmCadastroServidor', 'incluirDados_OLD', SQL.Text);
-
-       ExecSQL;
-
-      end;
-    Result := true
-  except
-    Result := false;
-  end;
-
-end;
 
 function TdmCadastroServidor.incluirPessoal_OLD(idPessoal, CPF, Nome,
   DataNascimento: String): boolean;
@@ -233,63 +204,6 @@ begin
 
 end;
 
-function TdmCadastroServidor.incluirServidor_OLD
-  (idPessoal, idServidor, Matr_Origem, idCargo, Especialidade,
-  idFuncao, idLotacao, CF_Num, Ramal, Sala,
-  Classe, Padrao, Requisitado, OrgaoDeOrigem, 
-  AuxTransporte, idUsuario, CargaHoraria: String): boolean;
-begin
-  try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
-        SQL.Text := 'Set dateformat dmy'
-            + ' Insert into '
-            + ' tbServidor'
-
-            + '(idPessoal, idServidor,'
-            + ' Matr_Origem, idCargo,'
-            + ' Especialidade, idFuncao, '
-            + ' idLotacao, CF_Num, '
-            + ' Ramal, Sala,'
-            + ' Classe, Padrao,'
-            + ' Requisitado, OrgaoDeOrigem,'
-            + ' AuxTransporte, '
-            + ' idUsuario, CargaHoraria)'
-
-            + ' Values ('
-
-            + QuotedStr(idPessoal) + ', '
-            + QuotedStr(idServidor) + ', '
-            + QuotedStr(Matr_Origem) + ', '
-            + QuotedStr(idCargo) + ', '
-            + QuotedStr(Especialidade) + ', '
-            + QuotedStr(idFuncao) + ', '
-            + QuotedStr(idLotacao) + ', '
-            + QuotedStr(CF_Num) + ', '
-            + QuotedStr(Ramal) + ', '
-            + QuotedStr(Sala) + ', '
-            + QuotedStr(Classe) + ', '
-            + QuotedStr(Padrao) + ', '
-            + QuotedStr(Requisitado) + ', '
-            + QuotedStr(OrgaoDeOrigem) + ', '
-            + QuotedStr(AuxTransporte) + ', '
-            + QuotedStr(idUsuario) + ', '
-            + QuotedStr(CargaHoraria)
-            + ')';
-
-        monitorarAcoesDaSessao
-        ('uDmCadastroServidor', 'incluirServidor_OLD', SQL.Text);
-
-        ExecSQL;
-
-      end;
-    Result := true
-  except
-    Result := false;
-  end;
-
-end;
 
 function TdmCadastroServidor.retornarCargo: boolean;
 begin
@@ -321,7 +235,7 @@ begin
     qryEspecialidade.Active := false;
     qryEspecialidade.SQL.Text :=
 
-    'SELECT Descricao'
+    'SELECT idEspecialidade, Descricao'
     + ' FROM tbEspecialidade '
     + ' ORDER BY Descricao';
 
@@ -564,13 +478,12 @@ end;
 function TdmCadastroServidor.incluirPessoal(vSQL: String): boolean;
 begin
   try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
-        SQL.Text := vSQL;
-
-        ExecSQL;
-      end;
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+      SQL.Text := vSQL;
+      ExecSQL;
+    end;
     Result := true
   except
     Result := false;
@@ -580,11 +493,12 @@ end;
 function TdmCadastroServidor.incluirServidor(vSQL: String): boolean;
 begin
   try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
-        ExecSQL;
-      end;
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+      SQL.Text := vSQL;
+      ExecSQL;
+    end;
     Result := true
   except
     Result := false;
@@ -597,11 +511,8 @@ begin
     with dmPessoal.qryExecSQL do
     begin
       Connection := dmConexao.conPessoal;
-
       SQL.Text := vSQL;
-
       ExecSQL;
-
     end;
     Result := true
   except
@@ -611,21 +522,21 @@ end;
 
 
 procedure TdmCadastroServidor.DataModuleCreate(Sender: TObject);
+var con: TADOConnection;
 begin
-  with DMConexao do
-  begin
-    qryExecSQL.Connection := conPessoal;
-    qryPessoal.Connection := conPessoal;
-    qryCargo.Connection := conPessoal;
-    qryLotacao.Connection := conPessoal;
-    qryEspecialidade.Connection := conPessoal;
-    qryFuncao.Connection := conPessoal;
-    qryUF.Connection := conPessoal;
-    qryEstadoCivil.Connection := conPessoal;
-    qryGrauInstrucao.Connection := conPessoal;
-    qryCurso.Connection := conPessoal;
-    qryBanco.Connection := conPessoal;
-  end
+  con := DMConexao.conPessoal;
+
+  qryExecSQL.Connection := con;
+  qryPessoal.Connection := con;
+  qryCargo.Connection := con;
+  qryLotacao.Connection := con;
+  qryEspecialidade.Connection := con;
+  qryFuncao.Connection := con;
+  qryUF.Connection := con;
+  qryEstadoCivil.Connection := con;
+  qryGrauInstrucao.Connection := con;
+  qryCurso.Connection := con;
+  qryBanco.Connection := con;
 end;
 
 function TdmCadastroServidor.salvarPessoal(vSQL: String): boolean;
@@ -705,13 +616,12 @@ end;
 function TdmCadastroServidor.alterarServidor(vSQL: String): boolean;
 begin
   try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
-        SQL.Text := vSQL;
-
-        ExecSQL;
-      end;
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+      SQL.Text := vSQL;
+      ExecSQL;
+    end;
     Result := true
   except
     Result := false;
@@ -738,20 +648,501 @@ end;
 function TdmCadastroServidor.registrarNotificaNupro(vSQL: String): Boolean;
 begin
   try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
-        SQL.Text := vSQL;
-        frmLogs.mmoLog.Lines.Add(SQL.Text);
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+      SQL.Text := vSQL;
 
-        ExecSQL;
+      ExecSQL;
+    end;
+    Result := true;
+    //ShowMessage('Registrado em tbCamposAltSer');
+  except
+    Result := false;
+    //ShowMessage('Não registrado em tbCamposAltSer');    
+  end; 
+end;
 
-      end;
+function TdmCadastroServidor.executarSQL(vSQL: String): boolean;
+begin
+  try
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+      SQL.Text := vSQL;
+      ExecSQL;
+    end;
     Result := true
   except
     Result := false;
   end;
-
 end;
+
+function TdmCadastroServidor.SQLUpdatePessoal(pIDP, pCPF, pNome, pDtNascimento: String): String;
+var SQL_Pessoal: String;
+begin
+  SQL_Pessoal :=
+      'SET DATEFORMAT dmy'
+      + ' UPDATE tbPessoal'
+      + ' SET '
+      + ' CPF = '  + QuotedStr(pCPF)
+      + ', Nome = ' + QuotedStr(pNome);
+
+      if pDtNascimento <> '' then
+        SQL_Pessoal := SQL_Pessoal + ', dt_Nascimento = '
+        + QuotedStr(pDtNascimento)
+      else
+        SQL_Pessoal := SQL_Pessoal + ', dt_Nascimento = NULL ';
+
+      SQL_Pessoal := SQL_Pessoal
+      + ' WHERE idPessoal = ' + QuotedStr(pIDP);
+
+  monitorarAcoesDaSessao('dmCadastroServidor', 'SQL de alteração do pessoal(SQLUpdatePessoal)', SQL_Pessoal);
+
+  Result := SQL_Pessoal;
+end;
+
+function TdmCadastroServidor.SQLUpdateDados
+//(Dados: TDadosPessoal): String;
+(idPessoal, Endereco, Bairro, Cidade, EnderecoUF, CEP, CI_Num, CI_UF, CI_Emissao, Naturalidade
+, Natural_UF, Pis_Pasep, TE_Num, TE_Zona, TE_Secao, TE_UF, TE_Emissao
+, Pai, Mae, EstadoCivil, Conjuge, Banco, Agencia, Conta, OAB_Num, OAB_Secao, GrauInstrucao
+, Curso, TipoSanguineo, Email: String): String;
+
+var SQL_Dados: String;
+begin
+
+  SQL_Dados := 'SET DATEFORMAT dmy'
+  + ' UPDATE tbDados'
+  + ' SET ';
+
+  if Endereco <> ''
+  then SQL_Dados := SQL_Dados
+    + ' Endereco = ' + QuotedStr(Endereco)
+  else SQL_Dados := SQL_Dados
+    + ' Endereco = NULL';
+
+  if Bairro <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Bairro = ' + QuotedStr(Bairro)
+  else SQL_Dados := SQL_Dados
+    + ', Bairro = NULL';
+
+  if Cidade <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Cidade = ' + QuotedStr(Cidade)
+  else SQL_Dados := SQL_Dados
+    + ', Cidade = NULL';
+
+  if EnderecoUF <> ''
+  then SQL_Dados := SQL_Dados
+    + ', UF = ' + QuotedStr(EnderecoUF)
+  else SQL_Dados := SQL_Dados
+    + ', UF = NULL';
+
+  if CEP <> ''
+  then SQL_Dados := SQL_Dados
+    + ', CEP = ' + QuotedStr(CEP)
+  else SQL_Dados := SQL_Dados
+    + ', CEP = NULL';
+
+  if CI_Num <> ''
+  then SQL_Dados := SQL_Dados
+    + ', CI_Num = ' + QuotedStr(CI_Num)
+  else SQL_Dados := SQL_Dados
+    + ', CI_Num = NULL';
+
+  if CI_UF <> ''
+  then SQL_Dados := SQL_Dados
+    + ', CI_UF = ' + QuotedStr(CI_UF)
+  else SQL_Dados := SQL_Dados
+    + ', CI_UF = NULL';
+
+  if CI_Emissao <> ''
+  then SQL_Dados := SQL_Dados
+    + ', CI_Emissao = ' + QuotedStr(CI_Emissao)
+  else SQL_Dados := SQL_Dados
+    + ', CI_Emissao = NULL';
+
+  if Naturalidade <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Naturalidade = ' + QuotedStr(Naturalidade)
+  else SQL_Dados := SQL_Dados
+    + ', Naturalidade = NULL';
+
+  if Natural_UF <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Natural_UF = ' + QuotedStr(Natural_UF)
+  else SQL_Dados := SQL_Dados
+    + ', Natural_UF = NULL';
+
+  if Pis_Pasep <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Pis_Pasep = ' + QuotedStr(Pis_Pasep)
+  else SQL_Dados := SQL_Dados
+    + ', Pis_Pasep = NULL';
+
+  if TE_Num <> ''
+  then SQL_Dados := SQL_Dados
+    + ', TE_Num = ' + QuotedStr(TE_Num)
+  else SQL_Dados := SQL_Dados
+    + ', TE_Num = NULL';
+
+  if TE_Zona <> ''
+  then SQL_Dados := SQL_Dados
+    + ', TE_Zona = ' + QuotedStr(TE_Zona)
+  else SQL_Dados := SQL_Dados
+    + ', TE_Zona = NULL';
+
+  if TE_Secao <> ''
+  then SQL_Dados := SQL_Dados
+    + ', TE_Secao = ' + QuotedStr(TE_Secao)
+  else SQL_Dados := SQL_Dados
+    + ', TE_Secao = NULL';
+
+  if TE_UF <> ''
+  then SQL_Dados := SQL_Dados
+    + ', TE_UF = ' + QuotedStr(TE_UF)
+  else SQL_Dados := SQL_Dados
+    + ', TE_UF = NULL';
+
+  if TE_Emissao <> ''
+  then SQL_Dados := SQL_Dados
+    + ', TE_Emissao = ' + QuotedStr(TE_Emissao)
+  else SQL_Dados := SQL_Dados
+    + ', TE_Emissao = NULL';
+
+  if Pai <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Pai = ' + QuotedStr(Pai)
+  else SQL_Dados := SQL_Dados
+    + ', Pai = NULL';
+
+  if Mae <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Mae = ' + QuotedStr(Mae)
+  else SQL_Dados := SQL_Dados
+    + ', Mae = NULL';
+
+  if EstadoCivil <> ''
+  then SQL_Dados := SQL_Dados
+    + ', idEstadoCivil = ' + QuotedStr(EstadoCivil)
+  else SQL_Dados := SQL_Dados
+    + ', idEstadoCivil = NULL';
+
+  if Conjuge <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Conjuge = ' + QuotedStr(Conjuge)
+  else SQL_Dados := SQL_Dados
+    + ', Conjuge = NULL';
+
+  if Banco <> ''
+  then SQL_Dados := SQL_Dados
+    + ', idBanco = ' + QuotedStr(Banco)
+  else SQL_Dados := SQL_Dados
+    + ', idBanco = NULL';
+
+  if Agencia <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Agencia = ' + QuotedStr(Agencia)
+  else SQL_Dados := SQL_Dados
+    + ', Agencia = NULL';
+
+  if Conta <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Conta = ' + QuotedStr(Conta)
+  else SQL_Dados := SQL_Dados
+    + ', Conta = NULL';
+
+  if OAB_Num <> ''
+  then SQL_Dados := SQL_Dados
+    + ', OAB_Num = ' + QuotedStr(OAB_Num)
+  else SQL_Dados := SQL_Dados
+    + ', OAB_Num = NULL';
+
+  if OAB_Secao <> ''
+  then SQL_Dados := SQL_Dados
+    + ', OAB_Secao = ' + QuotedStr(OAB_Secao)
+  else SQL_Dados := SQL_Dados
+    + ', OAB_Secao = NULL';
+
+  if GrauInstrucao <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Grau = ' + QuotedStr(GrauInstrucao)
+  else SQL_Dados := SQL_Dados
+    + ', Grau = NULL';
+
+  if Curso <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Curso = ' + QuotedStr(Curso)
+  else SQL_Dados := SQL_Dados
+    + ', Curso = NULL';
+
+  if TipoSanguineo <> ''
+  then SQL_Dados := SQL_Dados
+    + ', TipoSanguineo = ' + QuotedStr(TipoSanguineo)
+  else SQL_Dados := SQL_Dados
+    + ', TipoSanguineo = NULL';
+
+  if Email <> ''
+  then SQL_Dados := SQL_Dados
+    + ', Email = ' + QuotedStr(Email)
+  else SQL_Dados := SQL_Dados
+    + ', Email = NULL';
+
+  SQL_Dados := SQL_Dados
+    + ' WHERE idPessoal = ' + QuotedStr(idPessoal)
+    ;
+
+  monitorarAcoesDaSessao
+  ('uDmCadastroServidor', 'SQL de atualização de dados do servidor (SQLUpdateDados)', SQL_Dados);
+
+  Result := SQL_Dados;
+end;
+
+function TdmCadastroServidor.SQLUpdateServidor
+(pIDP, pIDS, idServidor, idCargo, idEspecialidade, CF_Num, Classe,
+Padrao, Requisitado, OrgaoDeOrigem, AuxTransporte, CargaHoraria,
+    Dt_InicioContrato1_Estagiario,
+    Dt_TerminoContrato1_Estagiario,
+    Dt_InicioContrato2_Estagiario,
+    Dt_TerminoContrato2_Estagiario,
+    Dt_InicioContrato3_Estagiario,
+    Dt_TerminoContrato3_Estagiario,
+    Dt_InicioContrato4_Estagiario,
+    Dt_TerminoContrato4_Estagiario,
+    Supervisor_Estagiario,
+    TurnoEstagio,
+    Semestre,
+    InstituicaoEnsino,
+    observacao
+: String): String;
+var SQL_Servidor : String;
+begin
+// Ordem dos campos
+{
+...
+...
+...
+39	Dt_InicioContrato1_Estagiario
+40	Dt_TerminoContrato1_Estagiario
+41	Dt_InicioContrato2_Estagiario
+42	Dt_TerminoContrato2_Estagiario
+43	Dt_InicioContrato3_Estagiario
+44	Dt_TerminoContrato3_Estagiario
+45	Dt_InicioContrato4_Estagiario
+46	Dt_TerminoContrato4_Estagiario
+47	Supervisor_Estagiario
+48	DtNovaEstrutura
+49	CaminhoFollhaDePonto
+50	TurnoEstagio
+51	Semestre
+52	InstituicaoEnsino
+53	observacao
+54	idNucleo
+55	dtNucleoDistribuicao
+56	idOrgaoExercicioExterno
+57	dt_InicioExercicioExterno
+58	dt_TerminoExercicioExterno
+
+}
+
+  // Obs: As datas serão incluídas após o Insert
+  // através da função incluirDatas (DMCadastroServidor)
+
+
+  // Se não for atribuído um valor para o Cargo
+  // o banco atribuirá o valor default (999999)
+  // ídem para os campos idFuncao, idLotacao, Requisitado, etc
+  // Obs: não será feito como definido nas linhas acima. serão informados
+  // os valores default aqui no código
+
+
+  SQL_Servidor := 'SET DATEFORMAT dmy'
+  + ' UPDATE '
+  + ' tbServidor'
+  + ' SET idServidor = ' + QuotedStr(idServidor);
+
+  if idCargo <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', idCargo = ' + QuotedStr(idCargo)
+  else SQL_Servidor := SQL_Servidor
+    + ', idCargo = ' + QuotedStr('999999');
+
+  {if Especialidade<> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', especialidade = ' + QuotedStr(Especialidade)
+  else SQL_Servidor := SQL_Servidor
+    + ', especialidade = NULL';}
+
+  if Especialidade <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', idEspecialidade = ' + QuotedStr(idEspecialidade)
+  else SQL_Servidor := SQL_Servidor
+    + ', idEspecialidade = NULL';
+
+
+  {if Funcao<> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', idFuncao = ' + QuotedStr(Funcao)
+  else SQL_Servidor := SQL_Servidor
+    + ', idFuncao  = NULL' ;}
+
+  {if Lotacao<> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', idLotacao = ' + QuotedStr(Lotacao)
+  else SQL_Servidor := SQL_Servidor
+    + ', idLotacao = NULL';}
+
+
+  // 8	CF_Num 9	Ramal 10	Sala 11	Classe
+  // 12	Padrao (não se aplica para ramal e sala)
+
+  if CF_Num<> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', CF_Num = ' + QuotedStr(Trim(CF_Num))
+  else SQL_Servidor := SQL_Servidor
+    + ', CF_Num = NULL';
+
+  if Classe <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', Classe = ' + QuotedStr(Trim(Classe))
+  else SQL_Servidor := SQL_Servidor
+    + ', Classe = NULL';
+
+  if Padrao <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', Padrao = ' + QuotedStr(Trim(Padrao))
+  else SQL_Servidor := SQL_Servidor
+    + ', Padrao = NULL';
+
+
+  if Requisitado = '1'
+  then SQL_Servidor := SQL_Servidor
+    + ', Requisitado = 1'
+  else SQL_Servidor := SQL_Servidor
+    + ', Requisitado = 0';
+
+
+  if OrgaoDeOrigem <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', OrgaoDeOrigem = ' + QuotedStr(Trim(OrgaoDeOrigem))
+  else SQL_Servidor := SQL_Servidor
+    + ', OrgaoDeOrigem = NULL';
+
+  if AuxTransporte = '1'
+  then SQL_Servidor := SQL_Servidor
+    + ', AuxTransporte = 1'
+  else SQL_Servidor := SQL_Servidor
+    + ', AuxTransporte = 0';
+
+
+  if CargaHoraria <> ''
+  then SQL_Servidor := SQL_Servidor
+    + ', CargaHoraria = ' + QuotedStr(Trim(CargaHoraria))
+  else SQL_Servidor := SQL_Servidor
+    + ', CargaHoraria = NULL';
+
+////////////////// Dados do estágio ////////////////////////////////
+
+
+    if Dt_InicioContrato1_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato1_Estagiario = ' + QuotedStr(Trim(Dt_InicioContrato1_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato1_Estagiario = NULL';
+
+    if Dt_InicioContrato2_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato2_Estagiario = ' + QuotedStr(Trim(Dt_InicioContrato2_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato2_Estagiario = NULL';
+
+    if Dt_InicioContrato3_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato3_Estagiario = ' + QuotedStr(Trim(Dt_InicioContrato3_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato3_Estagiario = NULL';
+
+    if Dt_InicioContrato4_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato4_Estagiario = ' + QuotedStr(Trim(Dt_InicioContrato4_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_InicioContrato4_Estagiario = NULL';
+
+    if Dt_TerminoContrato1_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato1_Estagiario = ' + QuotedStr(Trim(Dt_TerminoContrato1_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato1_Estagiario = NULL';
+
+    if Dt_TerminoContrato2_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato2_Estagiario = ' + QuotedStr(Trim(Dt_TerminoContrato2_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato2_Estagiario = NULL';
+
+    if Dt_TerminoContrato3_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato3_Estagiario = ' + QuotedStr(Trim(Dt_TerminoContrato3_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato3_Estagiario = NULL';
+
+    if Dt_TerminoContrato4_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato4_Estagiario = ' + QuotedStr(Trim(Dt_TerminoContrato4_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Dt_TerminoContrato4_Estagiario = NULL';
+
+
+    if InstituicaoEnsino <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', InstituicaoEnsino = ' + QuotedStr(Trim(InstituicaoEnsino))
+    else SQL_Servidor := SQL_Servidor
+      + ', InstituicaoEnsino = NULL';
+
+    if TurnoEstagio <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', TurnoEstagio = ' + QuotedStr(Trim(TurnoEstagio))
+    else SQL_Servidor := SQL_Servidor
+      + ', TurnoEstagio = NULL';
+
+    if Semestre <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Semestre = ' + QuotedStr(Trim(Semestre))
+    else SQL_Servidor := SQL_Servidor
+      + ', Semestre = NULL';
+
+    if Observacao <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Observacao = ' + QuotedStr(Trim(Observacao))
+    else SQL_Servidor := SQL_Servidor
+      + ', Observacao = NULL';
+
+    if Supervisor_Estagiario <> ''
+    then SQL_Servidor := SQL_Servidor
+      + ', Supervisor_Estagiario = ' + QuotedStr(Trim(Supervisor_Estagiario))
+    else SQL_Servidor := SQL_Servidor
+      + ', Supervisor_Estagiario = NULL';
+
+
+////////////////////////////////////////////////////////////////////
+
+
+    // ver com a Cláudia em que situações são digitados
+    // os campos AverbacaoGDF e AverbacaoServPublico
+
+
+  SQL_Servidor := SQL_Servidor
+    + ', idUsuario = ' + QuotedStr(DMConexao.Usuario.CPF)
+    + ' WHERE idPessoal = ' + QuotedStr(pIDP)
+    + ' AND ID = ' + QuotedStr(pIDS);
+
+
+  monitorarAcoesDaSessao('dmCadastroServidor', 'SQL de alteração do servidor (SQLUpdateServidor)', SQL_Servidor);
+
+  Result := SQL_Servidor;
+end;
+
 
 end.

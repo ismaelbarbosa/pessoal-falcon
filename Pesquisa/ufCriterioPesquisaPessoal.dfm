@@ -1,8 +1,8 @@
 object frmCriterioPesquisaPessoal: TfrmCriterioPesquisaPessoal
-  Left = 192
-  Top = 113
+  Left = 154
+  Top = 90
   Width = 582
-  Height = 425
+  Height = 390
   Caption = 'Crit'#233'rios da pesquisa de pessoal'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -20,8 +20,9 @@ object frmCriterioPesquisaPessoal: TfrmCriterioPesquisaPessoal
   TextHeight = 13
   object cxGroupBox2: TcxGroupBox
     Left = 0
-    Top = 321
+    Top = 286
     Align = alBottom
+    Style.BorderStyle = ebsNone
     TabOrder = 0
     Height = 73
     Width = 574
@@ -120,11 +121,11 @@ object frmCriterioPesquisaPessoal: TfrmCriterioPesquisaPessoal
     Left = 0
     Top = 0
     Width = 574
-    Height = 321
+    Height = 286
     ActivePage = tshCampos
     Align = alClient
     TabOrder = 1
-    ClientRectBottom = 321
+    ClientRectBottom = 286
     ClientRectRight = 574
     ClientRectTop = 24
     object tshCampos: TcxTabSheet
@@ -134,24 +135,10 @@ object frmCriterioPesquisaPessoal: TfrmCriterioPesquisaPessoal
         Left = 0
         Top = 0
         Align = alClient
+        Style.BorderStyle = ebsNone
         TabOrder = 0
-        Height = 297
+        Height = 262
         Width = 574
-        object lblNumeroRegistros: TLabel
-          Left = 2
-          Top = 279
-          Width = 570
-          Height = 16
-          Align = alBottom
-          Alignment = taCenter
-          Caption = 'N'#186' de registros encontrados: '
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clGray
-          Font.Height = -13
-          Font.Name = 'Verdana'
-          Font.Style = []
-          ParentFont = False
-        end
         object chkNome: TcxCheckBox
           Left = 24
           Top = 29

@@ -1,8 +1,8 @@
 object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
-  Left = 192
-  Top = 117
+  Left = 98
+  Top = 146
   Width = 926
-  Height = 577
+  Height = 576
   Caption = 'Lan'#231'amento de abono anual'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -71,7 +71,7 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       ParentFont = False
     end
     object btnSair: TcxButton
-      Left = 145
+      Left = 132
       Top = 5
       Width = 110
       Height = 35
@@ -165,96 +165,103 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
     Left = 0
     Top = 97
     Align = alTop
+    Style.BorderStyle = ebsNone
     TabOrder = 1
-    Height = 273
+    Height = 272
     Width = 918
     object Label6: TLabel
       Left = 26
       Top = 84
-      Width = 98
-      Height = 18
+      Width = 75
+      Height = 16
       Caption = 'Primeiro dia'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object Label1: TLabel
-      Left = 26
+      Left = 43
       Top = 32
-      Width = 71
-      Height = 18
+      Width = 58
+      Height = 16
       Caption = 'Exerc'#237'cio'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
-    object lblNProcessoSEI: TLabel
-      Left = 256
-      Top = 18
-      Width = 93
-      Height = 13
-      Caption = 'N'#186' Processo SEI'
-    end
     object Label3: TLabel
-      Left = 37
+      Left = 32
       Top = 194
-      Width = 87
-      Height = 18
+      Width = 69
+      Height = 16
       Caption = 'Quarto dia'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object Label4: TLabel
-      Left = 38
+      Left = 34
       Top = 231
-      Width = 86
-      Height = 18
+      Width = 67
+      Height = 16
       Caption = 'Quinto dia'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object Label5: TLabel
-      Left = 23
+      Left = 20
       Top = 120
-      Width = 101
-      Height = 18
+      Width = 81
+      Height = 16
       Caption = 'Segundo dia'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object Label7: TLabel
-      Left = 30
+      Left = 24
       Top = 157
-      Width = 94
-      Height = 18
+      Width = 77
+      Height = 16
       Caption = 'Terceiro dia'
       Font.Charset = ANSI_CHARSET
       Font.Color = clWindowText
-      Font.Height = -16
+      Font.Height = -13
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lblNProcessoSEI: TLabel
+      Left = 225
+      Top = 32
+      Width = 107
+      Height = 16
+      Caption = 'N'#186' Processo SEI'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object edtDt_1: TcxDateEdit
-      Left = 138
+      Left = 120
       Top = 78
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
@@ -264,10 +271,11 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 2
+      OnExit = edtDt_1Exit
       Width = 149
     end
     object edtExercicio: TcxTextEdit
-      Left = 112
+      Left = 120
       Top = 25
       ParentFont = False
       Properties.MaxLength = 4
@@ -283,23 +291,23 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       Width = 81
     end
     object edtProcessoSEI: TcxMaskEdit
-      Left = 256
-      Top = 34
+      Left = 352
+      Top = 25
       ParentFont = False
       Properties.EditMask = '00000-00000000/0000-00;0;_'
       Properties.MaxLength = 0
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
-      Style.Font.Height = -13
+      Style.Font.Height = -21
       Style.Font.Name = 'Verdana'
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 1
       Text = '                   '
-      Width = 210
+      Width = 293
     end
     object edtDt_4: TcxDateEdit
-      Left = 138
+      Left = 120
       Top = 188
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
@@ -309,10 +317,11 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 5
+      OnExit = edtDt_4Exit
       Width = 149
     end
     object edtDt_5: TcxDateEdit
-      Left = 138
+      Left = 120
       Top = 225
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
@@ -322,10 +331,11 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 6
+      OnExit = edtDt_5Exit
       Width = 149
     end
     object edtDt_2: TcxDateEdit
-      Left = 138
+      Left = 120
       Top = 114
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
@@ -335,10 +345,11 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 3
+      OnExit = edtDt_2Exit
       Width = 149
     end
     object edtDt_3: TcxDateEdit
-      Left = 138
+      Left = 120
       Top = 151
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
@@ -348,73 +359,8 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 4
+      OnExit = edtDt_3Exit
       Width = 149
-    end
-  end
-  object gbxFeriasNoPeriodo: TcxGroupBox
-    Left = 0
-    Top = 370
-    Align = alClient
-    Caption = 'Abonos do servidor no exerc'#237'cio'
-    TabOrder = 2
-    Height = 176
-    Width = 918
-    object grdAbono: TcxGrid
-      Left = 2
-      Top = 18
-      Width = 914
-      Height = 156
-      Align = alClient
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clWindowText
-      Font.Height = -13
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentFont = False
-      TabOrder = 0
-      object cxGridDBTableView1: TcxGridDBTableView
-        NavigatorButtons.ConfirmDelete = False
-        DataController.DataSource = dsAbonosNoPeriodo
-        DataController.Summary.DefaultGroupSummaryItems = <>
-        DataController.Summary.FooterSummaryItems = <>
-        DataController.Summary.SummaryGroups = <>
-        OptionsData.Deleting = False
-        OptionsData.Editing = False
-        OptionsData.Inserting = False
-        OptionsView.GroupByBox = False
-        object cxGridDBColumn1: TcxGridDBColumn
-          Caption = 'Exerc'#237'cio'
-          DataBinding.FieldName = 'idExercicio'
-        end
-        object cxGridDBColumn2: TcxGridDBColumn
-          Caption = '1'#186' dia'
-          DataBinding.FieldName = 'Dt_1'
-        end
-        object cxGridDBColumn3: TcxGridDBColumn
-          Caption = '2'#186' dia'
-          DataBinding.FieldName = 'Dt_2'
-        end
-        object cxGridDBColumn4: TcxGridDBColumn
-          Caption = '3'#186' dia'
-          DataBinding.FieldName = 'Dt_3'
-        end
-        object cxGridDBColumn5: TcxGridDBColumn
-          Caption = '4'#186' dia'
-          DataBinding.FieldName = 'Dt_4'
-        end
-        object cxGridDBColumn6: TcxGridDBColumn
-          Caption = '5'#186' dia'
-          DataBinding.FieldName = 'Dt_5'
-        end
-        object cxGridDBColumn7: TcxGridDBColumn
-          Caption = 'Processo SEI'
-          DataBinding.FieldName = 'nProcessoSEI'
-          Width = 150
-        end
-      end
-      object cxGridLevel1: TcxGridLevel
-        GridView = cxGridDBTableView1
-      end
     end
   end
   object pnlNome: TPanel
@@ -430,45 +376,99 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
     Font.Name = 'Verdana'
     Font.Style = []
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
     object lblMatricula: TLabel
-      Left = 21
-      Top = 8
-      Width = 94
-      Height = 18
+      Left = 645
+      Top = 32
+      Width = 64
+      Height = 13
       Caption = 'lblMatricula'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
+      Font.Color = clGray
+      Font.Height = -11
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object lblNome: TLabel
-      Left = 140
+      Left = 21
       Top = 8
-      Width = 67
-      Height = 18
+      Width = 79
+      Height = 23
       Caption = 'lblNome'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
+      Font.Color = clGray
+      Font.Height = -19
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object lblCargo: TLabel
       Left = 21
-      Top = 33
-      Width = 67
-      Height = 18
+      Top = 36
+      Width = 52
+      Height = 16
       Caption = 'lblCargo'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
+      Font.Color = clGray
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
+    end
+    object lbl_ID: TLabel
+      Left = 832
+      Top = 32
+      Width = 34
+      Height = 13
+      Caption = 'lbl_ID'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+  end
+  object cxGroupBox1: TcxGroupBox
+    Left = 0
+    Top = 369
+    Align = alClient
+    Caption = 'Abonos, afastamentos e f'#233'rias concomitantes'
+    TabOrder = 3
+    Height = 176
+    Width = 918
+    object grdFAA: TcxGrid
+      Left = 2
+      Top = 18
+      Width = 914
+      Height = 156
+      Align = alClient
+      TabOrder = 0
+      object tbvFAA: TcxGridDBTableView
+        NavigatorButtons.ConfirmDelete = False
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsData.Deleting = False
+        OptionsData.Editing = False
+        OptionsData.Inserting = False
+        OptionsView.GroupByBox = False
+        object tbcDt_Inicio: TcxGridDBColumn
+          Caption = 'Data de in'#237'cio'
+          DataBinding.FieldName = 'Dt_Inicio'
+        end
+        object tbcDt_Termino: TcxGridDBColumn
+          Caption = 'Data de t'#233'rmino'
+          DataBinding.FieldName = 'Dt_Termino'
+        end
+        object tbcTabela: TcxGridDBColumn
+          DataBinding.FieldName = 'Tabela'
+        end
+      end
+      object lvlFAA: TcxGridLevel
+        GridView = tbvFAA
+      end
     end
   end
   object qryAbonosNoPeriodo: TADOQuery
@@ -480,5 +480,9 @@ object frmUpdateAbonoAnual: TfrmUpdateAbonoAnual
     DataSet = qryAbonosNoPeriodo
     Left = 544
     Top = 144
+  end
+  object dsFeriasAfastamentosAbonos: TDataSource
+    Left = 648
+    Top = 16
   end
 end

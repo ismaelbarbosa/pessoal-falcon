@@ -17,7 +17,7 @@ uses Windows, SysUtils, StrUtils, Forms, Dialogs, Graphics, DateUtils, ADODB, Wi
 IniFiles, cxMemo, cxDBEdit, Classes;
 
 procedure monitorarAcoesDaSessao(pFonte, pAcao, pTexto: string);
-procedure IncluirLog(pUsu, pDtAlt, pTabela, pChave, pCampo, pTransacao: string);
+procedure IncluirLog(pUsu, pDtAlt, pTabela, pChave, pIdPessoal, pIdServidor, pCampo, pTransacao: string);
 function InserirZeros(Texto: string; Comprimento: integer): string;
 function ConfirmaAcao(pMensagem: String; pMB: integer): integer;
 function NomeComputador: string;
@@ -33,17 +33,14 @@ uses uDMConexao, udmPessoal, PRG_utils, ufLogs;
 
 procedure monitorarAcoesDaSessao(pFonte, pAcao, pTexto: string);
 begin
-  frmLogs.mmoLog.Lines.Add(
-    chr(13)
-    + 'Data: ' + RetornaData(2)
+  frmLogs.mmoLog.Lines.Add
+  (
+    'Data: ' + RetornaData(2)
     + chr(13)   + chr(13)
-    + 'Fonte: ' + pFonte
-    + chr(13)   + chr(13)
-    + 'Ação: '  +  pAcao
-    + chr(13)   + chr(13)
-    + pTexto
-    + chr(13)   + chr(13)
-    + ' *** Fim ***'
+    + 'Fonte: ' + pFonte    + chr(13)
+    + 'Ação: '  +  pAcao    + chr(13)
+    + pTexto                + chr(13)
+    + '------------------------------------------------------'
   );
 end;
 
@@ -120,7 +117,7 @@ begin
 end;
 
 procedure IncluirLog
-(pUsu, pDtAlt, pTabela, pChave, pCampo, pTransacao: string);
+(pUsu, pDtAlt, pTabela, pChave, pIdPessoal, pIdServidor, pCampo, pTransacao: string);
 var wIdLog: string;
 begin
   try
@@ -135,12 +132,14 @@ begin
           'Set dateformat dmy'
           + ' Insert into '
           + 'tbLog'
-          + '(idUsuario, Data, Tabela, Chave, Campo, Evento)'
+          + '(idUsuario, Data, Tabela, Chave, idPessoal, idServidor, Campo, Evento)'
           + ' Values ('
           + QuotedStr(pUsu)
           + ',' + QuotedStr(pDtAlt)
           + ',' + QuotedStr(pTabela)
           + ',' + QuotedStr(pChave)
+          + ',' + QuotedStr(pIdPessoal)
+          + ',' + QuotedStr(pIdServidor)
           + ',' + QuotedStr(pCampo)
           + ',' + QuotedStr(pTransacao)
           + ')';

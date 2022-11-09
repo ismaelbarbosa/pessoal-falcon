@@ -170,7 +170,7 @@ begin
 
       case rgpTipo.ItemIndex of
         0: acao := acao + 'FERIADO:';
-        1: acao := acao + 'FACULTATIVO:';
+        1: acao := acao + 'PONTO FACULTATIVO:';
       end;
 
       if retorno <> '0' then
@@ -205,7 +205,7 @@ begin
 
       case rgpTipo.ItemIndex of
         0: acao := acao + 'FERIADO:';
-        1: acao := acao + 'FACULTATIVO:';
+        1: acao := acao + 'PONTO FACULTATIVO:';
       end;
 
       if ConfirmaAcao('Confirma a alteração do registro?', 3) = 1
@@ -233,6 +233,8 @@ begin
   RetornaData(2),
   'tbFeriadosEAfastamentos',
   txtIdFeriado.Caption,
+  'NULL', //
+  'NULL', //
   'TODOS',
   acao
   + ' ID: ' + txtIdFeriado.Caption

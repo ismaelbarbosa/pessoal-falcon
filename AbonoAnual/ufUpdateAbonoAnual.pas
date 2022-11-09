@@ -22,7 +22,7 @@ type
     Data_2,
     Data_3,
     Data_4,
-    Data_5 : String;
+    Data_5, ID : String;
 end;
 
 type
@@ -36,11 +36,9 @@ type
     gbxLancamento: TcxGroupBox;
     Label6: TLabel;
     Label1: TLabel;
-    lblNProcessoSEI: TLabel;
     edtDt_1: TcxDateEdit;
     edtExercicio: TcxTextEdit;
     edtProcessoSEI: TcxMaskEdit;
-    gbxFeriasNoPeriodo: TcxGroupBox;
     Label3: TLabel;
     edtDt_4: TcxDateEdit;
     Label4: TLabel;
@@ -51,20 +49,20 @@ type
     edtDt_3: TcxDateEdit;
     qryAbonosNoPeriodo: TADOQuery;
     dsAbonosNoPeriodo: TDataSource;
-    grdAbono: TcxGrid;
-    cxGridDBTableView1: TcxGridDBTableView;
-    cxGridDBColumn1: TcxGridDBColumn;
-    cxGridDBColumn2: TcxGridDBColumn;
-    cxGridDBColumn3: TcxGridDBColumn;
-    cxGridDBColumn4: TcxGridDBColumn;
-    cxGridDBColumn5: TcxGridDBColumn;
-    cxGridDBColumn6: TcxGridDBColumn;
-    cxGridDBColumn7: TcxGridDBColumn;
-    cxGridLevel1: TcxGridLevel;
     pnlNome: TPanel;
     lblMatricula: TLabel;
     lblNome: TLabel;
     lblCargo: TLabel;
+    cxGroupBox1: TcxGroupBox;
+    grdFAA: TcxGrid;
+    tbvFAA: TcxGridDBTableView;
+    tbcDt_Inicio: TcxGridDBColumn;
+    tbcDt_Termino: TcxGridDBColumn;
+    tbcTabela: TcxGridDBColumn;
+    lvlFAA: TcxGridLevel;
+    dsFeriasAfastamentosAbonos: TDataSource;
+    lblNProcessoSEI: TLabel;
+    lbl_ID: TLabel;
     procedure btnSairClick(Sender: TObject);
     procedure edtExercicioExit(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -73,6 +71,12 @@ type
       Shift: TShiftState);
     procedure btnGravarClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure edtDt_1Exit(Sender: TObject);
+    procedure edtDt_2Exit(Sender: TObject);
+    procedure edtDt_3Exit(Sender: TObject);
+    procedure edtDt_4Exit(Sender: TObject);
+    procedure edtDt_5Exit(Sender: TObject);
+    procedure edtProcessoSEIExit(Sender: TObject);
   private
     OPERACAO: Integer;
     FormQueChamou: Integer;
@@ -87,16 +91,18 @@ type
 
     function incluirAbono: boolean;
     function atualizarAbono: boolean;
-    function jaExisteAbono(idPessoal, idServidor, idExercicio: String):boolean;
+
+    function existeAbono(idPessoal, idServidor, idExercicio: String):boolean;
     function carregarAbonoExistente:boolean;
 
-    function retornaSQLInsertAbono: String;
-    function retornaSQLUpdateAbono: String;
-    function exibeAbonoNoPeriodo(pIdPessoal, pIdServidor, pExercicio: String): Integer;
+    function SQLInsertAbono: String;
+    function SQLUpdateAbono: String;
+
     procedure bloquearCampos;
     procedure desbloquearCampos;
-    function carregarAbonoParaEdicao:boolean;
+    function carregarAbonoParaEdicao(ID, idExercicio, ProcessoSEI, dt_1, dt_2, dt_3, dt_4, dt_5: String):boolean;
 
+    function dataConcomitante(data: String): boolean;
 
   end;
 
@@ -115,34 +121,25 @@ var Abono: TAbono;
 function TfrmUpdateAbonoAnual.atualizarAbono: boolean;
 begin
   try
-      with dmPessoal.qryExecSQL do
-      begin
-        Connection := dmConexao.conPessoal;
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+      SQL.Text := SQLUpdateAbono;
 
-        {case getFormQueChamou of
-          // frmUpdateServidor
-          1: SQL.Text := retornaSQLInsertFerias
-             (frmUpdateServidor.lbl_IDP.Caption,
-              frmUpdateServidor.lbl_IDS.Caption);
+      ExecSQL;
 
-          // frmUpdateFeriasGeral
-          2: SQL.Text := retornaSQLInsertFerias
-             (frmUpdateFeriasGeral.qryPesquisa.FieldValues['idPessoal'],
-              frmUpdateFeriasGeral.qryPesquisa.FieldValues['idServidor']);
-        end;}
+      // A linha abaixo sempre deverá ficar abaixo do comando ExecSQL
+      // pois não estava sendo executado
+      // Obs: transferir para a função retornaSQlUpdateAbono
+      // verificar todos os programas que executam ações SQL
 
-        SQL.Text := retornaSQLUpdateAbono;
-
-        frmLogs.mmoLog.Lines.Add(SQL.Text);
-
-        ExecSQL;
-
-      end;
+      monitorarAcoesDaSessao
+      ('ufUpdateAbonoAnual', 'Atualização do abono (atualizarAbono)', SQL.Text);
+    end;
     Result := true
   except
     Result := false;
   end;
-
 end;
 
 procedure TfrmUpdateAbonoAnual.bloquearCampos;
@@ -166,9 +163,9 @@ begin
     edtDt_3.Text := Data_3;
     edtDt_4.Text := Data_4;
     edtDt_5.Text := Data_5;
+
+    lbl_ID.Caption := ID;
   end
-
-
 end;
 
 procedure TfrmUpdateAbonoAnual.configurarOperacao;
@@ -202,38 +199,6 @@ begin
   edtExercicio.Enabled := true;
 end;
 
-function TfrmUpdateAbonoAnual.exibeAbonoNoPeriodo(pIdPessoal, pIdServidor,
-  pExercicio: String): Integer;
-var wSQL: String;
-begin
-  with qryAbonosNoPeriodo do
-  begin
-    Active := false;
-    SQL.Clear;
-    wSQL :=
-
-    'SELECT'
-    + ' Abo.idPessoal, Abo.idExercicio,'
-    + ' Abo.Dt_1, Abo.Dt_2, Abo.Dt_3, Abo.Dt_4, Abo.Dt_5,'
-    + ' Abo.nProcessoSEI'
-
-    + ' FROM tbAbono as Abo'
-
-    + ' WHERE 1=1'
-    + ' and Abo.idPessoal = ' + QuotedStr(pidPessoal)
-    + ' AND Abo.idServidor = ' + QuotedStr(pidServidor)
-    + ' AND Abo.idExercicio = ' + QuotedStr(pExercicio)
-    + ' ORDER BY Abo.idExercicio desc';
-
-    SQL.Add(wSQL);
-    frmLogs.mmoLog.Lines.Add(wSQL);
-
-    Active := true;
-    Result := RecordCount;
-  end;
-
-end;
-
 function TfrmUpdateAbonoAnual.getFormQueChamou: Integer;
 begin
   Result := FormQueChamou;
@@ -245,25 +210,9 @@ begin
       with dmPessoal.qryExecSQL do
       begin
         Connection := dmConexao.conPessoal;
-
-        {case getFormQueChamou of
-          // frmUpdateServidor
-          1: SQL.Text := retornaSQLInsertFerias
-             (frmUpdateServidor.lbl_IDP.Caption,
-              frmUpdateServidor.lbl_IDS.Caption);
-
-          // frmUpdateFeriasGeral
-          2: SQL.Text := retornaSQLInsertFerias
-             (frmUpdateFeriasGeral.qryPesquisa.FieldValues['idPessoal'],
-              frmUpdateFeriasGeral.qryPesquisa.FieldValues['idServidor']);
-        end;}
-
-        SQL.Text := retornaSQLInsertAbono;
-
-        frmLogs.mmoLog.Lines.Add(SQL.Text);
+        SQL.Text := SQLInsertAbono;
 
         ExecSQL;
-
       end;
     Result := true
   except
@@ -272,7 +221,7 @@ begin
 
 end;
 
-function TfrmUpdateAbonoAnual.jaExisteAbono(idPessoal, idServidor,
+function TfrmUpdateAbonoAnual.existeAbono(idPessoal, idServidor,
   idExercicio: String): boolean;
 begin
   with dmPessoal.qryExecSQL do
@@ -325,10 +274,9 @@ begin
 
 end;
 
-function TfrmUpdateAbonoAnual.retornaSQLInsertAbono: String;
+function TfrmUpdateAbonoAnual.SQLInsertAbono: String;
 var SQL_Abono :String;
 begin
-
   SQL_Abono :=
 
       'SET DATEFORMAT dmy'
@@ -371,10 +319,11 @@ begin
 
   Result := SQL_Abono;
 
-
+  monitorarAcoesDaSessao
+  ('ufrmUpdateAbonoAnual', 'SQL da inclusão do abono', SQL_Abono);
 end;
 
-function TfrmUpdateAbonoAnual.retornaSQLUpdateAbono: String;
+function TfrmUpdateAbonoAnual.SQLUpdateAbono: String;
 var SQL_Abono: String;
 begin
   SQL_Abono :=
@@ -382,43 +331,52 @@ begin
       + ' UPDATE tbAbono'
       + ' SET ';
 
+      if edtExercicio.Text <> '' then
+        SQL_Abono := SQL_Abono + 'idExercicio = ' + QuotedStr(edtExercicio.Text)
+      else
+        SQL_Abono := SQL_Abono + 'idExercicio = NULL';
+
       if edtDt_1.Text <> '' then
         SQL_Abono := SQL_Abono + ', Dt_1 = ' + QuotedStr(edtDt_1.Text)
       else
-        SQL_Abono := SQL_Abono + ', Dt_1 = NULL, ';
+        SQL_Abono := SQL_Abono + ', Dt_1 = NULL';
 
       if edtDt_2.Text <> '' then
         SQL_Abono := SQL_Abono + ', Dt_2 = ' + QuotedStr(edtDt_2.Text)
       else
-        SQL_Abono := SQL_Abono + ', Dt_2 = NULL, ';
+        SQL_Abono := SQL_Abono + ', Dt_2 = NULL';
 
       if edtDt_3.Text <> '' then
         SQL_Abono := SQL_Abono + ', Dt_3 = ' + QuotedStr(edtDt_3.Text)
       else
-        SQL_Abono := SQL_Abono + ', Dt_3 = NULL, ';
+        SQL_Abono := SQL_Abono + ', Dt_3 = NULL';
 
       if edtDt_4.Text <> '' then
         SQL_Abono := SQL_Abono + ', Dt_4 = ' + QuotedStr(edtDt_4.Text)
       else
-        SQL_Abono := SQL_Abono + ', Dt_4 = NULL, ';
+        SQL_Abono := SQL_Abono + ', Dt_4 = NULL';
 
       if edtDt_5.Text <> '' then
         SQL_Abono := SQL_Abono + ', Dt_5 = ' + QuotedStr(edtDt_5.Text)
       else
-        SQL_Abono := SQL_Abono + ', Dt_5 = NULL, ';
+        SQL_Abono := SQL_Abono + ', Dt_5 = NULL';
 
 
       SQL_Abono := SQL_Abono
 
       + ', nProcessoSEI = ' + QuotedStr(edtProcessoSEI.Text)
 
-      + ' WHERE idPessoal = ' + QuotedStr(idPessoal)
-      + ' AND idServidor = ' + QuotedStr(idServidor)
-      + ' AND idExercicio = ' + QuotedStr(edtExercicio.Text);
+      + ' WHERE ID = ' + QuotedStr(lbl_ID.Caption);
 
+      {+ ' idPessoal = ' + QuotedStr(idPessoal)
+      + ' AND idServidor = '  + QuotedStr(idServidor)
+      + ' AND idExercicio = ' + QuotedStr(edtExercicio.Text)}
 
+      
   Result := SQL_Abono;
 
+  monitorarAcoesDaSessao
+  ('ufrmUpdateAbonoAnual', 'SQL da alteração do abono', SQL_Abono);
 end;
 
 function TfrmUpdateAbonoAnual.setarOperacao(tipo: Integer): boolean;
@@ -465,7 +423,7 @@ begin
       end
       else
       begin
-        exibeAbonoNoPeriodo(idPessoal, idServidor, edtExercicio.Text);
+        {exibeAbonoNoPeriodo(idPessoal, idServidor, edtExercicio.Text);
 
         if jaExisteAbono(idPessoal, idServidor, edtExercicio.Text)
         then
@@ -484,7 +442,7 @@ begin
             edtProcessoSEI.SetFocus;
           end;
         end
-
+        }
       end;
 
     end;
@@ -495,11 +453,12 @@ procedure TfrmUpdateAbonoAnual.FormActivate(Sender: TObject);
 begin
   Position := poScreenCenter;
 
+  {  -- É feito pela função configurarOpercao
   Case OPERACAO of
     1: lblOperacao.Caption := 'INCLUSÃO';
     2: lblOperacao.Caption := 'ALTERAÇÃO';
   end;
-
+  }
   lblFQC.Caption := IntToStr(getFormQueChamou);
 
   case getFormQueChamou of
@@ -518,12 +477,12 @@ begin
 
       idPessoal := DMFeriasAbonoAfastamento.qryPesquisa.FieldValues['idPessoal'];
       idServidor := DMFeriasAbonoAfastamento.qryPesquisa.FieldValues['idServidor'];
-
+      //edtExercicio.Text := dmFeriasAbonoAfastamento.qryAbonoAnual.FieldValues['idExercicio'];
     end;
 
   end;
 
-  edtExercicio.SetFocus;
+  //edtExercicio.SetFocus;
 
   configurarOperacao;
 
@@ -547,7 +506,7 @@ begin
 end;
 
 procedure TfrmUpdateAbonoAnual.btnGravarClick(Sender: TObject);
-var wMens, wOperacao: String;
+var wMens, wOperacao, wEvento: String;
 begin
   wMens := 'Atenção! Confirma esta';
 
@@ -558,13 +517,13 @@ begin
       wOperacao := 'inclusão';
       wMens := wMens + ' ' + wOperacao + '?';
 
-      if ConfirmaAcao(wMens,3) = 1 then
-      begin
+      //if ConfirmaAcao(wMens,3) = 1 then
+      //begin
         //edtNomeExit(Self);
         //setarCampos;
 
         if incluirAbono then ShowMessage('Registro incluído com sucesso.');
-      end;
+      //end;
     end;
 
   // Edição
@@ -573,15 +532,15 @@ begin
       wOperacao := 'alteração';
       wMens := wMens + ' ' + wOperacao + '?';
 
-      if ConfirmaAcao(wMens,3) = 1 then
-      begin
+      //if ConfirmaAcao(wMens,3) = 1 then
+      //begin
         //edtNomeExit(Self);
         //setarCampos;
 
         if atualizarAbono then ShowMessage('Registro alterado com sucesso.');
 
         desbloquearCampos;
-      end;
+      //end;
     end
   end;
 
@@ -602,21 +561,29 @@ begin
     end;
   end;
 
-  IncluirLog
-  (
-  DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
-  RetornaData(2),
-  'tbAbono',
-  'NULL',
-  'TODOS',
-  wOperacao + ' de abono: '
-  + 'Matrícula: ' + idServidor
-  + ' Nome: '
-  //+ frmUpdateAbonoAnualGeral.txtNome.Caption
-  + lblNome.Caption
-  + ' Exercício: ' + edtExercicio.Text
-  );
+  ////////////////
 
+
+    IncluirLog
+    (
+    DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+    RetornaData(2),
+    'tbAbono',
+    'NULL',
+    idPessoal,
+    idServidor,
+    'TODOS',
+    UpperCase(wOperacao)+ ' de abono.'
+    + ' Exercício: ' + edtExercicio.Text
+    + ', Datas: '
+    + edtDt_1.Text + ', '
+    + edtDt_2.Text + ', '
+    + edtDt_3.Text + ', '
+    + edtDt_4.Text + ', '
+    + edtDt_5.Text
+    );
+
+  ///////////////
 
   frmUpdateAbonoAnual.Close;
 
@@ -624,9 +591,14 @@ end;
 
 procedure TfrmUpdateAbonoAnual.FormCreate(Sender: TObject);
 begin
+  dsFeriasAfastamentosAbonos.DataSet := dmFeriasAbonoAfastamento.qryFeriasAfastamentosAbonos;
+  tbvFAA.DataController.DataSource := dsFeriasAfastamentosAbonos;
+
   WindowState := wsMaximized;
   KeyPreview := true;
   qryAbonosNoPeriodo.Connection := DMConexao.conPessoal;
+
+  edtProcessoSEI.Properties.MaxLength := 19;
 end;
 
 procedure TfrmUpdateAbonoAnual.setarDadosServidor(Matricula, Nome,
@@ -638,9 +610,111 @@ begin
 
 end;
 
-function TfrmUpdateAbonoAnual.carregarAbonoParaEdicao: boolean;
+function TfrmUpdateAbonoAnual.carregarAbonoParaEdicao
+(ID, idExercicio, ProcessoSEI, dt_1, dt_2, dt_3, dt_4, dt_5: String)
+: boolean;
 begin
-//
+  lbl_ID.Caption := ID;
+
+  edtExercicio.Text := idExercicio;
+  edtProcessoSEI.Text := ProcessoSEI;
+  edtDt_1.Text := dt_1;
+  edtDt_2.Text := dt_2;
+  edtDt_3.Text := dt_3;
+  edtDt_4.Text := dt_4;
+  edtDt_5.Text := dt_5;
+
+  {
+  if not FieldByName('Observacao').IsNull then
+  mmoObservacaoPrimeira.Text := qryFeriasNoPeriodo.FieldValues['Observacao'];
+  }
+end;
+
+procedure TfrmUpdateAbonoAnual.edtDt_1Exit(Sender: TObject);
+begin
+  if btnSair.Focused then Close
+  else
+  dataConcomitante(edtDt_1.Text);
+end;
+
+function TfrmUpdateAbonoAnual.dataConcomitante(data: String): boolean;
+var idPessoal, idServidor : String;
+begin
+  case getFormQueChamou of
+    // frmUpdateServidor
+    1:
+    begin
+      //ShowMessage('1');
+      idPessoal := frmUpdateServidor.lbl_IDP.Caption;
+      idServidor := frmUpdateServidor.edtidServidor.Text;
+    end;
+
+    // frmUpdateAbonoGeral
+    2:
+    begin
+      //ShowMessage('2');
+      idPessoal := DMFeriasAbonoAfastamento.qryPesquisa.FieldValues['idPessoal'];
+      idServidor := DMFeriasAbonoAfastamento.qryPesquisa.FieldValues['idServidor'];
+    end;
+  end;
+
+  if dmFeriasAbonoAfastamento.exibirFAANoPeriodo(idPessoal,idServidor, data) > 0
+  then ShowMessage('Existem outros afastamentos ou abonos ou férias concomitantes com esta data. '
+  + chr(13) + 'Vide relação abaixo.');
+
+  Result := true;
+end;
+
+procedure TfrmUpdateAbonoAnual.edtDt_2Exit(Sender: TObject);
+begin
+  if btnSair.Focused then Close
+  else
+  dataConcomitante(edtDt_2.Text);
+end;
+
+procedure TfrmUpdateAbonoAnual.edtDt_3Exit(Sender: TObject);
+begin
+  if btnSair.Focused then Close
+  else
+  dataConcomitante(edtDt_3.Text);
+end;
+
+procedure TfrmUpdateAbonoAnual.edtDt_4Exit(Sender: TObject);
+begin
+  if btnSair.Focused then Close
+  else
+  dataConcomitante(edtDt_4.Text);
+end;
+
+procedure TfrmUpdateAbonoAnual.edtDt_5Exit(Sender: TObject);
+begin
+  if btnSair.Focused then Close
+  else
+  dataConcomitante(edtDt_5.Text);
+end;
+
+procedure TfrmUpdateAbonoAnual.edtProcessoSEIExit(Sender: TObject);
+var SEI: String;
+begin
+  SEI := InserirZeros(edtProcessoSEI.Text, 19);
+
+  //1234567890123456789
+
+  {edtProcessoSEI.Text := copy(SEI,1,5) + '-'
+  + copy(SEI,6,8) + '/'
+  + copy(SEI,14,4) + '-'
+  + copy(SEI,17,3);}
+
+  //edtProcessoSEI.Properties.EditMask := '00000-00000000/0000-00;0;_'
+
+  edtProcessoSEI.Text := SEI;
+
+  //ShowMessage(edtProcessoSEI.Text);
+
+    //00000-00000000/0000-00;0;_
+  //edtProcessoSEI.Text := '12345-67890123/4567-89';
+  //edtProcessoSEI.Text := InserirZeros(edtProcessoSEI.Text, 19);
+
 end;
 
 end.

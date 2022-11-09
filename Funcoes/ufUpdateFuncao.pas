@@ -404,6 +404,8 @@ begin //1
         RetornaData(2),
         'tbServidor, tbHist_Funcao',
         frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.txtMatricula.Caption,
         'TODOS',
         'Alteração da função: '
         + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -452,6 +454,8 @@ begin //1
               RetornaData(2),
               'tbHist_Funcao',
               frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.txtMatricula.Caption,
               'TODOS',
               'Registrado histórico da função: '
               + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -492,6 +496,8 @@ begin //1
             RetornaData(2),
             'tbServidor',
             frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.txtMatricula.Caption,
             'TODOS',
             'Desligamento da função: '
             + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -551,6 +557,8 @@ begin //1
             RetornaData(2),
             'tbServidor',
             frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.txtMatricula.Caption,
             'TODOS',
             'Edição da função: '
             + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption

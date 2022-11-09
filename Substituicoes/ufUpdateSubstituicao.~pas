@@ -56,6 +56,7 @@ type
     function retornaSQLInsertSubstituicao(idPessoalSubstituido, idPessoalSubstituto: String): String;
     function retornaSQLUpdateSubstituicao: String;
     function retornaSQLDeleteSubstituicao: String;
+    function excluirAfastamento(ID: String): boolean;
 
   end;
 
@@ -216,8 +217,14 @@ begin
     // frmUpdateServidor
     1:
     begin
-      //dmExibirTabelas.qryFeriasServidor.Active := false;
-      //dmExibirTabelas.qryFeriasServidor.Active := true;
+      with dmExibirTabelas do
+      begin
+        qryProcuradorSubstituido.Active := false;
+        qryProcuradorSubstituido.Active := true;
+
+        qryTotalDiasSubstituidos.Active := false;
+        qryTotalDiasSubstituidos.Active := true;
+      end;
     end;
 
     // frmUpdateSubstituicaoGeral
@@ -230,6 +237,8 @@ begin
   RetornaData(2),
   'tbSubstituicao',
   'NULL',
+  idPessoal,
+  idServidor,
   'TODOS',
   wOperacao + ' de substituição de procurador: '
   + 'Matrícula: ' + idServidor
@@ -430,6 +439,34 @@ procedure TfrmUpdateSubstituicao.lkpNomeExit(Sender: TObject);
 begin
 //  ShowMessage(qryProcurador.FieldValues['idPessoal']);
 //  ShowMessage(lkpNome.EditValue);
+end;
+
+function TfrmUpdateSubstituicao.excluirAfastamento(ID: String): boolean;
+begin
+  try
+    with dmPessoal.qryExecSQL do
+    begin
+      Connection := dmConexao.conPessoal;
+
+      SQL.Text := ' DELETE FROM tbSubstProcurador'
+      + ' WHERE idSubstituicao = ' + QuotedStr(ID);
+
+      ExecSQL;
+
+      // A linha abaixo sempre deverá ficar abaixo do comando ExecSQL
+      // pois não estava sendo executado
+      // Obs: transferir para a função retornaSQlUpdateAbono
+      // verificar todos os programas que executam ações SQL
+
+      monitorarAcoesDaSessao
+      ('ufrmUpdateSubstituicao', 'Exclusão de substituicao' (excluirAfastamento)', SQL.Text);
+    end;
+    Result := true
+
+  except
+    Result := false;
+  end;            
+
 end;
 
 end.

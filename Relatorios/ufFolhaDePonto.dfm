@@ -223,7 +223,7 @@ object frmFolhaDePonto: TfrmFolhaDePonto
       Font.Style = []
       ParentFont = False
     end
-    object lkcmbbxAno: TcxLookupComboBox
+    object lkpAno: TcxLookupComboBox
       Left = 162
       Top = 18
       ParentFont = False
@@ -243,7 +243,7 @@ object frmFolhaDePonto: TfrmFolhaDePonto
       TabOrder = 0
       Width = 115
     end
-    object lkcmbbxMes: TcxLookupComboBox
+    object lkpMes: TcxLookupComboBox
       Left = 162
       Top = 46
       ParentFont = False
@@ -264,10 +264,11 @@ object frmFolhaDePonto: TfrmFolhaDePonto
       TabOrder = 1
       Width = 168
     end
-    object lkcmbbxSuperLotacao: TcxLookupComboBox
+    object lkpSuperLotacao: TcxLookupComboBox
       Left = 162
       Top = 74
       ParentFont = False
+      Properties.DropDownRows = 20
       Properties.KeyFieldNames = 'SUPERLOTACAO'
       Properties.ListColumns = <
         item
@@ -283,9 +284,9 @@ object frmFolhaDePonto: TfrmFolhaDePonto
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 2
-      Width = 423
+      Width = 247
     end
-    object lkcmbbxServidor: TcxLookupComboBox
+    object lkpServidor: TcxLookupComboBox
       Left = 162
       Top = 102
       ParentFont = False
@@ -313,36 +314,11 @@ object frmFolhaDePonto: TfrmFolhaDePonto
       Width = 425
     end
   end
-  object qryAno: TADOQuery
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'SELECT YEAR(GETDATE())+1 ANO'
-      'UNION'
-      'SELECT YEAR(GETDATE()) ANO'
-      'UNION'
-      'SELECT YEAR(GETDATE())-1 ANO')
-    Left = 438
-    Top = 56
-  end
-  object qryMes: TADOQuery
-    CursorType = ctStatic
-    Parameters = <>
-    SQL.Strings = (
-      'DECLARE @Ano INT'
-      'SET @Ano = YEAR(GETDATE())'
-      'SELECT nmes, mes '
-      'FROM F_PrimeiroUltimoDia12Meses(@Ano)')
-    Left = 438
-    Top = 84
-  end
   object dsqryMes: TDataSource
-    DataSet = qryMes
     Left = 474
     Top = 85
   end
   object dsqryAno: TDataSource
-    DataSet = qryAno
     Left = 474
     Top = 57
   end
@@ -384,13 +360,5 @@ object frmFolhaDePonto: TfrmFolhaDePonto
     DataSet = qryLotacao
     Left = 546
     Top = 58
-  end
-  object qryDataHora: TADOQuery
-    Parameters = <>
-    SQL.Strings = (
-      'select "Ano" = year(getdate()), "DataHora" = getdate(),'
-      '"Mes" = month(getdate());')
-    Left = 600
-    Top = 88
   end
 end

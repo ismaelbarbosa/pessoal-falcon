@@ -33,12 +33,13 @@ object dmPessoal: TdmPessoal
         'Operador=dbo.F_RetornaOperador(serv.idUsuario), OEE.Descricao as' +
         ' ExercicioExterno, '
       
-        'OEE.Sigla as siglaOrgaoExterno, PES.IDPESSOAL, PES.CPF, PES.NOME' +
-        ', pes.idpessoal, pes.cpf, pes.nome, '
+        'OEE.Sigla as siglaOrgaoExterno, pes.idpessoal, pes.cpf, pes.nome' +
+        ', '
       ''
       
         'pes.dt_nascimento, serv.idServidor, serv.ID, serv.Matr_Origem, s' +
-        'erv.idCargo, serv.Especialidade, '
+        'erv.idCargo, serv.idEspecialidade, esp.Descricao as Especialidad' +
+        'e,'
       
         'serv.idFuncao, fun.idDFG as SimboloDFG, fun.id as idFun, serv.id' +
         'Lotacao, serv.CF_Num, serv.Ramal, '
@@ -73,8 +74,9 @@ object dmPessoal: TdmPessoal
         'serv.Supervisor_Estagiario, serv.DtNovaEstrutura, serv.CaminhoFo' +
         'llhaDePonto, serv.TurnoEstagio, serv.Semestre, '
       
-        'serv.InstituicaoEnsino, serv.dt_InicioExercicioExterno, serv.dt_' +
-        'TerminoExercicioExterno, serv.dt_NomeacaoExercicioExterno, '
+        'serv.InstituicaoEnsino, serv.observacao, serv.dt_InicioExercicio' +
+        'Externo, serv.dt_TerminoExercicioExterno, serv.dt_NomeacaoExerci' +
+        'cioExterno, '
       
         'serv.dt_PosseExercicioExterno, dados.Endereco, dados.Bairro, dad' +
         'os.Cidade, dados.UF, dados.CEP, dados.CI_Num, dados.CI_UF, '
@@ -87,6 +89,10 @@ object dmPessoal: TdmPessoal
       ''
       'CASE  WHEN civil.Descricao != '#39#39' '
       'THEN civil.Descricao  ELSE '#39'N'#195'O INFORMADO'#39' END AS EstadoCivil, '
+      ''
+      'CASE  WHEN banco.Descricao != '#39#39' '
+      'THEN banco.Descricao  ELSE '#39'N'#195'O INFORMADO'#39' END AS Banco, '
+      ''
       'dados.Conjuge, dados.idBanco, dados.Agencia, '
       
         'dados.Conta, dados.OAB_Num, dados.OAB_Secao, dados.Aspro_Opc, da' +
@@ -106,8 +112,12 @@ object dmPessoal: TdmPessoal
       'LEFT JOIN tbCargo as car ON car.idCargo = serv.idCargo '
       'LEFT JOIN tbFuncao as fun ON fun.idFuncao = serv.idFuncao '
       
+        'LEFT JOIN tbEspecialidade esp on esp.idEspecialidade = serv.idEs' +
+        'pecialidade'
+      
         'LEFT JOIN tbEstadoCivil as civil ON civil.idEstadoCivil = dados.' +
         'idEstadoCivil '
+      'LEFT JOIN tbBanco as banco ON banco.idBanco = dados.idBanco'
       
         'LEFT JOIN tbDesligamento as desl ON desl.idDesligamento = serv.i' +
         'dDesligamento '
@@ -144,26 +154,11 @@ object dmPessoal: TdmPessoal
     end
     object qryPesquisaCPF: TStringField
       FieldName = 'CPF'
-      EditMask = '000\.000\.000\-00;0;_'
       FixedChar = True
       Size = 11
     end
     object qryPesquisaNOME: TStringField
       FieldName = 'NOME'
-      Size = 60
-    end
-    object qryPesquisaidpessoal_1: TStringField
-      FieldName = 'idpessoal_1'
-      FixedChar = True
-      Size = 5
-    end
-    object qryPesquisacpf_1: TStringField
-      FieldName = 'cpf_1'
-      FixedChar = True
-      Size = 11
-    end
-    object qryPesquisanome_1: TStringField
-      FieldName = 'nome_1'
       Size = 60
     end
     object qryPesquisadt_nascimento: TDateTimeField
@@ -187,6 +182,9 @@ object dmPessoal: TdmPessoal
       FieldName = 'idCargo'
       FixedChar = True
       Size = 6
+    end
+    object qryPesquisaidEspecialidade: TIntegerField
+      FieldName = 'idEspecialidade'
     end
     object qryPesquisaEspecialidade: TStringField
       FieldName = 'Especialidade'
@@ -469,6 +467,11 @@ object dmPessoal: TdmPessoal
       ReadOnly = True
       Size = 15
     end
+    object qryPesquisaBanco: TStringField
+      FieldName = 'Banco'
+      ReadOnly = True
+      Size = 60
+    end
     object qryPesquisaConjuge: TStringField
       FieldName = 'Conjuge'
       Size = 50
@@ -541,6 +544,10 @@ object dmPessoal: TdmPessoal
     object qryPesquisadesligamento: TStringField
       FieldName = 'desligamento'
       Size = 80
+    end
+    object qryPesquisaObservacao: TStringField
+      FieldName = 'Observacao'
+      Size = 250
     end
   end
 end

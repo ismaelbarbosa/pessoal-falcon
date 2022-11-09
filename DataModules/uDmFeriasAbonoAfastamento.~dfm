@@ -1,18 +1,18 @@
 object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 192
-  Top = 117
-  Height = 362
+  Left = 240
+  Top = 146
+  Height = 579
   Width = 561
   object qryPesquisa: TADOQuery
     Parameters = <>
-    Left = 72
+    Left = 80
     Top = 24
   end
   object dsPesquisa: TDataSource
     DataSet = qryPesquisa
-    Left = 152
+    Left = 160
     Top = 24
   end
   object qryFerias: TADOQuery
@@ -28,6 +28,16 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
       'Fer.Dt_InicioReagendamento, Fer.Dt_TerminoReagendamento,'
       'Fer.Observacao,'
       'Fer.nProcessoSEI,'
+      'Fer.ID,'
+      ''
+      'Fer.Abono,'
+      ''
+      'CASE'
+      'WHEN Fer.Abono = 0 THEN '#39'N'#195'O'#39
+      'WHEN Fer.Abono = 1 THEN '#39'SIM'#39
+      'END AS AbonoPecuniario, '
+      ''
+      ''
       'Per.idPeriodo, Per.descricao as descricaoPeriodo,'
       'Par.idParcela, Par.descricao as descricaoParcela,'
       'Tipo.idTipoParcela, Tipo.descricao as descricaoTipo'
@@ -44,7 +54,7 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
       'WHERE 1=1'
       'ORDER BY Fer.idExercicio desc'
       '')
-    Left = 72
+    Left = 80
     Top = 96
     object qryFeriasidPessoal: TStringField
       FieldName = 'idPessoal'
@@ -125,10 +135,22 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
       FieldName = 'descricaoTipo'
       Size = 10
     end
+    object qryFeriasID: TAutoIncField
+      FieldName = 'ID'
+      ReadOnly = True
+    end
+    object qryFeriasAbonoPecuniario: TStringField
+      FieldName = 'AbonoPecuniario'
+      ReadOnly = True
+      Size = 3
+    end
+    object qryFeriasAbono: TBooleanField
+      FieldName = 'Abono'
+    end
   end
   object dsFerias: TDataSource
     DataSet = qryFerias
-    Left = 152
+    Left = 160
     Top = 96
   end
   object qryAfastamento: TADOQuery
@@ -137,7 +159,7 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
     Parameters = <>
     SQL.Strings = (
       'SELECT'
-      'Saf.idPessoal, Saf.idServidor, Saf.idExercicio, '
+      'Saf.ID, Saf.idPessoal, Saf.idServidor, Saf.idExercicio, '
       'Saf.Dt_Inicio, Saf.Dt_Termino,'
       'Saf.Observacao,'
       'Saf.nProcessoSEI,'
@@ -148,9 +170,11 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
         'LEFT JOIN tbAfastamento as Afa on Afa.idAfastamento = Saf.idAfas' +
         'tamento'
       'WHERE 1=1'
-      'ORDER BY Saf.idExercicio desc'
+      
+        'ORDER BY Saf.idExercicio desc, Afa.idAfastamento, Saf.Dt_Inicio ' +
+        'desc'
       '')
-    Left = 72
+    Left = 80
     Top = 168
     object qryAfastamentoidPessoal: TStringField
       FieldName = 'idPessoal'
@@ -200,10 +224,14 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
     object qryAfastamentoAbreviatura: TStringField
       FieldName = 'Abreviatura'
     end
+    object qryAfastamentoID: TAutoIncField
+      FieldName = 'ID'
+      ReadOnly = True
+    end
   end
   object dsAfastamento: TDataSource
     DataSet = qryAfastamento
-    Left = 152
+    Left = 160
     Top = 168
   end
   object qryAbonoAnual: TADOQuery
@@ -214,11 +242,12 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
       'SELECT'
       'Abo.idPessoal, Abo.idExercicio,'
       'Abo.nProcessoSEI,'
-      'Abo.Dt_1, Abo.Dt_2, Abo.Dt_3, Abo.Dt_4, Abo.Dt_5'
+      'Abo.Dt_1, Abo.Dt_2, Abo.Dt_3, Abo.Dt_4, Abo.Dt_5,'
+      'Abo.ID'
       'FROM tbAbono as Abo'
       'WHERE 1=1'
       'ORDER BY Abo.idExercicio desc')
-    Left = 72
+    Left = 80
     Top = 240
     object qryAbonoAnualidPessoal: TStringField
       FieldName = 'idPessoal'
@@ -250,10 +279,14 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
     object qryAbonoAnualDt_5: TDateTimeField
       FieldName = 'Dt_5'
     end
+    object qryAbonoAnualID: TAutoIncField
+      FieldName = 'ID'
+      ReadOnly = True
+    end
   end
   object dsAbonoAnual: TDataSource
     DataSet = qryAbonoAnual
-    Left = 152
+    Left = 160
     Top = 240
   end
   object qryTipoAfastamento: TADOQuery
@@ -266,5 +299,100 @@ object dmFeriasAbonoAfastamento: TdmFeriasAbonoAfastamento
     DataSet = qryTipoAfastamento
     Left = 408
     Top = 168
+  end
+  object qryFeriasAfastamentosAbonos: TADOQuery
+    Parameters = <>
+    Left = 80
+    Top = 320
+  end
+  object qryFeriasNoPeriodo: TADOQuery
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT'
+      'Fer.idPessoal, Fer.idExercicio, Fer.idPeriodo, Fer.idParcela,'
+      
+        'Fer.idTipoParcela, Fer.Dt_Inicio, Fer.Dt_Termino, Fer.idServidor' +
+        ','
+      'Fer.Dt_InicioReagendamento, Fer.Dt_TerminoReagendamento,'
+      'Fer.Observacao,'
+      'Fer.nProcessoSEI,'
+      'Fer.ID,'
+      ''
+      'Fer.Abono,'
+      ''
+      'CASE'
+      'WHEN Fer.Abono = 0 THEN '#39'N'#195'O'#39
+      'WHEN Fer.Abono = 1 THEN '#39'SIM'#39
+      'END AS AbonoPecuniario, '
+      ''
+      ''
+      'Per.idPeriodo, Per.descricao as descricaoPeriodo,'
+      'Par.idParcela, Par.descricao as descricaoParcela,'
+      'Tipo.idTipoParcela, Tipo.descricao as descricaoTipo'
+      'FROM tbFerias as Fer'
+      
+        'INNER JOIN tbFeriasPeriodo as Per on Per.idPeriodo = Fer.idPerio' +
+        'do'
+      
+        'INNER JOIN tbFeriasParcela as Par on Par.idParcela = Fer.idParce' +
+        'la'
+      
+        'INNER JOIN tbFeriasTipoParcela as Tipo on Tipo.idTipoParcela = F' +
+        'er.idTipoParcela'
+      'WHERE 1=1'
+      'ORDER BY Fer.idExercicio desc'
+      ''
+      '')
+    Left = 80
+    Top = 384
+  end
+  object qryAfastamentosEFeriasCoincidentes: TADOQuery
+    CursorType = ctStatic
+    Parameters = <
+      item
+        Name = 'idPessoal'
+        DataType = ftString
+        Size = 5
+        Value = Null
+      end
+      item
+        Name = 'codigoAfastamento'
+        Size = -1
+        Value = Null
+      end
+      item
+        Name = 'DT_INICIO'
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = 'DT_TERMINO'
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = 'DT_INICIOATUAL'
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end
+      item
+        Name = 'DT_TERMINOATUAL'
+        DataType = ftDateTime
+        Size = 10
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SET DATEFORMAT DMY'
+      'SELECT * '
+      'FROM F_RetornaAfastamentosFeriasCoincidentes(:idPessoal, '
+      
+        '     :codigoAfastamento, :DT_INICIO, :DT_TERMINO, :DT_INICIOATUA' +
+        'L, '
+      '     :DT_TERMINOATUAL)')
+    Left = 82
+    Top = 456
   end
 end

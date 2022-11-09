@@ -22,19 +22,16 @@ type
     lblMes: TLabel;
     lblLotacao: TLabel;
     lblServidor: TLabel;
-    lkcmbbxAno: TcxLookupComboBox;
-    lkcmbbxMes: TcxLookupComboBox;
-    lkcmbbxSuperLotacao: TcxLookupComboBox;
-    lkcmbbxServidor: TcxLookupComboBox;
-    qryAno: TADOQuery;
-    qryMes: TADOQuery;
+    lkpAno: TcxLookupComboBox;
+    lkpMes: TcxLookupComboBox;
+    lkpSuperLotacao: TcxLookupComboBox;
+    lkpServidor: TcxLookupComboBox;
     dsqryMes: TDataSource;
     dsqryAno: TDataSource;
     qryLotacao: TADOQuery;
     qryServidor: TADOQuery;
     dsqryServidor: TDataSource;
     dsqryLotacao: TDataSource;
-    qryDataHora: TADOQuery;
     pgbrPonto: TcxProgressBar;
 
     procedure btnSairClick(Sender: TObject);
@@ -55,7 +52,7 @@ var
 
 implementation
 
-uses uDMPessoal, uDMConexao, ufPrincipal;
+uses uDMPessoal, uDMConexao, ufPrincipal, uDmExibirTabelas;
 
 {$R *.dfm}
 
@@ -66,31 +63,33 @@ end;
 
 procedure TfrmFolhaDePonto.FormCreate(Sender: TObject);
 begin
-  qryAno.Connection := DMConexao.conPessoal;
-  qryMes.Connection := DMConexao.conPessoal;
   qryLotacao.Connection := DMConexao.conPessoal;
   qryServidor.Connection := DMConexao.conPessoal;
-  qryDataHora.Connection := DMConexao.conPessoal;
 
-  qryAno.Active := true;
-  qryMes.Active := true;
+  dsqryMes.DataSet := dmExibirTabelas.qryMes;
+  dsqryAno.DataSet := dmExibirTabelas.qryAno;
+  
+  dmExibirTabelas.qryAno.Active := true;
+  dmExibirTabelas.qryMes.Active := true;
+  dmExibirTabelas.qryDataHora.Active := true;
+
   qryLotacao.Active := true;
   qryServidor.Active := true;
-  qryDataHora.Active := true;
 
-  lkcmbbxAno.ItemIndex := 1;
-  lkcmbbxMes.ItemIndex := qryDataHora.FieldValues['Mes']-1;
+  lkpAno.ItemIndex := 1;
+  lkpMes.ItemIndex := dmExibirTabelas.qryDataHora.FieldValues['Mes']-1;
 
 end;
 
 procedure TfrmFolhaDePonto.FormClose(Sender: TObject;
   var Action: TCloseAction);
 begin
-  qryAno.Active := false;
-  qryMes.Active := false;
+  dmExibirTabelas.qryAno.Active := false;
+  dmExibirTabelas.qryMes.Active := false;
+  dmExibirTabelas.qryDataHora.Active := false;
+
   qryLotacao.Active := false;
   qryServidor.Active := false;
-  qryDataHora.Active := false;
 end;
 
 procedure TfrmFolhaDePonto.btnGerarClick(Sender: TObject);
@@ -99,17 +98,17 @@ var
   i: integer;
 begin
 
-  if (lkcmbbxSuperLotacao.EditingText = '') and (lkcmbbxServidor.EditingText = '') then
+  if (lkpSuperLotacao.EditingText = '') and (lkpServidor.EditingText = '') then
   begin
     ShowMessage('Preencha o campo Lotação Principal ou o campo Servidor.');
-    lkcmbbxSuperLotacao.SetFocus;
+    lkpSuperLotacao.SetFocus;
 
     Abort;
   end;
 
-  if (lkcmbbxServidor.ItemIndex <> null) and (lkcmbbxServidor.EditText <> '') then
+  if (lkpServidor.ItemIndex <> null) and (lkpServidor.EditText <> '') then
   begin
-    lkcmbbxSuperLotacao.Clear;
+    lkpSuperLotacao.Clear;
 
     Application.ProcessMessages;
   end;
@@ -126,8 +125,8 @@ begin
   end;
 
 
-  URL := 'http://pgsrv08/jsecurity/rest/auth/geraPDF?ano=' + vartostr(lkcmbbxAno.EditValue) + '&idPessoal=' +
-          vartostr(lkcmbbxServidor.EditValue) + '&superlotacao=' + vartostr(lkcmbbxSuperLotacao.EditValue) + '&mes=' + vartostr(lkcmbbxMes.EditValue);
+  URL := 'http://pgsrv08/jsecurity/rest/auth/geraPDF?ano=' + vartostr(lkpAno.EditValue) + '&idPessoal=' +
+          vartostr(lkpServidor.EditValue) + '&superlotacao=' + vartostr(lkpSuperLotacao.EditValue) + '&mes=' + vartostr(lkpMes.EditValue);
 
 
   Application.ProcessMessages;
@@ -152,8 +151,8 @@ begin
 
   if DirectoryExists(Pasta) then
   begin
-    Arquivo := Pasta + '\FolhaDePonto_' + vartostr(lkcmbbxServidor.Text) + vartostr(lkcmbbxSuperLotacao.EditValue) + '_' +
-              vartostr(lkcmbbxMes.EditValue) + '_' + VarToStr(lkcmbbxAno.EditValue) + '.pdf';
+    Arquivo := Pasta + '\FolhaDePonto_' + vartostr(lkpServidor.Text) + vartostr(lkpSuperLotacao.EditValue) + '_' +
+              vartostr(lkpMes.EditValue) + '_' + VarToStr(lkpAno.EditValue) + '.pdf';
 
 
     if frmPrincipal.GetInetFile(URL, Arquivo) = false then ShowMessage('Falha ao tentar baixar a folha de ponto. Entre em contato com o Desenvolvedor.');
@@ -184,8 +183,8 @@ begin
     begin
     if CreateDir(Pasta) then
     begin
-      Arquivo := Pasta + '\FolhaDePonto_' + vartostr(lkcmbbxServidor.Text) + vartostr(lkcmbbxSuperLotacao.EditValue) + '_' +
-                vartostr(lkcmbbxMes.EditValue) + '_' + VarToStr(lkcmbbxAno.EditValue) + '.pdf';
+      Arquivo := Pasta + '\FolhaDePonto_' + vartostr(lkpServidor.Text) + vartostr(lkpSuperLotacao.EditValue) + '_' +
+                vartostr(lkpMes.EditValue) + '_' + VarToStr(lkpAno.EditValue) + '.pdf';
 
 
       frmPrincipal.GetInetFile(URL, Arquivo);
@@ -211,7 +210,7 @@ begin
     end
     else ShowMessage('Erro ao tentar criar a pasta. Código do erro: ' + IntToStr(GetLastError) + #13 + #10 + 'Favor criar a pasta "' + Pasta + '" manualmente.');
 
-end;
+  end;
 
   end;
 
@@ -221,7 +220,7 @@ end;
 
 procedure TfrmFolhaDePonto.FormActivate(Sender: TObject);
 begin
-  lkcmbbxSuperLotacao.SetFocus;
+  lkpSuperLotacao.SetFocus;
 end;
 
 procedure TfrmFolhaDePonto.FormShow(Sender: TObject);
@@ -237,11 +236,11 @@ end;
 procedure TfrmFolhaDePonto.lkcmbbxServidorPropertiesEditValueChanged(
   Sender: TObject);
 begin
-  if (lkcmbbxServidor.ItemIndex <> null) and (lkcmbbxServidor.EditText <> '') then
+  if (lkpServidor.ItemIndex <> null) and (lkpServidor.EditText <> '') then
   begin
 //    ShowMessage(IntToStr(lkcmbbxServidor.ItemIndex));
 
-    lkcmbbxSuperLotacao.Clear;
+    lkpSuperLotacao.Clear;
   end;
 end;
 

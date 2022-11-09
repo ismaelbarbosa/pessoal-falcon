@@ -12,26 +12,35 @@ uses
 
 type
   TfrmDesligarServidorEstagiario = class(TForm)
-    cxGrid1: TcxGrid;
-    cxGrid1DBTableView1: TcxGridDBTableView;
-    cxGrid1DBTableView1Column1: TcxGridDBColumn;
-    cxGrid1DBTableView1Column3: TcxGridDBColumn;
-    cxGrid1DBTableView1Column4: TcxGridDBColumn;
-    cxGrid1DBTableView1Column5: TcxGridDBColumn;
-    cxGrid1Level1: TcxGridLevel;
+    grdPesquisa: TcxGrid;
+    tbvPesquisa: TcxGridDBTableView;
+    tvcNome: TcxGridDBColumn;
+    tvcMatricula: TcxGridDBColumn;
+    tvcCargo: TcxGridDBColumn;
+    tvcLotacao: TcxGridDBColumn;
+    lvlPesquisa: TcxGridLevel;
     pnlBotoes: TPanel;
     Label2: TLabel;
     btnSair: TcxButton;
-    btnEditarMatricula: TcxButton;
+    btnDesligar: TcxButton;
     pnlNome: TPanel;
     txtNome: TDBText;
     lblNumeroRegistros: TLabel;
     Panel1: TPanel;
     Label1: TLabel;
-    lblQtdServidores: TLabel;
     edtPesquisa: TcxTextEdit;
     qryPesquisa: TADOQuery;
     dsPesquisa: TDataSource;
+    Timer1: TTimer;
+    tvcDtDesligamentoCargo: TcxGridDBColumn;
+    tvcFormaDesligamento: TcxGridDBColumn;
+    StyleRepository: TcxStyleRepository;
+    stlAtivo: TcxStyle;
+    stlRequisitado: TcxStyle;
+    stlDesligadoCargo: TcxStyle;
+    stlDesligadoFuncao: TcxStyle;
+    stlDesligado: TcxStyle;
+    tvcStatus: TcxGridDBColumn;
     procedure btnSairClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
@@ -39,11 +48,17 @@ type
       Shift: TShiftState);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
+    procedure btnDesligarClick(Sender: TObject);
+    procedure edtPesquisaKeyPress(Sender: TObject; var Key: Char);
+    procedure Timer1Timer(Sender: TObject);
+    procedure tbvPesquisaStylesGetContentStyle(
+      Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
+      AItem: TcxCustomGridTableItem; out AStyle: TcxStyle);
   private
     { Private declarations }
   public
     function pesquisarPessoal(condicao: String): integer;
-    function retornaSQLPesquisaPessoal
+    function SQLPesquisaPessoal
     (condicao: String): String;
   end;
 
@@ -52,7 +67,8 @@ var
 
 implementation
 
-uses uDMConexao, PRG_utils, uPesFuncoes, ufLogs;
+uses uDMConexao, PRG_utils, uPesFuncoes, ufLogs, ufUpdateDesligamento,
+  ufReadServidor;
 
 {$R *.dfm}
 
@@ -67,18 +83,18 @@ begin
 
   KeyPreview := true;
   WindowState := wsMaximized;
+  Timer1.Enabled := false;
 end;
 
 procedure TfrmDesligarServidorEstagiario.FormActivate(Sender: TObject);
-var
-  condicao: string;
-  Resultado: Integer;
+//var  condicao: string;  Resultado: Integer;
 begin
-  condicao := ' AND 0=0';
+  {condicao := ' AND 0=0';
   //+ Gera_SQL(RemoveIndesejadas('EST'), 'serv.idCargo');
 
   lblNumeroRegistros.Caption := 'Nº de registros encontrados: ' +
   IntToStr(pesquisarPessoal(condicao));
+  }
 
   edtPesquisa.SetFocus;
 
@@ -91,14 +107,14 @@ begin
   begin
     Active := False;
     Sql.Clear;
-    Sql.Add(retornaSQLPesquisaPessoal(condicao));
+    Sql.Add(SQLPesquisaPessoal(condicao));
     Active := True;
   end;
 
   Result := qryPesquisa.RecordCount;
 end;
 
-function TfrmDesligarServidorEstagiario.retornaSQLPesquisaPessoal(
+function TfrmDesligarServidorEstagiario.SQLPesquisaPessoal(
   condicao: String): String;
 var pesquisa: String;
 begin
@@ -248,7 +264,7 @@ begin
 
   + ' WHERE 1=1'
   + ' AND LTRIM(Nome) not like ' + QuotedStr('')
-  + ' AND serv.idDesligamento is NULL'
+//  + ' AND serv.idDesligamento is NULL'
 
 //  +  FstrNome + strMatricula + strLotacao + strCargo + strFuncao
 
@@ -276,6 +292,66 @@ end;
 
 procedure TfrmDesligarServidorEstagiario.edtPesquisaKeyDown(
   Sender: TObject; var Key: Word; Shift: TShiftState);
+//var condicao: String;
+begin
+  {condicao := ' AND '
+  + '('
+  + Gera_SQL(RemoveIndesejadas(edtPesquisa.Text), 'pes.Nome')
+  + ' OR '
+  + Gera_SQL(RemoveIndesejadas(edtPesquisa.Text), 'serv.idServidor')
+  + ')';
+
+  case Key of
+    VK_RETURN: lblNumeroRegistros.Caption :=
+    'Nº de registros localizados: ' + IntToStr(pesquisarPessoal(condicao));
+    VK_DOWN:  perform(WM_NEXTDLGCTL,0,0);
+  end
+  }
+
+  Timer1.Enabled := true;
+
+end;
+
+procedure TfrmDesligarServidorEstagiario.btnDesligarClick(
+  Sender: TObject);
+begin
+  Application.CreateForm(TfrmUpdateDesligamento, frmUpdateDesligamento);
+  frmUpdateDesligamento.setFormQueChamou('frmDesligarServidorEstagiario');
+
+  if Copy(qryPesquisa.FieldValues['descricaoCargo'],1,3) = 'EST'
+  then
+    frmUpdateDesligamento.setarSeEstagiario(true)
+  else
+    frmUpdateDesligamento.setarSeEstagiario(false);
+
+  frmUpdateDesligamento.setarDadosServidor
+  (
+    qryPesquisa.FieldValues['idPessoal'],
+    qryPesquisa.FieldValues['ID'],
+    qryPesquisa.FieldValues['idServidor'],
+    qryPesquisa.FieldValues['Nome'],
+    qryPesquisa.FieldValues['descricaoCargo']
+  );  
+
+  // carregar dados (data de desligamento e forma de desligamento
+
+  frmUpdateDesligamento.lkpFormaDesligamento.EditValue := qryPesquisa.FieldValues['idDesligamento'];
+  frmUpdateDesligamento.edtDataDesligamento.EditValue := qryPesquisa.FieldValues['dt_Deslig_Cargo'];
+  frmUpdateDesligamento.edtDataDesligamentoDODF.EditValue := qryPesquisa.FieldValues['dt_Deslig_CargoDODF'];
+                                                                                  
+  frmUpdateDesligamento.ShowModal;
+  frmUpdateDesligamento.Release;
+  frmUpdateDesligamento := Nil;
+end;
+
+procedure TfrmDesligarServidorEstagiario.edtPesquisaKeyPress(
+  Sender: TObject; var Key: Char);
+begin
+  Key := CaracterSemAcento(Key, True);
+end;
+
+
+procedure TfrmDesligarServidorEstagiario.Timer1Timer(Sender: TObject);
 var condicao: String;
 begin
   condicao := ' AND '
@@ -285,10 +361,67 @@ begin
   + Gera_SQL(RemoveIndesejadas(edtPesquisa.Text), 'serv.idServidor')
   + ')';
 
-  case Key of
-    VK_RETURN: lblNumeroRegistros.Caption := IntToStr(pesquisarPessoal(condicao));
-    VK_DOWN:  perform(WM_NEXTDLGCTL,0,0);
-  end
+
+  lblNumeroRegistros.Caption := IntToStr(pesquisarPessoal(condicao));
+  Timer1.Enabled := false;
+end;
+
+procedure TfrmDesligarServidorEstagiario.tbvPesquisaStylesGetContentStyle(
+  Sender: TcxCustomGridTableView; ARecord: TcxCustomGridRecord;
+  AItem: TcxCustomGridTableItem; out AStyle: TcxStyle);
+begin
+
+  with StyleRepository do
+  begin
+    stlAtivo.TextColor:= clBlack;
+    stlRequisitado.TextColor := clGreen;
+    stlDesligadoCargo.TextColor := clRed;
+    stlDesligadoFuncao.TextColor := clBlue;
+    stlDesligado.TextColor := clRed;
+  end;
+
+  //Ativos
+
+  if
+  (ARecord is TcxGridDataRow) And Not (ARecord.Selected) And
+  (ARecord.Values[tvcStatus.Index] = 'ATIVO')
+  then
+  begin
+  AStyle := stlAtivo;
+  end;
+
+  //Requisitados
+
+  if (ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tvcStatus.Index] = 'REQUISITADO')
+  then
+  begin
+  AStyle := stlRequisitado;
+  end;
+
+  //Inativos
+
+  if (ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tvcStatus.Index] = 'DESLIGADO DO CARGO')
+  then
+  begin
+    //AStyle := stlDesligadoCargo;
+    AStyle := stlDesligado;
+  end;
+
+  //Desligados da função (comissionados)
+
+  if (ARecord is TcxGridDataRow)
+  //And Not (ARecord.Selected)
+  And (ARecord.Values[tvcStatus.Index] = 'DESLIGADO DA FUNÇÃO')
+  then
+  begin
+    //AStyle := stlDesligadoFuncao;
+    AStyle := stlDesligado;
+  end;
+
 
 end;
 

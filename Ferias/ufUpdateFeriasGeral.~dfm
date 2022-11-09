@@ -1,8 +1,8 @@
 object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
-  Left = 193
-  Top = 118
-  Width = 1044
-  Height = 692
+  Left = 1
+  Top = 1
+  Width = 1022
+  Height = 726
   Caption = 'F'#233'rias de servidores e procuradores'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -12,6 +12,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
   Font.Style = []
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnClose = FormClose
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   PixelsPerInch = 96
@@ -19,7 +20,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1036
+    Width = 1014
     Height = 44
     Align = alTop
     BevelOuter = bvNone
@@ -30,12 +31,25 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    object Label2: TLabel
+      Left = 272
+      Top = 8
+      Width = 71
+      Height = 29
+      Caption = 'F'#233'rias'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -24
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
     object btnSair: TcxButton
-      Left = 145
+      Left = 132
       Top = 5
       Width = 110
       Height = 35
-      Caption = 'Sai&r'
+      Caption = 'Sair'
       TabOrder = 1
       OnClick = btnSairClick
       Glyph.Data = {
@@ -124,13 +138,13 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
   object pgcFerias: TcxPageControl
     Left = 0
     Top = 164
-    Width = 1036
-    Height = 497
-    ActivePage = tshRelacaoFerias
+    Width = 1014
+    Height = 531
+    ActivePage = tshRelacaoServidores
     Align = alClient
     TabOrder = 1
-    ClientRectBottom = 497
-    ClientRectRight = 1036
+    ClientRectBottom = 531
+    ClientRectRight = 1014
     ClientRectTop = 24
     object tshRelacaoServidores: TcxTabSheet
       Caption = '&1. Rela'#231#227'o de servidores'
@@ -138,7 +152,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1036
+        Width = 1014
         Height = 59
         Align = alTop
         TabOrder = 0
@@ -166,6 +180,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
           Left = 183
           Top = 17
           ParentFont = False
+          Properties.OnChange = edtPesquisaPropertiesChange
           Style.Font.Charset = ANSI_CHARSET
           Style.Font.Color = clWindowText
           Style.Font.Height = -16
@@ -181,8 +196,8 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
       object grdServidores: TcxGrid
         Left = 0
         Top = 59
-        Width = 1036
-        Height = 414
+        Width = 1014
+        Height = 448
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -192,6 +207,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
         ParentFont = False
         TabOrder = 1
         object tbvServidores: TcxGridDBTableView
+          OnDblClick = tbvServidoresDblClick
           OnKeyDown = tbvServidoresKeyDown
           NavigatorButtons.ConfirmDelete = False
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -226,11 +242,11 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
       Caption = '&2. Rela'#231#227'o de f'#233'rias do servidor'
       ImageIndex = 1
       OnShow = tshRelacaoFeriasShow
-      object Panel2: TPanel
+      object pnlCRUDFerias: TPanel
         Left = 0
         Top = 0
-        Width = 1036
-        Height = 54
+        Width = 1014
+        Height = 196
         Align = alTop
         BevelOuter = bvNone
         Font.Charset = ANSI_CHARSET
@@ -247,12 +263,273 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
           Height = 13
           Caption = 'lblQtdFerias'
         end
+        object DBText1: TDBText
+          Left = 959
+          Top = 22
+          Width = 48
+          Height = 13
+          AutoSize = True
+          DataField = 'ID'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clGray
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtIdExercicio: TDBText
+          Left = 91
+          Top = 56
+          Width = 44
+          Height = 17
+          DataField = 'idExercicio'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtDescricaoPeriodo: TDBText
+          Left = 232
+          Top = 56
+          Width = 72
+          Height = 13
+          DataField = 'descricaoPeriodo'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtdescricaoParcela: TDBText
+          Left = 91
+          Top = 80
+          Width = 61
+          Height = 17
+          DataField = 'descricaoParcela'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtDescricaoTipo: TDBText
+          Left = 291
+          Top = 80
+          Width = 68
+          Height = 17
+          DataField = 'descricaoTipo'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtIdTipoParcela: TDBText
+          Left = 272
+          Top = 80
+          Width = 16
+          Height = 17
+          DataField = 'idTipoParcela'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtDt_Inicio: TDBText
+          Left = 91
+          Top = 129
+          Width = 66
+          Height = 13
+          AutoSize = True
+          DataField = 'Dt_Inicio'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtDt_Termino: TDBText
+          Left = 272
+          Top = 129
+          Width = 80
+          Height = 17
+          DataField = 'Dt_Termino'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtNProcessoSEI: TDBText
+          Left = 91
+          Top = 105
+          Width = 174
+          Height = 17
+          DataField = 'nProcessoSEI'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtDt_InicioReagendamento: TDBText
+          Left = 502
+          Top = 129
+          Width = 80
+          Height = 17
+          DataField = 'Dt_InicioReagendamento'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtDt_TerminoReagendamento: TDBText
+          Left = 750
+          Top = 129
+          Width = 80
+          Height = 17
+          DataField = 'Dt_TerminoReagendamento'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object txtObservacao: TDBText
+          Left = 91
+          Top = 154
+          Width = 713
+          Height = 37
+          DataField = 'Observacao'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label3: TLabel
+          Left = 32
+          Top = 56
+          Width = 51
+          Height = 13
+          Caption = 'Exerc'#237'cio'
+        end
+        object Label4: TLabel
+          Left = 179
+          Top = 56
+          Width = 43
+          Height = 13
+          Caption = 'Per'#237'odo'
+        end
+        object Label5: TLabel
+          Left = 41
+          Top = 80
+          Width = 42
+          Height = 13
+          Caption = 'Parcela'
+        end
+        object Label6: TLabel
+          Left = 179
+          Top = 80
+          Width = 88
+          Height = 13
+          Caption = 'Tipo de parcela'
+        end
+        object Label8: TLabel
+          Left = 52
+          Top = 129
+          Width = 31
+          Height = 13
+          Caption = 'In'#237'cio'
+        end
+        object Label9: TLabel
+          Left = 220
+          Top = 129
+          Width = 47
+          Height = 13
+          Caption = 'T'#233'rmino'
+        end
+        object Label10: TLabel
+          Left = 8
+          Top = 105
+          Width = 75
+          Height = 13
+          Caption = 'Processo SEI'
+        end
+        object Label11: TLabel
+          Left = 368
+          Top = 129
+          Width = 125
+          Height = 13
+          Caption = 'In'#237'cio reagendamento'
+        end
+        object Label12: TLabel
+          Left = 600
+          Top = 129
+          Width = 141
+          Height = 13
+          Caption = 'T'#233'rmino reagendamento'
+        end
+        object Label13: TLabel
+          Left = 15
+          Top = 154
+          Width = 68
+          Height = 13
+          Caption = 'Observa'#231#227'o'
+        end
+        object Label7: TLabel
+          Left = 347
+          Top = 105
+          Width = 99
+          Height = 13
+          Caption = 'Abono pecuni'#225'rio'
+        end
+        object txtAbonoPecuniario: TDBText
+          Left = 459
+          Top = 105
+          Width = 133
+          Height = 17
+          DataField = 'AbonoPecuniario'
+          DataSource = dmFeriasAbonoAfastamento.dsFerias
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clBlue
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
         object btnIncluirFerias: TcxButton
           Left = 10
           Top = 8
           Width = 120
           Height = 35
-          Caption = 'Incluir f'#233'rias'
+          Caption = '&Incluir f'#233'rias'
           TabOrder = 0
           OnClick = btnIncluirFeriasClick
           Glyph.Data = {
@@ -293,11 +570,11 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
             000000000000}
         end
         object btnEditarFerias: TcxButton
-          Left = 136
+          Left = 145
           Top = 8
           Width = 120
           Height = 35
-          Caption = 'Editar f'#233'rias'
+          Caption = '&Editar f'#233'rias'
           TabOrder = 1
           OnClick = btnEditarFeriasClick
           Glyph.Data = {
@@ -338,13 +615,13 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
             000000000000}
         end
         object btnExcluirFerias: TcxButton
-          Left = 261
+          Left = 280
           Top = 8
           Width = 120
           Height = 35
-          Caption = 'Excluir f'#233'rias'
-          Enabled = False
+          Caption = 'E&xcluir f'#233'rias'
           TabOrder = 2
+          OnClick = btnExcluirFeriasClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -385,9 +662,9 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
       end
       object grdFerias: TcxGrid
         Left = 0
-        Top = 54
-        Width = 1036
-        Height = 419
+        Top = 196
+        Width = 1014
+        Height = 311
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -397,6 +674,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
         ParentFont = False
         TabOrder = 1
         object tbvFerias: TcxGridDBTableView
+          OnDblClick = tbvFeriasDblClick
           NavigatorButtons.ConfirmDelete = False
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <>
@@ -405,7 +683,6 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
           object tvcExercicio: TcxGridDBColumn
             Caption = 'Exerc'#237'cio'
             DataBinding.FieldName = 'idExercicio'
@@ -414,7 +691,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
           object tvcPeriodo: TcxGridDBColumn
             Caption = 'Per'#237'odo'
             DataBinding.FieldName = 'descricaoPeriodo'
-            Width = 60
+            Width = 100
           end
           object tvcParcela: TcxGridDBColumn
             Caption = 'Parcela'
@@ -422,14 +699,19 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
             Width = 100
           end
           object tvcTipoParcela: TcxGridDBColumn
-            Caption = 'Tipo da parcela'
+            Caption = 'Tipo'
             DataBinding.FieldName = 'descricaoTipo'
-            Width = 110
+            Width = 70
           end
           object tvcIdTipoParcela: TcxGridDBColumn
             Caption = 'IDTP'
             DataBinding.FieldName = 'idTipoParcela'
             Width = 45
+          end
+          object tvcAbonoPecuniario: TcxGridDBColumn
+            Caption = 'Abono'
+            DataBinding.FieldName = 'AbonoPecuniario'
+            Width = 70
           end
           object tvcDt_Inicio: TcxGridDBColumn
             Caption = 'In'#237'cio'
@@ -461,8 +743,11 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
             DataBinding.FieldName = 'Observacao'
             Width = 500
           end
+          object tbvID: TcxGridDBColumn
+            DataBinding.FieldName = 'ID'
+          end
         end
-        object grdFeriasLevel1: TcxGridLevel
+        object lvlFerias: TcxGridLevel
           GridView = tbvFerias
         end
       end
@@ -471,7 +756,7 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
   object pnlNome: TPanel
     Left = 0
     Top = 44
-    Width = 1036
+    Width = 1014
     Height = 120
     Align = alTop
     BevelOuter = bvNone
@@ -523,5 +808,11 @@ object frmUpdateFeriasGeral: TfrmUpdateFeriasGeral
       Font.Style = []
       ParentFont = False
     end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 272
+    Top = 68
   end
 end

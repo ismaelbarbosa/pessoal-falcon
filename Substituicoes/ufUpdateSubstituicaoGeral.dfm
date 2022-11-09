@@ -1,7 +1,7 @@
 object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
-  Left = 445
-  Top = 78
-  Width = 1091
+  Left = 0
+  Top = 74
+  Width = 1024
   Height = 654
   Caption = 'Substitui'#231#245'es de procuradores'
   Color = clBtnFace
@@ -19,7 +19,7 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1083
+    Width = 1016
     Height = 44
     Align = alTop
     BevelOuter = bvNone
@@ -124,7 +124,7 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
   object pnlNome: TPanel
     Left = 0
     Top = 44
-    Width = 1083
+    Width = 1016
     Height = 120
     Align = alTop
     BevelOuter = bvNone
@@ -193,13 +193,13 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
   object pgcSubstituicoes: TcxPageControl
     Left = 0
     Top = 164
-    Width = 1083
+    Width = 1016
     Height = 459
-    ActivePage = tshRelacaoProcuradores
+    ActivePage = tshRelacaoSubstituicao
     Align = alClient
     TabOrder = 2
     ClientRectBottom = 459
-    ClientRectRight = 1083
+    ClientRectRight = 1016
     ClientRectTop = 24
     object tshRelacaoProcuradores: TcxTabSheet
       Caption = '&1. Rela'#231#227'o de procuradores'
@@ -220,6 +220,20 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
           Font.Height = -16
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object DBText2: TDBText
+          Left = 959
+          Top = 7
+          Width = 100
+          Height = 34
+          DataField = 'idPessoal'
+          DataSource = dsPesquisa
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clGray
+          Font.Height = -27
           Font.Name = 'Verdana'
           Font.Style = []
           ParentFont = False
@@ -288,10 +302,10 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
       Caption = '&2. Rela'#231#227'o de substitui'#231#245'es do procurador'
       ImageIndex = 1
       OnShow = tshRelacaoSubstituicaoShow
-      object Panel2: TPanel
+      object pnlCRUDSubstituicao: TPanel
         Left = 0
         Top = 0
-        Width = 1083
+        Width = 1016
         Height = 54
         Align = alTop
         BevelOuter = bvNone
@@ -302,12 +316,12 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
         Font.Style = []
         ParentFont = False
         TabOrder = 0
-        object lblQtdFerias: TLabel
+        object lblQtdServidores: TLabel
           Left = 520
           Top = 21
-          Width = 67
+          Width = 95
           Height = 13
-          Caption = 'lblQtdFerias'
+          Caption = 'lblQtdServidores'
         end
         object btnIncluirSubstituicao: TcxButton
           Left = 10
@@ -405,8 +419,8 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
           Width = 150
           Height = 35
           Caption = 'Excluir substitui'#231#227'o'
-          Enabled = False
           TabOrder = 2
+          OnClick = btnExcluirFeriasClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -448,7 +462,7 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
       object grdSubstituicoes: TcxGrid
         Left = 0
         Top = 189
-        Width = 1083
+        Width = 1016
         Height = 246
         Align = alClient
         Font.Charset = ANSI_CHARSET
@@ -468,7 +482,6 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
           object tvcProcuradorSubstituido: TcxGridDBColumn
             Caption = 'Procurador substitu'#237'do'
             DataBinding.FieldName = 'Nome'
@@ -502,7 +515,7 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
       object cxGrid1: TcxGrid
         Left = 0
         Top = 54
-        Width = 1083
+        Width = 1016
         Height = 135
         Align = alTop
         Font.Charset = ANSI_CHARSET
@@ -602,5 +615,10 @@ object frmUpdateSubstituicaoGeral: TfrmUpdateSubstituicaoGeral
       'order by subst.dt_inicio desc, subst.dt_termino desc')
     Left = 548
     Top = 6
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 728
+    Top = 16
   end
 end

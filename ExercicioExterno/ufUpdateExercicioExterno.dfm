@@ -118,7 +118,7 @@ object frmUpdateExercicioExterno: TfrmUpdateExercicioExterno
       ParentFont = False
     end
     object btnSair: TcxButton
-      Left = 144
+      Left = 127
       Top = 5
       Width = 110
       Height = 35

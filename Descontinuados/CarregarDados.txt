@@ -1,0 +1,387 @@
+function TfrmUpdateServidor.carregarDados: boolean;
+begin
+
+  // Dividir essa função em várias para facilitar a manutenção
+  // Ex: carregarDadosPessoais, carrregarDadosFuncionais, Estagiário, etc.
+
+
+  // Campos carregados no EstadoEdicao:
+  // Nome, CPF, dt_Nascimento, idServidor
+  // Cargo
+
+  with dmPessoal.qryPesquisa do
+  begin
+
+    lbl_IDP.Caption         := FieldValues['idPessoal'];
+    lbl_IDS.Caption         := FieldValues['ID'];
+
+    if FieldByName('CPF').IsNull
+    then edtCPF.Text := ''
+    else edtCPF.Text := Trim(FieldValues['CPF']);
+
+    // Manter o valor do campo Nome no registro EstadoEdicao
+    EstadoEdicao.cpf[0]  := edtCPF.Text;
+
+    if FieldByName('dt_nascimento').IsNull
+    then edtDtNascimento.Text := ''
+    else edtDtNascimento.Text := Trim(FieldValues['dt_nascimento']);
+
+    // Manter o valor do campo dt_Nascimento no registro EstadoEdicao
+    EstadoEdicao.dtNascimento[0]  := edtDtNascimento.Text;
+
+    if FieldByName('idServidor').IsNull
+    then edtidServidor.Text := ''
+    else edtidServidor.Text := Trim(FieldValues['idServidor']);
+
+    // Manter o valor do campo idServidor no registro EstadoEdicao
+    EstadoEdicao.idServidor[0]  := edtidServidor.Text;
+
+    if FieldByName('Nome').IsNull
+    then edtNome.Text := ''
+    else edtNome.Text := Trim(FieldValues['Nome']);
+
+    // Manter o valor do campo Nome no registro EstadoEdicao
+    EstadoEdicao.nome[0]  := edtNome.Text;
+
+
+    //ShowMessage(FieldValues['descricaoCargo']);
+
+    if FieldByName('descricaoCargo').IsNull
+    then lkpCargo.Text := ''
+    else lkpCargo.Text := Trim(FieldValues['descricaoCargo']);
+
+    // Manter o valor do campo Cargo no registro EstadoEdicao
+    EstadoEdicao.idCargo[0]    := Trim(lkpCargo.Text);
+
+
+    if FieldByName('Especialidade').IsNull
+    then lkpEspecialidade.Text := ''
+    else lkpEspecialidade.Text := Trim(FieldValues['Especialidade']);
+
+    // Manter o valor do campo Especialidade no registro EstadoEdicao
+    EstadoEdicao.especialidade[0]    := Trim(lkpEspecialidade.Text);
+
+
+    if FieldByName('Dt_PosseCargo').IsNull
+    then edtDt_PosseCargo.Text := ''
+    else edtDt_PosseCargo.Text := Trim(FieldValues['Dt_PosseCargo']);
+
+    // Manter o valor do campo Dt_PosseCargo no registro EstadoEdicao
+    EstadoEdicao.dtPosseCargo[0]    := Trim(edtDt_PosseCargo.Text);
+
+    if FieldByName('Dt_ExercicioCargo').IsNull
+    then edtDt_ExercicioCargo.Text := ''
+    else edtDt_ExercicioCargo.Text := Trim(FieldValues['Dt_ExercicioCargo']);
+
+    // Manter o valor do campo Dt_ExercicioCargo no registro EstadoEdicao
+    EstadoEdicao.dtExercicioCargo[0]   := Trim(edtDt_ExercicioCargo.Text);
+
+    if FieldByName('Dt_NomeacaoCargo').IsNull
+    then edtDt_NomeacaoCargo.Text := ''
+    else edtDt_NomeacaoCargo.Text := Trim(FieldValues['Dt_NomeacaoCargo']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.dtNomeacaoCargo[0]   := Trim(edtDt_NomeacaoCargo.Text);
+
+    if FieldByName('Dt_NomeacaoCargoDODF').IsNull
+    then edtDt_NomeacaoCargoDODF.Text := ''
+    else edtDt_NomeacaoCargoDODF.Text := Trim(FieldValues['Dt_NomeacaoCargoDODF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.dtNomeacaoCargoDODF[0]   := Trim(edtDt_NomeacaoCargoDODF.Text);
+
+    if FieldByName('descricaoLotacao').IsNull
+    then txtLotacao.Caption := '' // lkpLotacao.Text := ''
+    else txtLotacao.Caption :=    // lkpLotacao.Text :=
+    Trim(FieldValues['descricaoLotacao']);
+
+    // Manter o valor do campo Lotacao no registro EstadoEdicao
+    EstadoEdicao.idLotacao[0]  := Trim(txtLotacao.Caption);
+
+
+    //lot.idlotacao, lot.Sigla as SiglaLotacao, lot.descricao as descricaoLotacao,
+
+    if not FieldByName('requisitado').IsNull
+    then chkRequisitado.Checked := false
+    else chkRequisitado.Checked := true;
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+//    EstadoEdicao.[0]   := Trim();
+
+    if FieldByName('OrgaoDeOrigem').IsNull
+    then edtOrgaoOrigem.Text := ''
+    else edtOrgaoOrigem.Text := Trim(FieldValues['OrgaoDeOrigem']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.orgaoOrigem[0]   := Trim(edtOrgaoOrigem.Text);
+
+    if FieldByName('CargaHoraria').IsNull
+    then cbxCargaHoraria.Text := ''
+    else cbxCargaHoraria.Text := Trim(FieldValues['CargaHoraria']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.cargaHoraria[0]   := Trim(cbxCargaHoraria.Text);
+
+    if FieldByName('Classe').IsNull
+    then cbxClasse.Text := ''
+    else cbxClasse.Text := Trim(FieldValues['Classe']);
+
+        // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.classe[0]   := Trim(cbxClasse.Text);
+
+    if FieldByName('Padrao').IsNull
+    then cbxPadrao.Text := ''
+    else cbxPadrao.Text := Trim(FieldValues['Padrao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.padrao[0]   := Trim(cbxPadrao.Text);
+
+
+    // Aba dados pessoais
+
+    if FieldByName('Naturalidade').IsNull
+    then edtNaturalidade.Text := ''
+    else edtNaturalidade.Text := Trim(FieldValues['Naturalidade']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.naturalidade[0]   := Trim(edtNaturalidade.Text);
+
+    // Manter o valor do campo Naturalidade no registro EstadoEdicao
+    EstadoEdicao.naturalidade[0]  := edtNaturalidade.Text;
+
+    if FieldByName('Natural_UF').IsNull
+    then cbxNatural_UF.Text := ''
+    else cbxNatural_UF.Text := Trim(FieldValues['Natural_UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.naturalUF[0]   := Trim(cbxNatural_UF.Text);
+
+    if FieldByName('Pai').IsNull
+    then edtPai.Text := ''
+    else edtPai.Text := Trim(FieldValues['Pai']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.pai[0]   := Trim(edtPai.Text);
+
+    if FieldByName('Mae').IsNull
+    then edtMae.Text := ''
+    else edtMae.Text := Trim(FieldValues['Mae']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.mae[0]   := Trim(edtMae.Text);
+
+    if FieldByName('EstadoCivil').IsNull
+    then lkpEstadoCivil.Text := ''
+    else lkpEstadoCivil.Text := Trim(FieldValues['EstadoCivil']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.estadoCivil[0]   := Trim(lkpEstadoCivil.Text);
+
+    if FieldByName('TipoSanguineo').IsNull
+    then cbxTipoSanguineo.Text := ''
+    else cbxTipoSanguineo.Text := Trim(FieldValues['TipoSanguineo']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.tipoSangue[0]   := Trim(cbxTipoSanguineo.Text);
+
+    if FieldByName('Conjuge').IsNull
+    then edtConjuge.Text := ''
+    else edtConjuge.Text := Trim(FieldValues['Conjuge']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.conjuge[0]   := Trim(edtConjuge.Text);
+
+    if FieldByName('Endereco').IsNull
+    then edtEndereco.Text := ''
+    else edtEndereco.Text := Trim(FieldValues['Endereco']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.endereco[0]   := Trim(edtEndereco.Text);
+
+    if FieldByName('Bairro').IsNull
+    then edtBairro.Text := ''
+    else edtBairro.Text := Trim(FieldValues['Bairro']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.bairro[0]   := Trim(edtBairro.Text);
+
+    if FieldByName('Cidade').IsNull
+    then edtCidade.Text := ''
+    else edtCidade.Text := Trim(FieldValues['Cidade']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.cidade[0]   := Trim(edtCidade.Text);
+
+    if FieldByName('UF').IsNull
+    then cbxEnderecoUF.Text := ''
+    else cbxEnderecoUF.Text := Trim(FieldValues['UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.enderecoUF[0]   := Trim(cbxEnderecoUF.Text);
+
+    if FieldByName('CEP').IsNull
+    then edtCEP.Text := ''
+    else edtCEP.Text := Trim(FieldValues['CEP']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.cep[0]   := Trim(edtCEP.Text);
+
+    if FieldByName('Grau').IsNull
+    then cbxGrauInstrucao.Text := ''
+    else cbxGrauInstrucao.Text := Trim(FieldValues['Grau']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.grauInstrucao[0]   := Trim(cbxGrauInstrucao.Text);
+
+    if FieldByName('Email').IsNull
+    then edtEmail.Text := ''
+    else edtEmail.Text := Trim(FieldValues['Email']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.email[0]   := Trim(edtEmail.Text);
+
+    if FieldByName('Curso').IsNull
+    then lkpCurso.Text := ''
+    else lkpCurso.Text := Trim(FieldValues['Curso']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.curso[0]   := Trim(lkpCurso.Text);
+
+    // Aba documentos
+
+    if FieldByName('CI_NUM').IsNull
+    then edtCI_NUM.Text := ''
+    else edtCI_NUM.Text := Trim(FieldValues['CI_NUM']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.ciNum[0]   := Trim(edtCI_Num.Text);
+
+    if FieldByName('CI_Emissao').IsNull
+    then edtCI_Emissao.Text := ''
+    else edtCI_Emissao.Text := Trim(FieldValues['CI_Emissao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.ciEmissao[0]   := Trim(edtCI_Emissao.Text);
+
+    if FieldByName('CI_UF').IsNull
+    then cbxCI_UF.Text := ''
+    else cbxCI_UF.Text := Trim(FieldValues['CI_UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.ciUF[0]   := Trim(cbxCI_UF.Text);
+
+    if FieldByName('TE_Num').IsNull
+    then edtTE_Num.Text := ''
+    else edtTE_Num.Text := Trim(FieldValues['TE_Num']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teNum[0]   := Trim(edtTE_Num.Text);
+
+    if FieldByName('TE_Zona').IsNull
+    then edtTE_Zona.Text := ''
+    else edtTE_Zona.Text := Trim(FieldValues['TE_Zona']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teZona[0]   := Trim(edtTE_Zona.Text);
+
+    if FieldByName('TE_Secao').IsNull
+    then edtTE_Secao.Text := ''
+    else edtTE_Secao.Text := Trim(FieldValues['TE_Secao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teSecao[0]   := Trim(edtTE_Secao.Text);
+
+    if FieldByName('TE_UF').IsNull
+    then cbxTE_UF.Text := ''
+    else cbxTE_UF.Text := Trim(FieldValues['TE_UF']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teUF[0]   := Trim(cbxTE_UF.Text);
+
+    if FieldByName('TE_Emissao').IsNull
+    then edtTE_Emissao.Text := ''
+    else edtTE_Emissao.Text := Trim(FieldValues['TE_Emissao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.teEmissao[0]   := Trim(edtTE_Emissao.Text);
+
+    if FieldByName('Pis_Pasep').IsNull
+    then edtPis_Pasep.Text := ''
+    else edtPis_Pasep.Text := Trim(FieldValues['Pis_Pasep']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.pisPasep[0]   := Trim(edtPis_Pasep.Text);
+
+    //ShowMessage(FieldByName('idBanco').AsString);
+    if FieldByName('idBanco').IsNull
+    then
+    begin
+      //lkpBanco.Text := ''
+    end
+    else
+    begin
+      lkpBanco.EditValue := Trim(FieldValues['idBanco']);
+      lkpBanco.Text := Trim(FieldValues['Banco']);
+    end;
+
+    //lkpBanco.Text := 'BANCO DO BRASIL S/A - SATELITE';
+
+    if FieldByName('Agencia').IsNull
+    then edtAgencia.Text := ''
+    else edtAgencia.Text := Trim(FieldValues['Agencia']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.agencia[0]   := Trim(edtAgencia.Text);
+
+    if FieldByName('Conta').IsNull
+    then edtConta.Text := ''
+    else edtConta.Text := Trim(FieldValues['Conta']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.contaBanco[0]   := Trim(edtConta.Text);
+
+    if FieldByName('OAB_Num').IsNull
+    then edtOAB_Num.Text := ''
+    else edtOAB_Num.Text := Trim(FieldValues['OAB_Num']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.oabNum[0]   := Trim(edtOAB_Num.Text);
+
+    if FieldByName('OAB_Secao').IsNull
+    then edtOAB_Secao.Text := ''
+    else edtOAB_Secao.Text := Trim(FieldValues['OAB_Secao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.oabSecao[0]   := Trim(edtOAB_Secao.Text);
+
+
+//39	Dt_InicioContrato1_Estagiario
+
+    if FieldByName('Dt_InicioContrato1_Estagiario').IsNull
+    then edtDt_InicioContrato1_Estagiario.Text := ''
+    else edtDt_InicioContrato1_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato1_Estagiario']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+    EstadoEdicao.oabSecao[0]   := Trim(edtOAB_Secao.Text);
+
+{40	Dt_TerminoContrato1_Estagiario
+41	Dt_InicioContrato2_Estagiario
+42	Dt_TerminoContrato2_Estagiario
+43	Dt_InicioContrato3_Estagiario
+44	Dt_TerminoContrato3_Estagiario
+45	Dt_InicioContrato4_Estagiario
+46	Dt_TerminoContrato4_Estagiario
+47	Supervisor_Estagiario
+48	DtNovaEstrutura
+49	CaminhoFollhaDePonto
+50	TurnoEstagio
+51	Semestre
+52	InstituicaoEnsino
+53	observacao
+}
+
+  end;
+
+  SetarAlteracaoDesfeita;
+  setarCorPadrao;
+end;

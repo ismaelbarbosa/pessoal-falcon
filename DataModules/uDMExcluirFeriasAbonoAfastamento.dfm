@@ -1,0 +1,12 @@
+object dmExcluirFeriasAbonoAfastamento: TdmExcluirFeriasAbonoAfastamento
+  OldCreateOrder = False
+  Left = 192
+  Top = 117
+  Height = 333
+  Width = 441
+  object qryDelete: TADOQuery
+    Parameters = <>
+    Left = 96
+    Top = 48
+  end
+end

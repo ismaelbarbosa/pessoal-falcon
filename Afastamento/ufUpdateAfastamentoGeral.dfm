@@ -1,8 +1,8 @@
 object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
-  Left = 192
-  Top = 117
-  Width = 1044
-  Height = 540
+  Left = 0
+  Top = 181
+  Width = 1024
+  Height = 541
   Caption = 'Afastamentos de servidores e procuradores'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -12,23 +12,38 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
   Font.Style = []
   OldCreateOrder = False
   OnActivate = FormActivate
+  OnClose = FormClose
   OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1036
+    Width = 1016
     Height = 44
     Align = alTop
     BevelOuter = bvNone
     TabOrder = 0
+    object Label2: TLabel
+      Left = 272
+      Top = 8
+      Width = 163
+      Height = 29
+      Caption = 'Afastamentos'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -24
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
     object btnSair: TcxButton
-      Left = 122
+      Left = 132
       Top = 5
       Width = 110
       Height = 35
-      Caption = 'Sai&r'
+      Caption = 'Sair'
       TabOrder = 1
       OnClick = btnSairClick
       Glyph.Data = {
@@ -117,7 +132,7 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
   object pnlNome: TPanel
     Left = 0
     Top = 44
-    Width = 1036
+    Width = 1016
     Height = 120
     Align = alTop
     BevelOuter = bvNone
@@ -173,13 +188,13 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
   object pgcAfastamento: TcxPageControl
     Left = 0
     Top = 164
-    Width = 1036
-    Height = 345
+    Width = 1016
+    Height = 346
     ActivePage = tshRelacaoAfastamentos
     Align = alClient
     TabOrder = 2
-    ClientRectBottom = 345
-    ClientRectRight = 1036
+    ClientRectBottom = 346
+    ClientRectRight = 1016
     ClientRectTop = 24
     object tshRelacaoServidores: TcxTabSheet
       Caption = '&1. Rela'#231#227'o de servidores'
@@ -187,7 +202,7 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
       object Panel1: TPanel
         Left = 0
         Top = 0
-        Width = 1036
+        Width = 1016
         Height = 59
         Align = alTop
         TabOrder = 0
@@ -230,8 +245,8 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
       object grdServidores: TcxGrid
         Left = 0
         Top = 59
-        Width = 1036
-        Height = 262
+        Width = 1016
+        Height = 263
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -241,6 +256,7 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
         ParentFont = False
         TabOrder = 1
         object tbvServidores: TcxGridDBTableView
+          OnKeyDown = tbvServidoresKeyDown
           NavigatorButtons.ConfirmDelete = False
           DataController.Summary.DefaultGroupSummaryItems = <>
           DataController.Summary.FooterSummaryItems = <>
@@ -249,7 +265,6 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
           object tvcMatricula: TcxGridDBColumn
             Caption = 'Matr'#237'cula'
             DataBinding.FieldName = 'idServidor'
@@ -266,7 +281,7 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
             DataBinding.FieldName = 'Lotacao'
           end
         end
-        object grdServidoresLevel1: TcxGridLevel
+        object lvlServidores: TcxGridLevel
           GridView = tbvServidores
         end
       end
@@ -275,10 +290,10 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
       Caption = '&2. Rela'#231#227'o de afastamentos do servidor'
       ImageIndex = 1
       OnShow = tshRelacaoAfastamentosShow
-      object Panel2: TPanel
+      object pnlCRUDAfastamento: TPanel
         Left = 0
         Top = 0
-        Width = 1036
+        Width = 1016
         Height = 54
         Align = alTop
         BevelOuter = bvNone
@@ -342,12 +357,11 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
             000000000000}
         end
         object btnEditarAfastamento: TcxButton
-          Left = 165
+          Left = 166
           Top = 8
           Width = 150
           Height = 35
           Caption = 'Editar afastamento'
-          Enabled = False
           TabOrder = 1
           OnClick = btnEditarAfastamentoClick
           Glyph.Data = {
@@ -393,8 +407,8 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
           Width = 150
           Height = 35
           Caption = 'Excluir afastamento'
-          Enabled = False
           TabOrder = 2
+          OnClick = btnExcluirAfastamentoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -433,11 +447,11 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
             000000000000}
         end
       end
-      object grdFerias: TcxGrid
+      object grdAfastamento: TcxGrid
         Left = 0
         Top = 54
-        Width = 1036
-        Height = 267
+        Width = 1016
+        Height = 268
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -455,17 +469,6 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
-          object tvcExercicio: TcxGridDBColumn
-            Caption = 'Exerc'#237'cio'
-            DataBinding.FieldName = 'idExercicio'
-            Width = 70
-          end
-          object tvcIdAfastamento: TcxGridDBColumn
-            Caption = 'C'#243'digo'
-            DataBinding.FieldName = 'idAfastamento'
-            Width = 55
-          end
           object tvcDescricaoAfastamento: TcxGridDBColumn
             Caption = 'Tipo de afastamento'
             DataBinding.FieldName = 'descricaoAfastamento'
@@ -486,16 +489,34 @@ object frmUpdateAfastamentoGeral: TfrmUpdateAfastamentoGeral
             DataBinding.FieldName = 'nProcessoSEI'
             Width = 190
           end
+          object tvcExercicio: TcxGridDBColumn
+            Caption = 'Exerc'#237'cio'
+            DataBinding.FieldName = 'idExercicio'
+            Width = 70
+          end
           object tvcObservacao: TcxGridDBColumn
             Caption = 'Observa'#231#227'o'
             DataBinding.FieldName = 'Observacao'
             Width = 500
           end
+          object tvcIdAfastamento: TcxGridDBColumn
+            Caption = 'C'#243'digo'
+            DataBinding.FieldName = 'idAfastamento'
+            Width = 55
+          end
+          object tvcID: TcxGridDBColumn
+            DataBinding.FieldName = 'ID'
+          end
         end
-        object grdAfastamento: TcxGridLevel
+        object lvlAfastamento: TcxGridLevel
           GridView = tbvAfastamento
         end
       end
     end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 728
+    Top = 16
   end
 end

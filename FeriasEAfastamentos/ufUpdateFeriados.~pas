@@ -233,6 +233,8 @@ begin
   RetornaData(2),
   'tbFeriadosEAfastamentos',
   txtIdFeriado.Caption,
+  'NULL', //
+  'NULL', //
   'TODOS',
   acao
   + ' ID: ' + txtIdFeriado.Caption

@@ -1,7 +1,7 @@
 object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
-  Left = 192
-  Top = 117
-  Width = 1044
+  Left = 0
+  Top = 146
+  Width = 1024
   Height = 540
   Caption = 'Abono anual dos servidores'
   Color = clBtnFace
@@ -19,7 +19,7 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1036
+    Width = 1016
     Height = 44
     Align = alTop
     BevelOuter = bvNone
@@ -30,8 +30,21 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
     Font.Style = []
     ParentFont = False
     TabOrder = 0
+    object Label2: TLabel
+      Left = 272
+      Top = 8
+      Width = 148
+      Height = 29
+      Caption = 'Abono anual'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -24
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
     object btnSair: TcxButton
-      Left = 145
+      Left = 132
       Top = 5
       Width = 110
       Height = 35
@@ -124,13 +137,13 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
   object pgcAbono: TcxPageControl
     Left = 0
     Top = 164
-    Width = 1036
+    Width = 1016
     Height = 345
     ActivePage = tshRelacaoAbonos
     Align = alClient
     TabOrder = 1
     ClientRectBottom = 345
-    ClientRectRight = 1036
+    ClientRectRight = 1016
     ClientRectTop = 24
     object tshRelacaoServidores: TcxTabSheet
       Caption = '&1. Rela'#231#227'o de servidores'
@@ -166,6 +179,7 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
           Left = 183
           Top = 17
           ParentFont = False
+          Properties.OnChange = edtPesquisaPropertiesChange
           Style.Font.Charset = ANSI_CHARSET
           Style.Font.Color = clWindowText
           Style.Font.Height = -16
@@ -201,7 +215,6 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
           object tvcMatricula: TcxGridDBColumn
             Caption = 'Matr'#237'cula'
             DataBinding.FieldName = 'idServidor'
@@ -227,10 +240,10 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
       Caption = '&2. Rela'#231#227'o de abonos do servidor'
       ImageIndex = 1
       OnShow = tshRelacaoAbonosShow
-      object Panel2: TPanel
+      object pnlCRUDAbonos: TPanel
         Left = 0
         Top = 0
-        Width = 1036
+        Width = 1016
         Height = 54
         Align = alTop
         BevelOuter = bvNone
@@ -293,14 +306,14 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
             00FF000000FF000000FF000000B1000000220000000000000000000000000000
             000000000000}
         end
-        object btnEditarFerias: TcxButton
-          Left = 136
+        object btnEditarAbono: TcxButton
+          Left = 145
           Top = 8
           Width = 120
           Height = 35
           Caption = 'Editar abono'
-          Enabled = False
           TabOrder = 1
+          OnClick = btnEditarAbonoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -338,14 +351,14 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
             00000000000000000000000000000000000000000040000000E3000000400000
             000000000000}
         end
-        object btnExcluirFerias: TcxButton
-          Left = 261
+        object btnExcluirAbono: TcxButton
+          Left = 280
           Top = 8
           Width = 120
           Height = 35
           Caption = 'Excluir abono'
-          Enabled = False
           TabOrder = 2
+          OnClick = btnExcluirAbonoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -387,7 +400,7 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
       object grdAbonoAnual: TcxGrid
         Left = 0
         Top = 54
-        Width = 1036
+        Width = 1016
         Height = 267
         Align = alClient
         Font.Charset = ANSI_CHARSET
@@ -406,7 +419,6 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
           object tvcExercicio: TcxGridDBColumn
             Caption = 'Exerc'#237'cio'
             DataBinding.FieldName = 'idExercicio'
@@ -451,7 +463,7 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
   object pnlNome: TPanel
     Left = 0
     Top = 44
-    Width = 1036
+    Width = 1016
     Height = 120
     Align = alTop
     BevelOuter = bvNone
@@ -503,5 +515,11 @@ object frmUpdateAbonoAnualGeral: TfrmUpdateAbonoAnualGeral
       Font.Style = []
       ParentFont = False
     end
+  end
+  object Timer1: TTimer
+    Enabled = False
+    OnTimer = Timer1Timer
+    Left = 648
+    Top = 84
   end
 end

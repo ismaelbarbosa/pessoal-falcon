@@ -404,6 +404,8 @@ begin //1
         RetornaData(2),
         'tbServidor, tbHist_Funcao',
         frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.txtMatricula.Caption,
         'TODOS',
         'Alteração da função: '
         + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -452,6 +454,8 @@ begin //1
               RetornaData(2),
               'tbHist_Funcao',
               frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.txtMatricula.Caption,
               'TODOS',
               'Registrado histórico da função: '
               + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -492,6 +496,8 @@ begin //1
             RetornaData(2),
             'tbServidor',
             frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.txtMatricula.Caption,
             'TODOS',
             'Desligamento da função: '
             + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -701,9 +707,8 @@ begin
     + ' AND idFuncao = ' + QuotedStr(Trim(idFuncao))
     + ' AND dt_NomeacaoFuncao = ' + QuotedStr(Trim(dt_NomeacaoFuncao));
 
-    frmLogs.mmoLog.Lines.Add(SQL.Text);
-    //mmoSQL.Text := SQL.Text;
-    //ShowMessage(SQL.Text);
+    frmLogs.mmoLog.Lines.Add('Verificar se a função está no histórico' + chr(13) + RetornaData(3) + SQL.Text);
+
     Active := true;
 
     if dmCadastroServidor.qryExecSQL.RecordCount = 0

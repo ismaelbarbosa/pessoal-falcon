@@ -1,7 +1,7 @@
 object frmUpdateServidor: TfrmUpdateServidor
   Left = 0
-  Top = 110
-  Width = 1536
+  Top = 14
+  Width = 1246
   Height = 714
   Caption = 'Atualiza'#231#227'o de dados do servidor'
   Color = clBtnFace
@@ -21,7 +21,7 @@ object frmUpdateServidor: TfrmUpdateServidor
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 1528
+    Width = 1238
     Height = 40
     Align = alTop
     BevelOuter = bvNone
@@ -47,12 +47,12 @@ object frmUpdateServidor: TfrmUpdateServidor
       Visible = False
     end
     object btnSair: TcxButton
-      Left = 288
+      Left = 130
       Top = 5
       Width = 110
       Height = 35
       Caption = 'Sai&r'
-      TabOrder = 2
+      TabOrder = 1
       OnClick = btnSairClick
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -92,12 +92,12 @@ object frmUpdateServidor: TfrmUpdateServidor
         000000000000}
     end
     object btnGravarServidor: TcxButton
-      Left = 117
+      Left = 5
       Top = 5
       Width = 110
       Height = 35
       Caption = '&Gravar'
-      TabOrder = 1
+      TabOrder = 0
       OnClick = btnGravarServidorClick
       Glyph.Data = {
         42040000424D4204000000000000420000002800000010000000100000000100
@@ -136,56 +136,21 @@ object frmUpdateServidor: TfrmUpdateServidor
         0000000000000000000000000000000000000000000000000000000000000000
         000000000000}
     end
-    object btnEditarServidor: TcxButton
-      Left = 2
-      Top = 5
-      Width = 110
-      Height = 35
-      Caption = '&Editar'
-      TabOrder = 0
-      OnClick = btnEditarServidorClick
-      Glyph.Data = {
-        42040000424D4204000000000000420000002800000010000000100000000100
-        20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
-        0000FF000000000000DE000000A30000003D0000000000000000000000000000
-        0000000000000000000000000000000000000000000000000000000000000000
-        000000000000000000A3000000C7000000D6000000D600000070000000120000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0000000000000000003D000000D5000000010000003D000000A3000000EC0000
-        0040000000000000000000000000000000000000000000000000000000000000
-        00000000000000000000000000D60000003D0000000000000000000000EF0000
-        00F5000000400000000000000000000000000000000000000000000000000000
-        0000000000000000000000000070000000A300000000000000EC000000EC0000
-        0040000000EA0000004000000000000000000000000000000000000000000000
-        0000000000000000000000000012000000EC000000EF000000EC000000000000
-        000000000040000000EA00000040000000000000000000000000000000000000
-        000000000000000000000000000000000040000000F500000040000000000000
-        00000000000000000040000000EA000000400000000000000000000000000000
-        0000000000000000000000000000000000000000003D000000E9000000420000
-        000000000000000000000000003C000000E90000004200000000000000000000
-        000000000000000000000000000000000000000000000000003D000000E90000
-        00420000000000000000000000000000003C000000E900000042000000000000
-        00000000000000000000000000000000000000000000000000000000003D0000
-        00E9000000420000000000000000000000000000003C000000E9000000420000
-        0000000000000000000000000000000000000000000000000000000000000000
-        0040000000EA0000004000000000000000000000000000000074000000F50000
-        0040000000000000000000000000000000000000000000000000000000000000
-        000000000040000000EA000000400000000000000040000000E9000000740000
-        00EA000000400000000000000000000000000000000000000000000000000000
-        00000000000000000040000000EA00000074000000E900000040000000000000
-        0074000000E20000000000000000000000000000000000000000000000000000
-        0000000000000000000000000040000000F50000007400000000000000400000
-        00EA000000400000000000000000000000000000000000000000000000000000
-        000000000000000000000000000000000040000000EA00000074000000EA0000
-        0040000000000000000000000000000000000000000000000000000000000000
-        00000000000000000000000000000000000000000040000000E3000000400000
-        000000000000}
+    object Button2: TButton
+      Left = 920
+      Top = 7
+      Width = 75
+      Height = 25
+      Caption = 'SQL'
+      TabOrder = 2
+      Visible = False
+      OnClick = Button2Click
     end
   end
   object pnlNome: TPanel
     Left = 0
     Top = 40
-    Width = 1528
+    Width = 1238
     Height = 52
     Align = alTop
     BevelOuter = bvNone
@@ -204,7 +169,7 @@ object frmUpdateServidor: TfrmUpdateServidor
       DataField = 'nome'
       DataSource = frmReadServidor.dsPesquisa
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
+      Font.Color = clGray
       Font.Height = -27
       Font.Name = 'Verdana'
       Font.Style = []
@@ -214,28 +179,27 @@ object frmUpdateServidor: TfrmUpdateServidor
   object pgcPessoal: TcxPageControl
     Left = 0
     Top = 92
-    Width = 1528
+    Width = 1238
     Height = 572
-    ActivePage = tshAfastamentos
+    ActivePage = tshDadosFuncionais
     Align = alClient
     TabOrder = 2
     ClientRectBottom = 572
-    ClientRectRight = 1528
+    ClientRectRight = 1238
     ClientRectTop = 24
     object tshDadosFuncionais: TcxTabSheet
       Caption = 'Dados Funcionais'
       ImageIndex = 0
-      object grpbxDadosFuncionais: TGroupBox
+      object gbxDadosFuncionais: TcxGroupBox
         Left = 0
         Top = 0
-        Width = 1528
-        Height = 548
         Align = alClient
-        Ctl3D = True
-        ParentCtl3D = False
+        Style.BorderStyle = ebsNone
         TabOrder = 0
+        Height = 548
+        Width = 1238
         object Label1: TLabel
-          Left = 260
+          Left = 268
           Top = 93
           Width = 51
           Height = 13
@@ -262,7 +226,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblCargo: TLabel
           Left = 98
-          Top = 120
+          Top = 122
           Width = 35
           Height = 13
           Caption = 'Cargo'
@@ -275,7 +239,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblLotacao: TLabel
           Left = 57
-          Top = 224
+          Top = 238
           Width = 76
           Height = 13
           Caption = 'Lota'#231#227'o atual'
@@ -288,7 +252,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblCF_Num: TLabel
           Left = 12
-          Top = 439
+          Top = 477
           Width = 121
           Height = 13
           Caption = 'Carteira Funcional n'#186
@@ -301,8 +265,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           Visible = False
         end
         object btnGera_CF_Numero: TSpeedButton
-          Left = 223
-          Top = 435
+          Left = 231
+          Top = 473
           Width = 82
           Height = 20
           Caption = 'Gerar n'#186
@@ -318,7 +282,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblEspecialidade: TLabel
           Left = 56
-          Top = 146
+          Top = 151
           Width = 77
           Height = 13
           Caption = 'Especialidade'
@@ -331,7 +295,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblCargaHoraria: TLabel
           Left = 52
-          Top = 387
+          Top = 419
           Width = 81
           Height = 13
           Caption = 'Carga Hor'#225'ria'
@@ -343,8 +307,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblOrgaoOrigem: TLabel
-          Left = 171
-          Top = 250
+          Left = 179
+          Top = 267
           Width = 99
           Height = 13
           Caption = 'Org'#227'o de Origem'
@@ -358,7 +322,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblDt_PosseCargo: TLabel
           Left = 46
-          Top = 172
+          Top = 180
           Width = 87
           Height = 13
           Caption = 'Posse no cargo'
@@ -370,8 +334,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblDt_ExercicioCargo: TLabel
-          Left = 249
-          Top = 172
+          Left = 257
+          Top = 180
           Width = 105
           Height = 13
           Caption = 'Exerc'#237'cio no cargo'
@@ -383,8 +347,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblPrimeiroExercicioGDF: TLabel
-          Left = 475
-          Top = 172
+          Left = 483
+          Top = 180
           Width = 96
           Height = 13
           Caption = '1'#186' Exerc'#237'cio GDF'
@@ -399,7 +363,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblDt_Nomeacao: TLabel
           Left = 6
-          Top = 198
+          Top = 209
           Width = 127
           Height = 13
           Caption = 'Decreto de Nomea'#231#227'o'
@@ -411,8 +375,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblDt_NomeacaoDODF: TLabel
-          Left = 449
-          Top = 198
+          Left = 261
+          Top = 209
           Width = 107
           Height = 13
           Caption = 'Nomea'#231#227'o (DODF)'
@@ -424,8 +388,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblAverbacaoGDF: TLabel
-          Left = 466
-          Top = 387
+          Left = 474
+          Top = 419
           Width = 89
           Height = 13
           Caption = 'Averba'#231#227'o GDF'
@@ -438,8 +402,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           Visible = False
         end
         object lblAverbacaoServPublico: TLabel
-          Left = 460
-          Top = 412
+          Left = 468
+          Top = 447
           Width = 200
           Height = 13
           Caption = 'Averba'#231#227'o Servi'#231'o P'#250'blico (U/E/M)'
@@ -466,7 +430,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object Label3: TLabel
           Left = 95
-          Top = 413
+          Top = 448
           Width = 38
           Height = 13
           Caption = 'Classe'
@@ -478,8 +442,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object Label4: TLabel
-          Left = 245
-          Top = 413
+          Left = 253
+          Top = 448
           Width = 40
           Height = 13
           Caption = 'Padr'#227'o'
@@ -505,14 +469,14 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object Label6: TLabel
           Left = 103
-          Top = 288
+          Top = 308
           Width = 40
           Height = 13
           Caption = 'Fun'#231#227'o'
         end
         object DBText1: TDBText
-          Left = 301
-          Top = 288
+          Left = 309
+          Top = 308
           Width = 48
           Height = 13
           AutoSize = True
@@ -527,8 +491,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           Visible = False
         end
         object DBText2: TDBText
-          Left = 241
-          Top = 288
+          Left = 249
+          Top = 308
           Width = 48
           Height = 13
           AutoSize = True
@@ -543,14 +507,14 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object Label8: TLabel
           Left = 24
-          Top = 310
+          Top = 333
           Width = 120
           Height = 13
           Caption = 'Nomea'#231#227'o na fun'#231#227'o'
         end
         object DBText3: TDBText
-          Left = 161
-          Top = 310
+          Left = 169
+          Top = 333
           Width = 48
           Height = 13
           AutoSize = True
@@ -565,21 +529,21 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object Label9: TLabel
           Left = 51
-          Top = 331
+          Top = 357
           Width = 93
           Height = 13
           Caption = 'Posse na fun'#231#227'o'
         end
         object Label10: TLabel
           Left = 7
-          Top = 353
+          Top = 382
           Width = 138
           Height = 13
           Caption = 'Desligamento da fun'#231#227'o'
         end
         object DBText4: TDBText
-          Left = 161
-          Top = 353
+          Left = 169
+          Top = 382
           Width = 48
           Height = 13
           AutoSize = True
@@ -593,15 +557,15 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object Label11: TLabel
-          Left = 342
-          Top = 331
+          Left = 350
+          Top = 357
           Width = 111
           Height = 13
           Caption = 'Exerc'#237'cio na fun'#231#227'o'
         end
         object DBText5: TDBText
-          Left = 541
-          Top = 331
+          Left = 549
+          Top = 357
           Width = 48
           Height = 13
           AutoSize = True
@@ -615,8 +579,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object Label12: TLabel
-          Left = 341
-          Top = 310
+          Left = 349
+          Top = 333
           Width = 167
           Height = 13
           Caption = 'Nomea'#231#227'o na fun'#231#227'o (DODF)'
@@ -628,8 +592,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object DBText6: TDBText
-          Left = 541
-          Top = 310
+          Left = 549
+          Top = 333
           Width = 48
           Height = 13
           AutoSize = True
@@ -643,8 +607,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object DBText7: TDBText
-          Left = 161
-          Top = 331
+          Left = 169
+          Top = 357
           Width = 48
           Height = 13
           AutoSize = True
@@ -658,15 +622,15 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object Label13: TLabel
-          Left = 343
-          Top = 353
+          Left = 351
+          Top = 382
           Width = 185
           Height = 13
           Caption = 'Desligamento da fun'#231#227'o (DODF)'
         end
         object DBText8: TDBText
-          Left = 545
-          Top = 353
+          Left = 553
+          Top = 382
           Width = 48
           Height = 13
           AutoSize = True
@@ -680,8 +644,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object DBText9: TDBText
-          Left = 161
-          Top = 288
+          Left = 169
+          Top = 308
           Width = 48
           Height = 13
           AutoSize = True
@@ -695,8 +659,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object txtLotacao: TDBText
-          Left = 143
-          Top = 225
+          Left = 151
+          Top = 239
           Width = 59
           Height = 13
           AutoSize = True
@@ -710,7 +674,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object Label19: TLabel
-          Left = 695
+          Left = 703
           Top = 27
           Width = 21
           Height = 13
@@ -723,14 +687,14 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lbl_IDS: TLabel
-          Left = 796
+          Left = 804
           Top = 27
           Width = 7
           Height = 13
           Caption = '0'
         end
         object Label34: TLabel
-          Left = 767
+          Left = 775
           Top = 27
           Width = 22
           Height = 13
@@ -743,14 +707,14 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lbl_IDP: TLabel
-          Left = 724
-          Top = 26
+          Left = 732
+          Top = 27
           Width = 7
           Height = 13
           Caption = '0'
         end
         object txtMatricula: TDBText
-          Left = 456
+          Left = 464
           Top = 91
           Width = 79
           Height = 16
@@ -764,6 +728,34 @@ object frmUpdateServidor: TfrmUpdateServidor
           Font.Style = []
           ParentFont = False
           WordWrap = True
+        end
+        object txtDt_DesligamentoCargo: TDBText
+          Left = 645
+          Top = 209
+          Width = 148
+          Height = 13
+          AutoSize = True
+          DataField = 'Dt_Deslig_Cargo'
+          DataSource = frmReadServidor.dsPesquisa
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clNavy
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
+        object Label56: TLabel
+          Left = 497
+          Top = 209
+          Width = 132
+          Height = 13
+          Caption = 'Desligamento do cargo'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
         end
         object edtAverbacaoServPublico: TDBEdit
           Left = 1161
@@ -781,45 +773,53 @@ object frmUpdateServidor: TfrmUpdateServidor
           MaxLength = 5
           ParentCtl3D = False
           ParentFont = False
-          TabOrder = 15
+          TabOrder = 0
           Visible = False
         end
         object edtDt_PrimeiroExercicioGDF: TcxDBDateEdit
-          Left = 579
-          Top = 168
+          Left = 587
+          Top = 176
           DataBinding.DataField = 'Dt_PrimeiroExercicioGDF'
           Enabled = False
-          TabOrder = 18
+          TabOrder = 1
           Visible = False
           Width = 100
         end
         object edtAverbacaoGDF: TcxDBDateEdit
-          Left = 563
-          Top = 383
+          Left = 571
+          Top = 415
           DataBinding.DataField = 'AverbacaoGDF'
           Enabled = False
-          TabOrder = 16
+          TabOrder = 2
           Visible = False
           Width = 100
         end
         object chkAuxTransporte: TcxDBCheckBox
-          Left = 536
-          Top = 433
+          Left = 544
+          Top = 471
           Caption = 'Aux'#237'lio-transporte'
           DataBinding.DataField = 'AuxTransporte'
-          TabOrder = 17
+          TabOrder = 3
           Width = 126
         end
         object edtCF_Num: TcxDBTextEdit
-          Left = 141
-          Top = 435
+          Left = 149
+          Top = 473
           DataBinding.DataField = 'CF_Num'
-          TabOrder = 19
+          ParentFont = False
+          Properties.OnChange = edtCF_NumPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 4
           Visible = False
           Width = 81
         end
         object edtNome: TcxTextEdit
-          Left = 141
+          Left = 149
           Top = 18
           ParentFont = False
           Properties.OnChange = edtNomePropertiesChange
@@ -829,7 +829,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.IsFontAssigned = True
-          TabOrder = 0
+          TabOrder = 5
           Text = 'edtNome'
           OnExit = edtNomeExit
           OnKeyDown = edtNomeKeyDown
@@ -837,7 +837,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           Width = 522
         end
         object edtCPF: TcxTextEdit
-          Left = 141
+          Left = 149
           Top = 48
           ParentFont = False
           Properties.OnChange = edtCPFPropertiesChange
@@ -847,14 +847,15 @@ object frmUpdateServidor: TfrmUpdateServidor
           Style.Font.Name = 'Verdana'
           Style.Font.Style = []
           Style.IsFontAssigned = True
-          TabOrder = 1
+          TabOrder = 6
           Text = 'edtCPF'
           OnKeyDown = edtCPFKeyDown
           Width = 172
         end
         object lkpCargo: TcxLookupComboBox
-          Left = 141
-          Top = 116
+          Left = 149
+          Top = 118
+          ParentFont = False
           Properties.KeyFieldNames = 'idCargo'
           Properties.ListColumns = <
             item
@@ -862,116 +863,209 @@ object frmUpdateServidor: TfrmUpdateServidor
             end>
           Properties.ListSource = dmCadastroServidor.dsCargo
           Properties.OnChange = lkpCargoPropertiesChange
-          TabOrder = 4
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 7
           OnKeyDown = lkpCargoKeyDown
           Width = 522
         end
         object edtDtNascimento: TcxDateEdit
-          Left = 141
+          Left = 149
           Top = 89
+          ParentFont = False
           Properties.OnChange = edtDtNascimentoPropertiesChange
-          TabOrder = 2
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 8
           OnKeyDown = edtDtNascimentoKeyDown
           Width = 108
         end
         object lkpEspecialidade: TcxLookupComboBox
-          Left = 141
-          Top = 142
-          Properties.KeyFieldNames = 'Descricao'
+          Left = 149
+          Top = 147
+          ParentFont = False
+          Properties.KeyFieldNames = 'idEspecialidade'
           Properties.ListColumns = <
             item
               FieldName = 'Descricao'
             end>
-          TabOrder = 5
-          Width = 326
+          Properties.ListSource = dmCadastroServidor.dsEspecialidade
+          Properties.OnChange = lkpEspecialidadePropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 9
+          Width = 522
         end
         object edtidServidor: TcxTextEdit
-          Left = 319
+          Left = 327
           Top = 89
+          ParentFont = False
           Properties.OnChange = edtidServidorPropertiesChange
-          TabOrder = 3
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 10
           Text = 'edtidServidor'
           OnKeyDown = edtidServidorKeyDown
           Width = 121
         end
         object edtDt_PosseCargo: TcxDateEdit
-          Left = 141
-          Top = 168
-          TabOrder = 6
+          Left = 149
+          Top = 176
+          ParentFont = False
+          Properties.OnChange = edtDt_PosseCargoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 11
           Width = 99
         end
         object edtDt_ExercicioCargo: TcxDateEdit
-          Left = 367
-          Top = 168
-          TabOrder = 7
+          Left = 375
+          Top = 176
+          ParentFont = False
+          Properties.OnChange = edtDt_ExercicioCargoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 12
           Width = 99
         end
         object edtDt_NomeacaoCargo: TcxDateEdit
-          Left = 141
-          Top = 194
-          TabOrder = 8
+          Left = 149
+          Top = 205
+          ParentFont = False
+          Properties.OnChange = edtDt_NomeacaoCargoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 13
           Width = 99
         end
         object edtDt_NomeacaoCargoDODF: TcxDateEdit
-          Left = 563
-          Top = 194
-          TabOrder = 9
+          Left = 375
+          Top = 205
+          ParentFont = False
+          Properties.OnChange = edtDt_NomeacaoCargoDODFPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 14
           Width = 99
         end
         object chkRequisitado: TcxCheckBox
           Left = 47
-          Top = 247
+          Top = 264
           Caption = 'Requisitado'
-          TabOrder = 10
+          TabOrder = 15
           Width = 90
         end
         object edtOrgaoOrigem: TcxTextEdit
-          Left = 277
-          Top = 246
-          TabOrder = 11
+          Left = 285
+          Top = 263
+          ParentFont = False
+          Properties.OnChange = edtOrgaoOrigemPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 16
           Text = 'edtOrgaoOrigem'
           Width = 386
         end
         object cbxCargaHoraria: TcxComboBox
-          Left = 142
-          Top = 383
+          Left = 150
+          Top = 415
+          ParentFont = False
           Properties.Items.Strings = (
             '20'
             '30'
             '40')
-          TabOrder = 12
+          Properties.OnChange = cbxCargaHorariaPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 17
           Text = 'cbxCargaHoraria'
           Width = 60
         end
         object cbxClasse: TcxComboBox
-          Left = 142
-          Top = 409
+          Left = 150
+          Top = 444
+          ParentFont = False
           Properties.Items.Strings = (
             '1'
             '2'
             '3'
             'E'
             'U')
-          TabOrder = 13
+          Properties.OnChange = cbxClassePropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 18
           Text = 'cbxClasse'
           Width = 73
         end
         object cbxPadrao: TcxComboBox
-          Left = 304
-          Top = 409
+          Left = 312
+          Top = 444
+          ParentFont = False
           Properties.Items.Strings = (
             '1'
             '2'
             '3'
             'E'
             'U')
-          TabOrder = 14
+          Properties.OnChange = cbxPadraoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 19
           Text = 'cbxPadrao'
           Width = 73
         end
         object chkPessoal: TcxCheckBox
-          Left = 696
-          Top = 296
+          Left = 1016
+          Top = 116
           Caption = 'Tabela de pessoal'
           Properties.ReadOnly = True
           TabOrder = 20
@@ -979,8 +1073,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           Width = 147
         end
         object chkServidor: TcxCheckBox
-          Left = 696
-          Top = 328
+          Left = 1016
+          Top = 148
           Caption = 'Tabela de servidor'
           Properties.ReadOnly = True
           TabOrder = 21
@@ -988,8 +1082,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           Width = 147
         end
         object chkDados: TcxCheckBox
-          Left = 696
-          Top = 360
+          Left = 1016
+          Top = 180
           Caption = 'Tabela de dados'
           Properties.ReadOnly = True
           TabOrder = 22
@@ -997,28 +1091,136 @@ object frmUpdateServidor: TfrmUpdateServidor
           Width = 147
         end
         object chkDatas: TcxCheckBox
-          Left = 696
-          Top = 392
+          Left = 1016
+          Top = 212
           Caption = 'Datas'
           Properties.ReadOnly = True
           TabOrder = 23
           Visible = False
           Width = 147
         end
+        object gbxPromocaoProcurador: TcxGroupBox
+          Left = 720
+          Top = 309
+          Caption = 'Promo'#231#227'o de procurador'
+          TabOrder = 24
+          Height = 108
+          Width = 392
+          object Label52: TLabel
+            Left = 98
+            Top = 20
+            Width = 134
+            Height = 13
+            Caption = 'Nomea'#231#227'o Categoria II'
+          end
+          object Label53: TLabel
+            Left = 80
+            Top = 40
+            Width = 149
+            Height = 13
+            Caption = 'Nomea'#231#227'o Subprocurador'
+          end
+          object txtDt_PromocaoCategoria2: TDBText
+            Left = 261
+            Top = 20
+            Width = 177
+            Height = 16
+            AutoSize = True
+            DataField = 'Dt_PromocaoCategoria2'
+            DataSource = frmReadServidor.dsPesquisa
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clNavy
+            Font.Height = -13
+            Font.Name = 'Verdana'
+            Font.Style = []
+            ParentFont = False
+          end
+          object txtDt_PromocaoSubProcurador: TDBText
+            Left = 261
+            Top = 40
+            Width = 202
+            Height = 16
+            AutoSize = True
+            DataField = 'Dt_PromocaoSubProcurador'
+            DataSource = frmReadServidor.dsPesquisa
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clNavy
+            Font.Height = -13
+            Font.Name = 'Verdana'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label54: TLabel
+            Left = 148
+            Top = 60
+            Width = 101
+            Height = 16
+            Caption = 'Averba'#231#227'o GDF'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Verdana'
+            Font.Style = []
+            ParentFont = False
+          end
+          object Label55: TLabel
+            Left = 15
+            Top = 76
+            Width = 232
+            Height = 16
+            Caption = 'Averba'#231#227'o Servi'#231'o P'#250'blico (U/E/M)'
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clWindowText
+            Font.Height = -13
+            Font.Name = 'Verdana'
+            Font.Style = []
+            ParentFont = False
+            WordWrap = True
+          end
+          object txtAverbacaoGDF: TDBText
+            Left = 261
+            Top = 60
+            Width = 115
+            Height = 16
+            AutoSize = True
+            DataField = 'AverbacaoGDF'
+            DataSource = frmReadServidor.dsPesquisa
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clNavy
+            Font.Height = -13
+            Font.Name = 'Verdana'
+            Font.Style = []
+            ParentFont = False
+          end
+          object txtAverbacaoServPublico: TDBText
+            Left = 261
+            Top = 76
+            Width = 165
+            Height = 16
+            AutoSize = True
+            DataField = 'AverbacaoServPublico'
+            DataSource = frmReadServidor.dsPesquisa
+            Font.Charset = ANSI_CHARSET
+            Font.Color = clNavy
+            Font.Height = -13
+            Font.Name = 'Verdana'
+            Font.Style = []
+            ParentFont = False
+          end
+        end
       end
     end
     object tshDadosPessoais: TcxTabSheet
       Caption = 'Dados Pessoais'
       ImageIndex = 1
-      object grpbxDados: TGroupBox
+      object gbxDados: TcxGroupBox
         Left = 0
         Top = 0
-        Width = 1528
-        Height = 548
         Align = alClient
-        Ctl3D = True
-        ParentCtl3D = False
+        Style.BorderStyle = ebsNone
         TabOrder = 0
+        Height = 548
+        Width = 1238
         object lblNaturalidade: TLabel
           Left = 61
           Top = 23
@@ -1034,7 +1236,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblPai: TLabel
           Left = 116
-          Top = 49
+          Top = 52
           Width = 17
           Height = 13
           Caption = 'Pai'
@@ -1047,7 +1249,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblEstadoCivil: TLabel
           Left = 66
-          Top = 101
+          Top = 110
           Width = 67
           Height = 13
           Caption = 'Estado Civil'
@@ -1060,7 +1262,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblCEP: TLabel
           Left = 110
-          Top = 231
+          Top = 255
           Width = 23
           Height = 13
           Caption = 'CEP'
@@ -1073,7 +1275,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblBairro: TLabel
           Left = 98
-          Top = 179
+          Top = 197
           Width = 35
           Height = 13
           Caption = 'Bairro'
@@ -1085,7 +1287,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblUF: TLabel
-          Left = 514
+          Left = 522
           Top = 23
           Width = 14
           Height = 13
@@ -1093,7 +1295,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblMae: TLabel
           Left = 110
-          Top = 75
+          Top = 81
           Width = 23
           Height = 13
           Caption = 'M'#227'e'
@@ -1106,7 +1308,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblConjuge: TLabel
           Left = 85
-          Top = 127
+          Top = 139
           Width = 48
           Height = 13
           Caption = 'C'#244'njuge'
@@ -1119,7 +1321,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblEndereco: TLabel
           Left = 80
-          Top = 153
+          Top = 168
           Width = 53
           Height = 13
           Caption = 'Endere'#231'o'
@@ -1132,7 +1334,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblCidade: TLabel
           Left = 93
-          Top = 205
+          Top = 226
           Width = 40
           Height = 13
           Caption = 'Cidade'
@@ -1144,15 +1346,15 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblUFEndereco: TLabel
-          Left = 512
-          Top = 202
+          Left = 520
+          Top = 223
           Width = 14
           Height = 13
           Caption = 'UF'
         end
         object lblGrauInstrucao: TLabel
           Left = 30
-          Top = 257
+          Top = 313
           Width = 104
           Height = 13
           Caption = 'Grau de Instru'#231#227'o'
@@ -1164,8 +1366,8 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblCurso: TLabel
-          Left = 326
-          Top = 257
+          Left = 100
+          Top = 342
           Width = 34
           Height = 13
           Caption = 'Curso'
@@ -1177,15 +1379,15 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object lblTipoSanguineo: TLabel
-          Left = 438
-          Top = 101
+          Left = 446
+          Top = 110
           Width = 88
           Height = 13
           Caption = 'Tipo Sang'#252#237'neo'
         end
         object lblEmail: TLabel
-          Left = 323
-          Top = 231
+          Left = 97
+          Top = 284
           Width = 36
           Height = 13
           Caption = 'E-mail'
@@ -1197,22 +1399,41 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object edtNaturalidade: TcxTextEdit
-          Left = 141
+          Left = 149
           Top = 19
+          ParentFont = False
+          Properties.OnChange = edtNaturalidadePropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 0
           Text = 'edtNaturalidade'
-          Width = 200
+          OnExit = edtNaturalidadeExit
+          OnKeyPress = edtNaturalidadeKeyPress
+          Width = 300
         end
         object cbxNatural_UF: TcxComboBox
-          Left = 536
+          Left = 544
           Top = 19
+          ParentFont = False
+          Properties.OnChange = cbxNatural_UFPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 1
           Text = 'cbxNatural_UF'
           Width = 63
         end
         object cbxTipoSanguineo: TcxComboBox
-          Left = 534
-          Top = 97
+          Left = 542
+          Top = 106
+          ParentFont = False
           Properties.Items.Strings = (
             'A+'
             'A-'
@@ -1222,76 +1443,147 @@ object frmUpdateServidor: TfrmUpdateServidor
             'AB-'
             'O+'
             'O-')
+          Properties.OnChange = cbxTipoSanguineoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 5
           Text = 'cbxTipoSanguineo'
           Width = 65
         end
         object cbxEnderecoUF: TcxComboBox
-          Left = 534
-          Top = 198
+          Left = 542
+          Top = 219
+          ParentFont = False
+          Properties.OnChange = cbxEnderecoUFPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 10
           Text = 'cbxEnderecoUF'
           Width = 65
         end
         object edtPai: TcxTextEdit
-          Left = 141
-          Top = 45
+          Left = 149
+          Top = 48
+          ParentFont = False
+          Properties.OnChange = edtPaiPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 2
           Text = 'edtPai'
+          OnKeyPress = edtPaiKeyPress
           Width = 458
         end
         object edtMae: TcxTextEdit
-          Left = 141
-          Top = 71
+          Left = 149
+          Top = 77
+          ParentFont = False
+          Properties.OnChange = edtMaePropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 3
           Text = 'edtMae'
+          OnKeyPress = edtMaeKeyPress
           Width = 458
         end
         object edtConjuge: TcxTextEdit
-          Left = 141
-          Top = 123
+          Left = 149
+          Top = 135
+          ParentFont = False
+          Properties.OnChange = edtConjugePropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 6
           Text = 'edtConjuge'
+          OnKeyPress = edtConjugeKeyPress
           Width = 458
         end
         object edtEndereco: TcxTextEdit
-          Left = 141
-          Top = 149
+          Left = 149
+          Top = 164
+          ParentFont = False
+          Properties.OnChange = edtEnderecoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 7
           Text = 'edtEndereco'
+          OnKeyPress = edtEnderecoKeyPress
           Width = 458
         end
         object edtBairro: TcxTextEdit
-          Left = 141
-          Top = 175
+          Left = 149
+          Top = 193
+          ParentFont = False
+          Properties.OnChange = edtBairroPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 8
           Text = 'edtBairro'
+          OnKeyPress = edtBairroKeyPress
           Width = 200
         end
         object edtCidade: TcxTextEdit
-          Left = 141
-          Top = 201
+          Left = 149
+          Top = 222
+          ParentFont = False
+          Properties.OnChange = edtCidadePropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 9
           Text = 'edtCidade'
-          Width = 200
-        end
-        object edtCEP: TcxTextEdit
-          Left = 141
-          Top = 227
-          TabOrder = 11
-          Text = 'edtCEP'
-          Width = 80
+          OnKeyPress = edtCidadeKeyPress
+          Width = 300
         end
         object edtEmail: TcxTextEdit
-          Left = 367
-          Top = 227
+          Left = 149
+          Top = 280
+          ParentFont = False
+          Properties.OnChange = edtEmailPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 12
           Text = 'edtEmail'
           Width = 232
         end
         object cbxGrauInstrucao: TcxComboBox
-          Left = 141
-          Top = 253
+          Left = 149
+          Top = 309
+          ParentFont = False
           Properties.Items.Strings = (
             '1'#186' GRAU COMPLETO'
             '1'#186' GRAU INCOMPLETO'
@@ -1300,44 +1592,86 @@ object frmUpdateServidor: TfrmUpdateServidor
             '3'#186' GRAU COMPLETO'
             '3'#186' GRAU INCOMPLETO'
             'NAO INFORMADO       ')
+          Properties.OnChange = cbxGrauInstrucaoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 13
           Text = 'cbxGrauInstrucao'
-          Width = 162
+          Width = 180
         end
         object lkpEstadoCivil: TcxLookupComboBox
-          Left = 141
-          Top = 97
+          Left = 149
+          Top = 106
+          ParentFont = False
           Properties.KeyFieldNames = 'idEstadoCivil'
           Properties.ListColumns = <
             item
               FieldName = 'Descricao'
             end>
+          Properties.ListSource = dmCadastroServidor.dsEstadoCivil
+          Properties.OnChange = lkpEstadoCivilPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 4
-          Width = 145
+          Width = 200
         end
         object lkpCurso: TcxLookupComboBox
-          Left = 367
-          Top = 253
-          Properties.KeyFieldNames = 'idCurso'
+          Left = 149
+          Top = 338
+          ParentFont = False
+          Properties.KeyFieldNames = 'Descricao'
           Properties.ListColumns = <
             item
               FieldName = 'Descricao'
             end>
+          Properties.ListSource = dmCadastroServidor.dsCurso
+          Properties.OnChange = lkpCursoPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 14
-          Width = 232
+          Width = 400
+        end
+        object edtCEP: TcxMaskEdit
+          Left = 150
+          Top = 251
+          ParentFont = False
+          Properties.EditMask = '00\.000\-000;0;_'
+          Properties.MaxLength = 0
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 11
+          Text = '        '
+          Width = 121
         end
       end
     end
     object tshDocumentos: TcxTabSheet
       Caption = 'Documentos'
       ImageIndex = 2
-      object grpbxDocum: TGroupBox
+      object gbxDocumentos: TcxGroupBox
         Left = 0
         Top = 0
-        Width = 1528
-        Height = 548
         Align = alClient
+        Style.BorderStyle = ebsNone
         TabOrder = 0
+        Height = 548
+        Width = 1238
         object lblRG: TLabel
           Left = 85
           Top = 20
@@ -1347,193 +1681,306 @@ object frmUpdateServidor: TfrmUpdateServidor
         end
         object lblTitulo: TLabel
           Left = 13
-          Top = 45
+          Top = 49
           Width = 89
           Height = 13
           Caption = 'T'#237'tulo de eleitor'
         end
         object lblCI_UF: TLabel
-          Left = 481
+          Left = 489
           Top = 20
           Width = 63
           Height = 13
           Caption = #211'rg'#227'o/SSP'
         end
         object lblCI_Emissao: TLabel
-          Left = 252
+          Left = 260
           Top = 20
           Width = 69
           Height = 13
           Caption = 'RG/Emiss'#227'o'
         end
         object lblZona: TLabel
-          Left = 292
-          Top = 45
+          Left = 300
+          Top = 49
           Width = 29
           Height = 13
           Caption = 'Zona'
         end
         object lblSecao: TLabel
-          Left = 509
-          Top = 46
+          Left = 517
+          Top = 50
           Width = 35
           Height = 13
           Caption = 'Se'#231#227'o'
         end
         object lblTE_UF: TLabel
           Left = 61
-          Top = 70
+          Top = 78
           Width = 41
           Height = 13
           Caption = 'TE - UF'
         end
         object lblTE_Emissao: TLabel
-          Left = 247
-          Top = 70
+          Left = 255
+          Top = 78
           Width = 74
           Height = 13
           Caption = 'TE - Emiss'#227'o'
         end
         object lblPis_Pasep: TLabel
           Left = 40
-          Top = 95
+          Top = 107
           Width = 62
           Height = 13
           Caption = 'PIS/PASEP'
         end
         object lblBanco: TLabel
           Left = 66
-          Top = 119
+          Top = 135
           Width = 35
           Height = 13
           Caption = 'Banco'
         end
         object lblAgencia: TLabel
           Left = 57
-          Top = 148
+          Top = 197
           Width = 45
           Height = 13
           Caption = 'Ag'#234'ncia'
         end
         object lblConta: TLabel
-          Left = 286
-          Top = 148
+          Left = 294
+          Top = 197
           Width = 34
           Height = 13
           Caption = 'Conta'
         end
         object lblOAB: TLabel
           Left = 77
-          Top = 173
+          Top = 225
           Width = 25
           Height = 13
           Caption = 'OAB'
         end
         object lblOAB_Secao: TLabel
-          Left = 285
-          Top = 174
+          Left = 293
+          Top = 226
           Width = 35
           Height = 13
           Caption = 'Se'#231#227'o'
         end
+        object Label43: TLabel
+          Left = 121
+          Top = 159
+          Width = 292
+          Height = 13
+          Caption = 'Por padr'#227'o o banco ser'#225' o BRB - Banco de Bras'#237'lia'
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clGray
+          Font.Height = -11
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
+        end
         object edtCI_Num: TcxTextEdit
-          Left = 109
+          Left = 117
           Top = 16
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 0
           Text = 'edtCI_Num'
           Width = 121
         end
         object cbxCI_UF: TcxComboBox
-          Left = 552
+          Left = 560
           Top = 16
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 2
           Text = 'cbxCI_UF'
           Width = 65
         end
         object cbxTE_UF: TcxComboBox
-          Left = 109
-          Top = 66
+          Left = 117
+          Top = 74
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 6
           Text = 'cbxTE_UF'
           Width = 121
         end
         object edtTE_Num: TcxTextEdit
-          Left = 109
-          Top = 41
+          Left = 117
+          Top = 45
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 3
           Text = 'edtTE_Num'
           Width = 121
         end
         object edtTE_Zona: TcxTextEdit
-          Left = 328
-          Top = 41
+          Left = 336
+          Top = 45
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 4
           Text = 'edtTE_Zona'
           Width = 121
         end
         object edtTE_Secao: TcxTextEdit
-          Left = 552
-          Top = 42
+          Left = 560
+          Top = 46
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 5
           Text = 'edtTE_Secao'
           Width = 121
         end
         object edtPis_Pasep: TcxTextEdit
-          Left = 109
-          Top = 91
+          Left = 117
+          Top = 103
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 8
           Text = 'edtPis_Pasep'
           Width = 121
         end
         object edtAgencia: TcxTextEdit
-          Left = 109
-          Top = 144
+          Left = 117
+          Top = 193
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 10
           Text = 'edtAgencia'
           Width = 80
         end
         object edtConta: TcxTextEdit
-          Left = 328
-          Top = 144
+          Left = 336
+          Top = 193
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 11
           Text = 'edtConta'
           Width = 121
         end
         object edtOAB_Num: TcxTextEdit
-          Left = 109
-          Top = 170
+          Left = 117
+          Top = 222
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 12
           Text = 'edtOAB_Num'
           Width = 121
         end
         object edtOAB_Secao: TcxTextEdit
-          Left = 328
-          Top = 170
+          Left = 336
+          Top = 222
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 13
           Text = 'edtOAB_Secao'
           Width = 121
         end
         object lkpBanco: TcxLookupComboBox
-          Left = 109
-          Top = 116
-          Enabled = False
+          Left = 117
+          Top = 132
+          ParentFont = False
+          Properties.DropDownRows = 16
+          Properties.DropDownWidth = 450
           Properties.KeyFieldNames = 'idBanco'
           Properties.ListColumns = <
             item
               FieldName = 'Descricao'
             end>
+          Properties.ListSource = dmCadastroServidor.dsBanco
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 9
           Width = 340
         end
         object edtTE_Emissao: TcxDateEdit
-          Left = 328
-          Top = 66
+          Left = 336
+          Top = 74
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 7
           Width = 121
         end
         object edtCI_Emissao: TcxDateEdit
-          Left = 328
+          Left = 336
           Top = 16
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
           TabOrder = 1
           Width = 121
         end
@@ -1541,296 +1988,15 @@ object frmUpdateServidor: TfrmUpdateServidor
     end
     object tshTelefones: TcxTabSheet
       Caption = 'Telefones'
-      Enabled = False
       ImageIndex = 3
-      object grpbxTelefone: TGroupBox
+      object grdTelefones: TcxGrid
         Left = 0
-        Top = 0
-        Width = 1528
-        Height = 89
-        Align = alTop
-        TabOrder = 0
-        object lblTipo: TLabel
-          Left = 77
-          Top = 42
-          Width = 24
-          Height = 13
-          HelpContext = 11
-          Caption = 'Tipo'
-        end
-        object btnSelTipoTelefone: TSpeedButton
-          Left = 145
-          Top = 38
-          Width = 19
-          Height = 20
-          Caption = '...'
-          Enabled = False
-        end
-        object txtDesc_TipoTel: TDBText
-          Left = 171
-          Top = 42
-          Width = 78
-          Height = 13
-          AutoSize = True
-          DataField = 'Descricao'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clWindowText
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          ParentFont = False
-        end
-        object lblNumero: TLabel
-          Left = 56
-          Top = 16
-          Width = 45
-          Height = 13
-          Caption = 'N'#250'mero'
-        end
-        object btnGravarTel: TSpeedButton
-          Left = 306
-          Top = 17
-          Width = 36
-          Height = 36
-          Hint = 'Grava um novo telefone'
-          Enabled = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          Glyph.Data = {
-            66030000424D6603000000000000360000002800000010000000110000000100
-            18000000000030030000C30E0000C30E00000000000000000000BFBFBFBFBFBF
-            BFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF0000000000007F7F7F0000007F7F
-            7F7F7F7F000000000000BFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF
-            BFBF000000000000BFBFBF000000BFBFBFBFBFBF000000000000BFBFBFBFBFBF
-            BFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF000000000000BFBFBFBFBFBFBFBF
-            BFBFBFBF000000000000BFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF
-            BFBF000000000000000000000000000000000000000000000000000000000000
-            0000000000000000000000000000000000000000000000000000000000000000
-            00000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
-            FFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000000000FFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFF
-            FFFFFFFFFFFFFF000000000000FFFFFF000000000000FFFFFF000000000000BF
-            BFBF000000FF0000FF0000FF00000000FFFF0000FF0000000000000000FFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000BFBFBF0000FF0000
-            FF0000FFBFBFBFBFBFBF000000FFFFFF000000000000000000000000FFFFFF00
-            0000FFFFFF0000000000FF0000FF0000FF0000FF0000FFBFBFBF000000FFFFFF
-            FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FF0000FF0000FF0000
-            FF0000FF0000FF0000FF000000FFFFFF000000000000FFFFFF00000000000000
-            0000000000000000BFBFBF0000FF0000FF0000FFBFBFBFBFBFBF000000FFFFFF
-            FFFFFFFFFFFFFFFFFF000000FFFFFFFFFFFF000000BFBFBFBFBFBF0000FF0000
-            FF0000FFBFBFBFBFBFBF000000FFFFFF000000BFBFBFFFFFFF000000FFFFFF00
-            0000BFBFBFBFBFBF7F7F7F0000FF0000FF0000FFBFBFBFBFBFBF000000FFFFFF
-            FFFFFFFFFFFFFFFFFF000000000000BFBFBF0000FF0000FF0000FF0000FF0000
-            FFBFBFBFBFBFBFBFBFBF000000000000000000000000000000000000BFBFBFBF
-            BFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF
-            BFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBFBF
-            BFBFBFBFBFBFBFBFBFBF}
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object btnExcluir: TSpeedButton
-          Left = 414
-          Top = 17
-          Width = 36
-          Height = 36
-          Hint = 'Exclui um telefone'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          Glyph.Data = {
-            C6050000424DC605000000000000360400002800000014000000140000000100
-            0800000000009001000000000000000000000001000000000000000000000000
-            80000080000000808000800000008000800080800000C0C0C000C0DCC000F0CA
-            A6000020400000206000002080000020A0000020C0000020E000004000000040
-            20000040400000406000004080000040A0000040C0000040E000006000000060
-            20000060400000606000006080000060A0000060C0000060E000008000000080
-            20000080400000806000008080000080A0000080C0000080E00000A0000000A0
-            200000A0400000A0600000A0800000A0A00000A0C00000A0E00000C0000000C0
-            200000C0400000C0600000C0800000C0A00000C0C00000C0E00000E0000000E0
-            200000E0400000E0600000E0800000E0A00000E0C00000E0E000400000004000
-            20004000400040006000400080004000A0004000C0004000E000402000004020
-            20004020400040206000402080004020A0004020C0004020E000404000004040
-            20004040400040406000404080004040A0004040C0004040E000406000004060
-            20004060400040606000406080004060A0004060C0004060E000408000004080
-            20004080400040806000408080004080A0004080C0004080E00040A0000040A0
-            200040A0400040A0600040A0800040A0A00040A0C00040A0E00040C0000040C0
-            200040C0400040C0600040C0800040C0A00040C0C00040C0E00040E0000040E0
-            200040E0400040E0600040E0800040E0A00040E0C00040E0E000800000008000
-            20008000400080006000800080008000A0008000C0008000E000802000008020
-            20008020400080206000802080008020A0008020C0008020E000804000008040
-            20008040400080406000804080008040A0008040C0008040E000806000008060
-            20008060400080606000806080008060A0008060C0008060E000808000008080
-            20008080400080806000808080008080A0008080C0008080E00080A0000080A0
-            200080A0400080A0600080A0800080A0A00080A0C00080A0E00080C0000080C0
-            200080C0400080C0600080C0800080C0A00080C0C00080C0E00080E0000080E0
-            200080E0400080E0600080E0800080E0A00080E0C00080E0E000C0000000C000
-            2000C0004000C0006000C0008000C000A000C000C000C000E000C0200000C020
-            2000C0204000C0206000C0208000C020A000C020C000C020E000C0400000C040
-            2000C0404000C0406000C0408000C040A000C040C000C040E000C0600000C060
-            2000C0604000C0606000C0608000C060A000C060C000C060E000C0800000C080
-            2000C0804000C0806000C0808000C080A000C080C000C080E000C0A00000C0A0
-            2000C0A04000C0A06000C0A08000C0A0A000C0A0C000C0A0E000C0C00000C0C0
-            2000C0C04000C0C06000C0C08000C0C0A000F0FBFF00A4A0A000808080000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00FDFDFD495252
-            5B9BA4A45B52524A49494AFDFDFDFDFDFDFDF707F6FFFFFF0807A45B4952FDFD
-            FDFDFDFDFDFD5BF707F6FFF607F79B520049FDFDFDFDFDFDFDFD9BF707F6F607
-            A4A49B520049FDFDFDFDFDFDFDFD9BF707AD5B52000013530049FDFDFDFDFDFD
-            FDFD9BF7FBBFA452000A2F2F0049FDFDFDFDFDFDFDFD9B77FBBF0752005C2F27
-            1449FDFDFDFDFDFDFDFD9B37FBBFF66D032E2F272748FDFDFDFDFDFDFDFD9B25
-            37B6F6641B2F1D1D1D49FDFDFDFDFDFDFDFDA4000A52AD7F370A00000052FDFD
-            FDFDFDFDFDFDA400495B9B3F370000000052FDFDFDFDFDFDFDFD9BF70052F7FB
-            FB1300000049FDFDFDFDFDFDFDFD9BF79B5BF6FBFB2E00490049FDFDFDFDFDFD
-            FDFD9BF70707FFBF7F6E5B520049FDFDFDFDFDFDFDFDA30708FFFFFF07F7A452
-            0052FDFDFDFDFDFDFD00000049525B5B52494900004949FDFDFDFDFDFD4A9BF7
-            07F6F6FFA4F79B52004A52FDFDFDFDFDFDFDA40708F6F6F60707A49B5B52FDFD
-            FDFDFDFDFDFDFDFDFD5B07FFF6F752FDFDFDFDFDFDFDFDFDFDFDFDFDFDFD0052
-            4900FDFDFDFDFDFDFDFD}
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object btnEditarTel: TSpeedButton
-          Left = 342
-          Top = 17
-          Width = 36
-          Height = 36
-          Hint = 'Altera um telefone'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            04000000000000010000120B0000120B00001000000000000000000000000000
-            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333000000
-            000033333377777777773333330FFFFFFFF03FF3FF7FF33F3FF700300000FF0F
-            00F077F777773F737737E00BFBFB0FFFFFF07773333F7F3333F7E0BFBF000FFF
-            F0F077F3337773F3F737E0FBFBFBF0F00FF077F3333FF7F77F37E0BFBF00000B
-            0FF077F3337777737337E0FBFBFBFBF0FFF077F33FFFFFF73337E0BF0000000F
-            FFF077FF777777733FF7000BFB00B0FF00F07773FF77373377373330000B0FFF
-            FFF03337777373333FF7333330B0FFFF00003333373733FF777733330B0FF00F
-            0FF03333737F37737F373330B00FFFFF0F033337F77F33337F733309030FFFFF
-            00333377737FFFFF773333303300000003333337337777777333}
-          NumGlyphs = 2
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object btnInserirTel: TSpeedButton
-          Left = 270
-          Top = 17
-          Width = 36
-          Height = 36
-          Hint = 'Novo telefone'
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          Glyph.Data = {
-            96010000424D9601000000000000760000002800000018000000180000000100
-            0400000000002001000000000000000000001000000000000000000000000000
-            BF0000BF000000BFBF00BF000000BF00BF00BFBF0000C0C0C000808080000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-            3333333333333333333333333333333333333333333333333B3333333B333333
-            B33333333B333333B33333333BB33888BB8888BB3333333333B00000000000B3
-            333333333330FFFFFFFFF083333333333330FFFFFFFFF083333333333330FFFF
-            FFFFF083333333333330FFFFFFFFF083333333333330FFFFFFFFF08333333333
-            3BB0FFFFFFFFF0833333333BB330FFFFFFFFF0BB333333333330FFFFFF777033
-            BB3333333330FFFFF0000033333333333330FFFFF0FF0333333333333330FFFF
-            F0F0B333333333333330FFFFF003BB333333333333B0000000333BB333333333
-            3BB33333BB3333BB33333333B3333333B3333333B33333333333333333333333
-            3333333333333333333333333333333333333333333333333333}
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object btnCancelarTel: TSpeedButton
-          Left = 378
-          Top = 17
-          Width = 36
-          Height = 36
-          Hint = 'Desfaz as altera'#231#245'es'
-          Enabled = False
-          Font.Charset = DEFAULT_CHARSET
-          Font.Color = clNavy
-          Font.Height = -11
-          Font.Name = 'MS Sans Serif'
-          Font.Style = []
-          Glyph.Data = {
-            76010000424D7601000000000000760000002800000020000000100000000100
-            04000000000000010000130B0000130B00001000000000000000000000000000
-            800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-            FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
-            3333333333FFFFF3333333333999993333333333F77777FFF333333999999999
-            3333333777333777FF3333993333339993333377FF3333377FF3399993333339
-            993337777FF3333377F3393999333333993337F777FF333337FF993399933333
-            399377F3777FF333377F993339993333399377F33777FF33377F993333999333
-            399377F333777FF3377F993333399933399377F3333777FF377F993333339993
-            399377FF3333777FF7733993333339993933373FF3333777F7F3399933333399
-            99333773FF3333777733339993333339933333773FFFFFF77333333999999999
-            3333333777333777333333333999993333333333377777333333}
-          NumGlyphs = 2
-          ParentFont = False
-          ParentShowHint = False
-          ShowHint = True
-        end
-        object edtTipoTel: TDBEdit
-          Left = 111
-          Top = 39
-          Width = 34
-          Height = 19
-          Ctl3D = False
-          DataField = 'idtelefone'
-          Enabled = False
-          Font.Charset = ANSI_CHARSET
-          Font.Color = clGray
-          Font.Height = -11
-          Font.Name = 'Verdana'
-          Font.Style = []
-          ParentCtl3D = False
-          ParentFont = False
-          ReadOnly = True
-          TabOrder = 1
-        end
-        object edtNumero: TDBEdit
-          Left = 111
-          Top = 14
-          Width = 106
-          Height = 19
-          CharCase = ecUpperCase
-          Ctl3D = False
-          DataField = 'numero'
-          Enabled = False
-          ParentCtl3D = False
-          TabOrder = 0
-        end
-      end
-      object SplitterDocumentos: TcxSplitter
-        Left = 0
-        Top = 89
-        Width = 8
-        Height = 8
-        HotZoneClassName = 'TcxXPTaskBarStyle'
-        AlignSplitter = salTop
-        Control = grpbxTelefone
-      end
-      object cxGrid4: TcxGrid
-        Left = 0
-        Top = 97
-        Width = 1528
-        Height = 451
+        Top = 59
+        Width = 1238
+        Height = 489
         Align = alClient
-        TabOrder = 2
-        object cxGrid4DBTableView1: TcxGridDBTableView
+        TabOrder = 0
+        object grdTelefonesDBTableView1: TcxGridDBTableView
           NavigatorButtons.ConfirmDelete = False
           DataController.DataSource = frmReadServidor.dsTelefonesServidor
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -1840,18 +2006,116 @@ object frmUpdateServidor: TfrmUpdateServidor
           OptionsData.Editing = False
           OptionsData.Inserting = False
           OptionsView.GroupByBox = False
-          object cxGrid4DBTableView1Column1: TcxGridDBColumn
+          object grdTelefonesDBTableView1Column1: TcxGridDBColumn
             Caption = 'N'#250'mero'
             DataBinding.FieldName = 'Numero'
             Width = 100
           end
-          object cxGrid4DBTableView1Column2: TcxGridDBColumn
+          object grdTelefonesDBTableView1Column2: TcxGridDBColumn
             DataBinding.FieldName = 'Tipo'
             Width = 250
           end
         end
-        object cxGrid4Level1: TcxGridLevel
-          GridView = cxGrid4DBTableView1
+        object lvlTelefones: TcxGridLevel
+          GridView = grdTelefonesDBTableView1
+        end
+      end
+      object gbxCRUDTelefones: TcxGroupBox
+        Left = 0
+        Top = 0
+        Align = alTop
+        Style.BorderStyle = ebsNone
+        TabOrder = 1
+        Height = 59
+        Width = 1238
+        object btnIncluirTelefone: TcxButton
+          Left = 10
+          Top = 11
+          Width = 120
+          Height = 35
+          Caption = 'Incluir telefone'
+          TabOrder = 0
+          OnClick = btnIncluirTelefoneClick
+          Glyph.Data = {
+            42040000424D4204000000000000420000002800000010000000100000000100
+            20000300000000040000000000000000000000000000000000000000FF0000FF
+            0000FF000000000000000000000000000049000000E3000000FF000000FF0000
+            00FF000000FF000000FF000000FF000000FF000000FF000000E2000000480000
+            0000000000000000000000000000000000E30000003C00000000000000000000
+            000000000000000000000000000000000000000000000000003D000000E20000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000FF0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            00000000000000000000000000010000005B0000008800000088000000AE0000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            000000000000000000000000005C000000FF000000FF000000DF000000200000
+            0000000000000000000000000000000000FF0000000000000000000000000000
+            0000000000000000000000000080000000FF000000E100000022000000000000
+            0000000000000000000000000000000000E30000003A00000000000000000000
+            0000000000000000000000000080000000E10000002200000000000000000000
+            00000000000000000000000000000000004B000000E4000000FF000000FF0000
+            00FF000000FF000000FF000000B1000000220000000000000000000000000000
+            000000000000}
+        end
+        object btnEditarTelefone: TcxButton
+          Left = 145
+          Top = 11
+          Width = 120
+          Height = 35
+          Caption = 'Editar telefone'
+          TabOrder = 1
+          Glyph.Data = {
+            42040000424D4204000000000000420000002800000010000000100000000100
+            20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
+            0000FF000000000000DE000000A30000003D0000000000000000000000000000
+            0000000000000000000000000000000000000000000000000000000000000000
+            000000000000000000A3000000C7000000D6000000D600000070000000120000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0000000000000000003D000000D5000000010000003D000000A3000000EC0000
+            0040000000000000000000000000000000000000000000000000000000000000
+            00000000000000000000000000D60000003D0000000000000000000000EF0000
+            00F5000000400000000000000000000000000000000000000000000000000000
+            0000000000000000000000000070000000A300000000000000EC000000EC0000
+            0040000000EA0000004000000000000000000000000000000000000000000000
+            0000000000000000000000000012000000EC000000EF000000EC000000000000
+            000000000040000000EA00000040000000000000000000000000000000000000
+            000000000000000000000000000000000040000000F500000040000000000000
+            00000000000000000040000000EA000000400000000000000000000000000000
+            0000000000000000000000000000000000000000003D000000E9000000420000
+            000000000000000000000000003C000000E90000004200000000000000000000
+            000000000000000000000000000000000000000000000000003D000000E90000
+            00420000000000000000000000000000003C000000E900000042000000000000
+            00000000000000000000000000000000000000000000000000000000003D0000
+            00E9000000420000000000000000000000000000003C000000E9000000420000
+            0000000000000000000000000000000000000000000000000000000000000000
+            0040000000EA0000004000000000000000000000000000000074000000F50000
+            0040000000000000000000000000000000000000000000000000000000000000
+            000000000040000000EA000000400000000000000040000000E9000000740000
+            00EA000000400000000000000000000000000000000000000000000000000000
+            00000000000000000040000000EA00000074000000E900000040000000000000
+            0074000000E20000000000000000000000000000000000000000000000000000
+            0000000000000000000000000040000000F50000007400000000000000400000
+            00EA000000400000000000000000000000000000000000000000000000000000
+            000000000000000000000000000000000040000000EA00000074000000EA0000
+            0040000000000000000000000000000000000000000000000000000000000000
+            00000000000000000000000000000000000000000040000000E3000000400000
+            000000000000}
         end
       end
     end
@@ -1864,6 +2128,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         Align = alTop
         Caption = 'Fun'#231#227'o atual'
         ParentFont = False
+        Style.BorderStyle = ebsNone
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clWindowText
         Style.Font.Height = -13
@@ -1872,7 +2137,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         Style.IsFontAssigned = True
         TabOrder = 0
         Height = 201
-        Width = 1528
+        Width = 1238
         object txtidFuncao: TDBText
           Left = 805
           Top = 48
@@ -2114,7 +2379,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object btnDesligarFuncao: TcxButton
-          Left = 125
+          Left = 135
           Top = 149
           Width = 139
           Height = 35
@@ -2232,7 +2497,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           OnClick = Button1Click
         end
         object btnEditarHistorico: TcxButton
-          Left = 504
+          Left = 544
           Top = 149
           Width = 184
           Height = 35
@@ -2283,7 +2548,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnExcluirFuncao: TcxButton
-          Left = 386
+          Left = 416
           Top = 149
           Width = 113
           Height = 35
@@ -2335,7 +2600,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnEditarFuncao: TcxButton
-          Left = 269
+          Left = 289
           Top = 149
           Width = 112
           Height = 35
@@ -2391,15 +2656,22 @@ object frmUpdateServidor: TfrmUpdateServidor
         Top = 201
         Align = alClient
         Caption = 'Hist'#243'rico de fun'#231#245'es'
+        Style.BorderStyle = ebsNone
         TabOrder = 1
         Height = 347
-        Width = 1528
+        Width = 1238
         object grdHistoricoFuncoes: TcxGrid
           Left = 2
           Top = 145
-          Width = 1524
+          Width = 1234
           Height = 200
           Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
           object tbvHistoricoFuncoes: TcxGridDBTableView
             NavigatorButtons.ConfirmDelete = False
@@ -2449,14 +2721,14 @@ object frmUpdateServidor: TfrmUpdateServidor
               DataBinding.FieldName = 'Observacao'
             end
           end
-          object cxGridLevel3: TcxGridLevel
+          object lvlHstoricoFuncoes: TcxGridLevel
             GridView = tbvHistoricoFuncoes
           end
         end
         object Panel1: TPanel
           Left = 2
           Top = 18
-          Width = 1524
+          Width = 1234
           Height = 127
           Align = alTop
           BevelOuter = bvNone
@@ -2686,14 +2958,15 @@ object frmUpdateServidor: TfrmUpdateServidor
     object tshLotacoes: TcxTabSheet
       Caption = 'Lota'#231#245'es'
       ImageIndex = 8
-      object cxGroupBox8: TcxGroupBox
+      object gbxCRUDLotacoes: TcxGroupBox
         Left = 0
         Top = 0
         Align = alTop
         Caption = 'Lota'#231#227'o atual'
+        Style.BorderStyle = ebsNone
         TabOrder = 0
         Height = 100
-        Width = 1528
+        Width = 1238
         object txtDescricaoLotacao: TDBText
           Left = 40
           Top = 20
@@ -2770,22 +3043,29 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
       end
-      object cxGroupBox11: TcxGroupBox
+      object gbxHistoricoLotacoes: TcxGroupBox
         Left = 0
         Top = 100
         Align = alClient
         Caption = 'Hist'#243'rico de lota'#231#245'es'
+        Style.BorderStyle = ebsNone
         TabOrder = 1
         Height = 448
-        Width = 1528
-        object cxGrid5: TcxGrid
+        Width = 1238
+        object grdHistoricoLotacoes: TcxGrid
           Left = 2
           Top = 127
-          Width = 1524
+          Width = 1234
           Height = 319
           Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
-          object cxGridDBTableView5: TcxGridDBTableView
+          object tbvHistoricoLotacoes: TcxGridDBTableView
             NavigatorButtons.ConfirmDelete = False
             DataController.DataSource = frmReadServidor.dsHistoricoLotacoes
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -2806,14 +3086,14 @@ object frmUpdateServidor: TfrmUpdateServidor
               Width = 150
             end
           end
-          object cxGridLevel5: TcxGridLevel
-            GridView = cxGridDBTableView5
+          object lblHistoricoLotacoes: TcxGridLevel
+            GridView = tbvHistoricoLotacoes
           end
         end
-        object Panel3: TPanel
+        object pnlHistoricoLotacoes: TPanel
           Left = 2
           Top = 18
-          Width = 1524
+          Width = 1234
           Height = 109
           Align = alTop
           BevelOuter = bvNone
@@ -2907,12 +3187,13 @@ object frmUpdateServidor: TfrmUpdateServidor
     object tshExercicioExterno: TcxTabSheet
       Caption = 'Exerc'#237'cio externo'
       ImageIndex = 9
-      object cxGroupBox9: TcxGroupBox
+      object gbxCRUDExercicioExterno: TcxGroupBox
         Left = 0
         Top = 0
         Align = alTop
         Caption = 'Exerc'#237'cio externo atual'
         ParentFont = False
+        Style.BorderStyle = ebsNone
         Style.Font.Charset = ANSI_CHARSET
         Style.Font.Color = clBlack
         Style.Font.Height = -11
@@ -2921,7 +3202,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         Style.IsFontAssigned = True
         TabOrder = 0
         Height = 145
-        Width = 1528
+        Width = 1238
         object Label29: TLabel
           Left = 15
           Top = 24
@@ -3054,7 +3335,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           ParentFont = False
         end
         object btnDesligarExercicioExterno: TcxButton
-          Left = 141
+          Left = 152
           Top = 93
           Width = 159
           Height = 35
@@ -3144,7 +3425,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnEditarHistoricoEE: TcxButton
-          Left = 304
+          Left = 326
           Top = 93
           Width = 205
           Height = 35
@@ -3189,22 +3470,29 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
       end
-      object cxGroupBox10: TcxGroupBox
+      object gbxHistoricoExercicioExterno: TcxGroupBox
         Left = 0
         Top = 145
         Align = alClient
         Caption = 'Hist'#243'rico de exerc'#237'cios externos'
+        Style.BorderStyle = ebsNone
         TabOrder = 1
         Height = 403
-        Width = 1528
-        object grdFerias: TcxGrid
+        Width = 1238
+        object grdExercicioExterno: TcxGrid
           Left = 2
           Top = 79
-          Width = 1524
+          Width = 1234
           Height = 322
           Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
-          object cxGridDBTableView4: TcxGridDBTableView
+          object tbvExercicioExterno: TcxGridDBTableView
             NavigatorButtons.ConfirmDelete = False
             DataController.DataSource = frmReadServidor.dsHistoricoExercicioExterno
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -3234,19 +3522,19 @@ object frmUpdateServidor: TfrmUpdateServidor
               DataBinding.FieldName = 'dt_Inicio'
               Width = 100
             end
-            object cxGridDBTableView4Column1: TcxGridDBColumn
+            object tbvExercicioExternoColumn1: TcxGridDBColumn
               Caption = 'T'#233'rmino'
               DataBinding.FieldName = 'dt_Termino'
             end
           end
-          object cxGridLevel4: TcxGridLevel
-            GridView = cxGridDBTableView4
+          object lvlExercicioExterno: TcxGridLevel
+            GridView = tbvExercicioExterno
           end
         end
-        object Panel2: TPanel
+        object pnlHistoricoExercicioExterno: TPanel
           Left = 2
           Top = 18
-          Width = 1524
+          Width = 1234
           Height = 61
           Align = alTop
           BevelOuter = bvNone
@@ -3416,19 +3704,21 @@ object frmUpdateServidor: TfrmUpdateServidor
     object tshFerias: TcxTabSheet
       Caption = 'F'#233'rias'
       ImageIndex = 5
-      object cxGroupBox5: TcxGroupBox
+      OnShow = tshFeriasShow
+      object gbxFerias: TcxGroupBox
         Left = 0
-        Top = 61
+        Top = 65
         Align = alClient
         Caption = 'Rela'#231#227'o (ordem decrescente de exerc'#237'cio, per'#237'odo e parcela)'
+        Style.BorderStyle = ebsNone
         TabOrder = 0
-        Height = 487
-        Width = 1528
-        object cxGrid6: TcxGrid
+        Height = 483
+        Width = 1238
+        object grdFerias: TcxGrid
           Left = 2
           Top = 18
-          Width = 1524
-          Height = 467
+          Width = 1234
+          Height = 463
           Align = alClient
           Font.Charset = ANSI_CHARSET
           Font.Color = clWindowText
@@ -3437,7 +3727,7 @@ object frmUpdateServidor: TfrmUpdateServidor
           Font.Style = []
           ParentFont = False
           TabOrder = 0
-          object cxGridDBTableView6: TcxGridDBTableView
+          object tbvFerias: TcxGridDBTableView
             NavigatorButtons.ConfirmDelete = False
             DataController.DataSource = frmReadServidor.dsFeriasServidor
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -3498,19 +3788,19 @@ object frmUpdateServidor: TfrmUpdateServidor
               Width = 500
             end
           end
-          object cxGridLevel6: TcxGridLevel
-            GridView = cxGridDBTableView6
+          object lvlFerias: TcxGridLevel
+            GridView = tbvFerias
           end
         end
       end
-      object pnlBotoesFerias: TPanel
+      object gbxCRUDFerias: TcxGroupBox
         Left = 0
         Top = 0
-        Width = 1528
-        Height = 61
         Align = alTop
-        BevelOuter = bvNone
+        Style.BorderStyle = ebsNone
         TabOrder = 1
+        Height = 65
+        Width = 1238
         object btnIncluirFerias: TcxButton
           Left = 10
           Top = 11
@@ -3557,7 +3847,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnEditarFerias: TcxButton
-          Left = 135
+          Left = 145
           Top = 11
           Width = 120
           Height = 35
@@ -3602,12 +3892,11 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnExcluirFerias: TcxButton
-          Left = 260
+          Left = 280
           Top = 11
           Width = 120
           Height = 35
           Caption = 'Excluir f'#233'rias'
-          Enabled = False
           TabOrder = 2
           OnClick = btnExcluirFeriasClick
           Glyph.Data = {
@@ -3652,13 +3941,14 @@ object frmUpdateServidor: TfrmUpdateServidor
     object tshAbonos: TcxTabSheet
       Caption = 'Abono anual'
       ImageIndex = 6
-      object cxGroupBox2: TcxGroupBox
+      object gbxCRUDAbonoAnual: TcxGroupBox
         Left = 0
         Top = 0
         Align = alTop
+        Style.BorderStyle = ebsNone
         TabOrder = 0
         Height = 65
-        Width = 1528
+        Width = 1238
         object btnIncluirAbono: TcxButton
           Left = 10
           Top = 11
@@ -3704,15 +3994,14 @@ object frmUpdateServidor: TfrmUpdateServidor
             00FF000000FF000000FF000000B1000000220000000000000000000000000000
             000000000000}
         end
-        object cxButton2: TcxButton
-          Left = 135
+        object btnEditarAbono: TcxButton
+          Left = 145
           Top = 11
           Width = 120
           Height = 35
           Caption = 'Editar abonos'
-          Enabled = False
           TabOrder = 1
-          OnClick = btnEditarFeriasClick
+          OnClick = btnEditarAbonoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -3750,15 +4039,14 @@ object frmUpdateServidor: TfrmUpdateServidor
             00000000000000000000000000000000000000000040000000E3000000400000
             000000000000}
         end
-        object cxButton3: TcxButton
-          Left = 260
+        object btnExcluirAbono: TcxButton
+          Left = 280
           Top = 11
           Width = 120
           Height = 35
           Caption = 'Excluir abonos'
-          Enabled = False
           TabOrder = 2
-          OnClick = btnExcluirFeriasClick
+          OnClick = btnExcluirAbonoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -3801,13 +4089,14 @@ object frmUpdateServidor: TfrmUpdateServidor
         Left = 0
         Top = 65
         Align = alClient
+        Style.BorderStyle = ebsNone
         TabOrder = 1
         Height = 483
-        Width = 1528
+        Width = 1238
         object grdAbonoAnual: TcxGrid
           Left = 2
           Top = 18
-          Width = 1524
+          Width = 1234
           Height = 463
           Align = alClient
           Font.Charset = ANSI_CHARSET
@@ -3861,8 +4150,11 @@ object frmUpdateServidor: TfrmUpdateServidor
               Caption = 'Quinto dia'
               DataBinding.FieldName = 'Dt_5'
             end
+            object tbvAbonoAnualColumn1: TcxGridDBColumn
+              DataBinding.FieldName = 'ID'
+            end
           end
-          object grdFeriasLevel1: TcxGridLevel
+          object lvlAbonoAnual: TcxGridLevel
             GridView = tbvAbonoAnual
           end
         end
@@ -3871,13 +4163,14 @@ object frmUpdateServidor: TfrmUpdateServidor
     object tshAfastamentos: TcxTabSheet
       Caption = 'Afastamentos'
       ImageIndex = 7
-      object cxGroupBox4: TcxGroupBox
+      object gbxCRUDAfastamento: TcxGroupBox
         Left = 0
         Top = 0
         Align = alTop
+        Style.BorderStyle = ebsNone
         TabOrder = 0
         Height = 65
-        Width = 1528
+        Width = 1238
         object btnIncluirAfastamento: TcxButton
           Left = 10
           Top = 11
@@ -3924,7 +4217,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnEditarAfastamento: TcxButton
-          Left = 161
+          Left = 171
           Top = 11
           Width = 155
           Height = 35
@@ -3969,13 +4262,13 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object btnExcluirAfastamento: TcxButton
-          Left = 321
+          Left = 341
           Top = 11
           Width = 150
           Height = 35
           Caption = 'Excluir afastamento'
-          Enabled = False
           TabOrder = 2
+          OnClick = btnExcluirAfastamentoClick
           Glyph.Data = {
             42040000424D4204000000000000420000002800000010000000100000000100
             20000300000000040000C11E0000C11E000000000000000000000000FF0000FF
@@ -4018,17 +4311,24 @@ object frmUpdateServidor: TfrmUpdateServidor
         Left = 0
         Top = 65
         Align = alClient
+        Style.BorderStyle = ebsNone
         TabOrder = 1
         Height = 483
-        Width = 1528
-        object cxGrid2: TcxGrid
+        Width = 1238
+        object grdAfastamentos: TcxGrid
           Left = 2
           Top = 18
-          Width = 1524
+          Width = 1234
           Height = 463
           Align = alClient
+          Font.Charset = ANSI_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -13
+          Font.Name = 'Verdana'
+          Font.Style = []
+          ParentFont = False
           TabOrder = 0
-          object cxGridDBTableView2: TcxGridDBTableView
+          object tbvAfastamentos: TcxGridDBTableView
             NavigatorButtons.ConfirmDelete = False
             DataController.DataSource = frmReadServidor.dsAfastamentoServidor
             DataController.Summary.DefaultGroupSummaryItems = <>
@@ -4038,40 +4338,312 @@ object frmUpdateServidor: TfrmUpdateServidor
             OptionsData.Editing = False
             OptionsData.Inserting = False
             OptionsView.GroupByBox = False
-            object cxGridDBColumn8: TcxGridDBColumn
+            object tvcTipoAfastamento: TcxGridDBColumn
               Caption = 'Tipo de afastamento'
               DataBinding.FieldName = 'descricao'
-              Width = 300
+              Width = 400
             end
-            object cxGridDBColumn9: TcxGridDBColumn
+            object tvcDt_inicioAfastamento: TcxGridDBColumn
               Caption = 'In'#237'cio'
               DataBinding.FieldName = 'dt_inicio'
             end
-            object cxGridDBColumn10: TcxGridDBColumn
+            object tvcDt_TerminoAfastamento: TcxGridDBColumn
               Caption = 'T'#233'rmino'
               DataBinding.FieldName = 'dt_termino'
             end
-            object cxGridDBColumn11: TcxGridDBColumn
-              Caption = 'Exerc'#237'cio'
-              DataBinding.FieldName = 'idExercicio'
-            end
-            object cxGridDBColumn12: TcxGridDBColumn
-              Caption = 'C'#243'digo'
-              DataBinding.FieldName = 'Codigo'
-            end
-            object cxGridDBColumn14: TcxGridDBColumn
+            object tvcProcessoSEIAfastamento: TcxGridDBColumn
               Caption = 'Processo SEI'
               DataBinding.FieldName = 'nProcessoSEI'
               Width = 150
             end
-            object cxGridDBTableView2Column1: TcxGridDBColumn
+            object tbvObservacaoAfastamento: TcxGridDBColumn
               Caption = 'Observa'#231#227'o'
               DataBinding.FieldName = 'Observacao'
             end
+            object tvcIdExercicioAfastamento: TcxGridDBColumn
+              Caption = 'Exerc'#237'cio'
+              DataBinding.FieldName = 'idExercicio'
+            end
+            object tvcCodigoAfastamento: TcxGridDBColumn
+              Caption = 'C'#243'digo'
+              DataBinding.FieldName = 'Codigo'
+            end
+            object tbvIDAfastamento: TcxGridDBColumn
+              DataBinding.FieldName = 'ID'
+            end
           end
-          object cxGridLevel2: TcxGridLevel
-            GridView = cxGridDBTableView2
+          object lvlAfastamentos: TcxGridLevel
+            GridView = tbvAfastamentos
           end
+        end
+      end
+    end
+    object tshEstagio: TcxTabSheet
+      Caption = 'Est'#225'gio'
+      ImageIndex = 11
+      object gbxDadosEstagio: TcxGroupBox
+        Left = 0
+        Top = 0
+        Align = alClient
+        Style.BorderStyle = ebsNone
+        TabOrder = 0
+        Height = 548
+        Width = 1238
+        object Label14: TLabel
+          Left = 354
+          Top = 27
+          Width = 133
+          Height = 13
+          Caption = 'T'#233'rmino do 1'#186' contrato'
+        end
+        object Label18: TLabel
+          Left = 10
+          Top = 27
+          Width = 117
+          Height = 13
+          Caption = 'In'#237'cio do 1'#186' contrato'
+        end
+        object Label20: TLabel
+          Left = 10
+          Top = 56
+          Width = 117
+          Height = 13
+          Caption = 'In'#237'cio do 2'#186' contrato'
+        end
+        object Label21: TLabel
+          Left = 354
+          Top = 56
+          Width = 133
+          Height = 13
+          Caption = 'T'#233'rmino do 2'#186' contrato'
+        end
+        object Label31: TLabel
+          Left = 10
+          Top = 85
+          Width = 117
+          Height = 13
+          Caption = 'In'#237'cio do 3'#186' contrato'
+        end
+        object Label36: TLabel
+          Left = 354
+          Top = 85
+          Width = 133
+          Height = 13
+          Caption = 'T'#233'rmino do 3'#186' contrato'
+        end
+        object Label38: TLabel
+          Left = 10
+          Top = 114
+          Width = 117
+          Height = 13
+          Caption = 'In'#237'cio do 4'#186' contrato'
+        end
+        object Label41: TLabel
+          Left = 354
+          Top = 114
+          Width = 133
+          Height = 13
+          Caption = 'T'#233'rmino do 4'#186' contrato'
+        end
+        object Label45: TLabel
+          Left = 9
+          Top = 173
+          Width = 118
+          Height = 13
+          Caption = 'Institui'#231#227'o de ensino'
+        end
+        object Label47: TLabel
+          Left = 32
+          Top = 201
+          Width = 95
+          Height = 13
+          Caption = 'Turno do est'#225'gio'
+        end
+        object Label49: TLabel
+          Left = 72
+          Top = 229
+          Width = 55
+          Height = 13
+          Caption = 'Semestre'
+        end
+        object Label50: TLabel
+          Left = 59
+          Top = 252
+          Width = 68
+          Height = 13
+          Caption = 'Observa'#231#227'o'
+        end
+        object Label51: TLabel
+          Left = 65
+          Top = 144
+          Width = 62
+          Height = 13
+          Caption = 'Supervisor'
+        end
+        object edtSupervisor_Estagiario: TcxTextEdit
+          Left = 156
+          Top = 138
+          ParentFont = False
+          Properties.OnChange = edtSupervisor_EstagiarioPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 0
+          Width = 500
+        end
+        object edtDt_InicioContrato1_Estagiario: TcxDateEdit
+          Left = 156
+          Top = 21
+          ParentFont = False
+          Properties.OnChange = edtDt_InicioContrato1_EstagiarioPropertiesChange
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 1
+          Width = 121
+        end
+        object edtDt_InicioContrato2_Estagiario: TcxDateEdit
+          Left = 156
+          Top = 50
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 2
+          Width = 121
+        end
+        object edtDt_InicioContrato3_Estagiario: TcxDateEdit
+          Left = 156
+          Top = 79
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 3
+          Width = 121
+        end
+        object edtDt_InicioContrato4_Estagiario: TcxDateEdit
+          Left = 156
+          Top = 108
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 4
+          Width = 121
+        end
+        object edtDt_TerminoContrato1_Estagiario: TcxDateEdit
+          Left = 500
+          Top = 21
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 5
+          Width = 121
+        end
+        object edtDt_TerminoContrato2_Estagiario: TcxDateEdit
+          Left = 500
+          Top = 50
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 6
+          Width = 121
+        end
+        object edtDt_TerminoContrato3_Estagiario: TcxDateEdit
+          Left = 500
+          Top = 79
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 7
+          Width = 121
+        end
+        object edtDt_TerminoContrato4_Estagiario: TcxDateEdit
+          Left = 500
+          Top = 108
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 8
+          Width = 121
+        end
+        object edtInstituicaoEnsino: TcxTextEdit
+          Left = 156
+          Top = 167
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 9
+          Width = 500
+        end
+        object edtTurnoEstagio: TcxTextEdit
+          Left = 156
+          Top = 195
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 10
+          Width = 237
+        end
+        object edtSemestre: TcxTextEdit
+          Left = 156
+          Top = 223
+          ParentFont = False
+          Style.Font.Charset = ANSI_CHARSET
+          Style.Font.Color = clWindowText
+          Style.Font.Height = -13
+          Style.Font.Name = 'Verdana'
+          Style.Font.Style = []
+          Style.IsFontAssigned = True
+          TabOrder = 11
+          Width = 237
+        end
+        object mmoObservacao_Estagio: TcxMemo
+          Left = 156
+          Top = 252
+          TabOrder = 12
+          Height = 89
+          Width = 501
         end
       end
     end
@@ -4081,7 +4653,7 @@ object frmUpdateServidor: TfrmUpdateServidor
       object Panel4: TPanel
         Left = 0
         Top = 0
-        Width = 1528
+        Width = 1036
         Height = 61
         Align = alTop
         BevelOuter = bvNone
@@ -4132,7 +4704,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object cxButton5: TcxButton
-          Left = 167
+          Left = 176
           Top = 11
           Width = 120
           Height = 35
@@ -4177,7 +4749,7 @@ object frmUpdateServidor: TfrmUpdateServidor
             000000000000}
         end
         object cxButton6: TcxButton
-          Left = 292
+          Left = 311
           Top = 11
           Width = 120
           Height = 35
@@ -4225,9 +4797,9 @@ object frmUpdateServidor: TfrmUpdateServidor
       end
       object grdSubstituicoes: TcxGrid
         Left = 0
-        Top = 257
-        Width = 1528
-        Height = 327
+        Top = 196
+        Width = 1036
+        Height = 352
         Align = alClient
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -4236,7 +4808,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         Font.Style = []
         ParentFont = False
         TabOrder = 1
-        object tvSubstProcurador: TcxGridDBTableView
+        object tbvSubstituicoes: TcxGridDBTableView
           NavigatorButtons.ConfirmDelete = False
           DataController.DataSource = frmReadServidor.dsProcuradorSubstituido
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -4247,40 +4819,39 @@ object frmUpdateServidor: TfrmUpdateServidor
           OptionsCustomize.ColumnSorting = False
           OptionsSelection.MultiSelect = True
           OptionsView.GroupByBox = False
-          Styles.ContentEven = frmPrincipal.cxStyle1
-          object tvSubstProcuradorColumn1: TcxGridDBColumn
+          object tbvSubstituicoesColumn1: TcxGridDBColumn
             DataBinding.FieldName = 'Nome'
           end
-          object tvSubstProcuradorinicio: TcxGridDBColumn
+          object tbvSubstituicoesinicio: TcxGridDBColumn
             Caption = 'IN'#205'CIO'
             DataBinding.FieldName = 'dt_Inicio'
             Width = 183
           end
-          object tvSubstProcuradortermino: TcxGridDBColumn
+          object tbvSubstituicoestermino: TcxGridDBColumn
             Caption = 'T'#201'RMINO'
             DataBinding.FieldName = 'dt_Termino'
             Width = 226
           end
-          object tvSubstProcuradorndias: TcxGridDBColumn
+          object tbvSubstituicoesndias: TcxGridDBColumn
             Caption = 'N'#186' DE DIAS'
             DataBinding.FieldName = 'ndias'
             Width = 125
           end
-          object tvSubstProcuradornProcessoSEI: TcxGridDBColumn
+          object tbvSubstituicoesnProcessoSEI: TcxGridDBColumn
             Caption = 'N'#186' Processo SEI'
             DataBinding.FieldName = 'nProcessoSEI'
             Width = 160
           end
         end
-        object lvSubstProcurador: TcxGridLevel
-          GridView = tvSubstProcurador
+        object lvlSubstituicoes: TcxGridLevel
+          GridView = tbvSubstituicoes
         end
       end
-      object cxGrid7: TcxGrid
+      object grdResumoSubstituicoes: TcxGrid
         Left = 0
         Top = 61
-        Width = 1528
-        Height = 196
+        Width = 1036
+        Height = 135
         Align = alTop
         Font.Charset = ANSI_CHARSET
         Font.Color = clWindowText
@@ -4289,7 +4860,7 @@ object frmUpdateServidor: TfrmUpdateServidor
         Font.Style = []
         ParentFont = False
         TabOrder = 2
-        object cxGridDBTableView1: TcxGridDBTableView
+        object tbvResumoSubstituicoes: TcxGridDBTableView
           NavigatorButtons.ConfirmDelete = False
           DataController.DataSource = frmReadServidor.dsTotalDiasSubstituidos
           DataController.Summary.DefaultGroupSummaryItems = <>
@@ -4309,8 +4880,8 @@ object frmUpdateServidor: TfrmUpdateServidor
             Width = 157
           end
         end
-        object cxGridLevel1: TcxGridLevel
-          GridView = cxGridDBTableView1
+        object lvlResumoSubstituicoes: TcxGridLevel
+          GridView = tbvResumoSubstituicoes
         end
       end
     end
@@ -4318,7 +4889,7 @@ object frmUpdateServidor: TfrmUpdateServidor
   object StatusBar: TStatusBar
     Left = 0
     Top = 664
-    Width = 1528
+    Width = 1238
     Height = 19
     Panels = <
       item

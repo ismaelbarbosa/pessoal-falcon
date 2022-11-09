@@ -1,8 +1,8 @@
 object DMConexao: TDMConexao
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 540
-  Top = 195
+  Left = 635
+  Top = 244
   Height = 188
   Width = 389
   object conPessoal: TADOConnection

@@ -1,8 +1,8 @@
 object frmUpdateAfastamento: TfrmUpdateAfastamento
-  Left = 327
-  Top = 136
+  Left = 237
+  Top = 108
   Width = 787
-  Height = 502
+  Height = 620
   Caption = 'Lan'#231'amento de afastamentos'
   Color = clBtnFace
   Font.Charset = ANSI_CHARSET
@@ -14,6 +14,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
   OnActivate = FormActivate
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
+  OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13
   object pnlBotoes: TPanel
@@ -71,7 +72,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       ParentFont = False
     end
     object btnSair: TcxButton
-      Left = 145
+      Left = 132
       Top = 5
       Width = 110
       Height = 35
@@ -163,14 +164,15 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
   end
   object gbxLancamento: TcxGroupBox
     Left = 0
-    Top = 97
-    Align = alClient
+    Top = 107
+    Align = alTop
+    Style.BorderStyle = ebsNone
     TabOrder = 1
-    Height = 374
+    Height = 327
     Width = 779
     object Label5: TLabel
-      Left = 66
-      Top = 117
+      Left = 74
+      Top = 101
       Width = 35
       Height = 18
       Caption = 'Tipo'
@@ -182,7 +184,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       ParentFont = False
     end
     object Label1: TLabel
-      Left = 26
+      Left = 34
       Top = 28
       Width = 71
       Height = 18
@@ -195,7 +197,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       ParentFont = False
     end
     object lblNProcessoSEI: TLabel
-      Left = 136
+      Left = 130
       Top = 28
       Width = 132
       Height = 18
@@ -208,8 +210,8 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       ParentFont = False
     end
     object Label6: TLabel
-      Left = 56
-      Top = 150
+      Left = 64
+      Top = 134
       Width = 45
       Height = 18
       Caption = 'In'#237'cio'
@@ -221,8 +223,8 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       ParentFont = False
     end
     object Label3: TLabel
-      Left = 35
-      Top = 186
+      Left = 43
+      Top = 170
       Width = 66
       Height = 18
       Caption = 'T'#233'rmino'
@@ -235,7 +237,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
     end
     object lblObservacao1: TLabel
       Left = 34
-      Top = 239
+      Top = 215
       Width = 95
       Height = 18
       Caption = 'Observa'#231#227'o'
@@ -246,9 +248,22 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Font.Style = []
       ParentFont = False
     end
+    object lbl_ID: TLabel
+      Left = 712
+      Top = 32
+      Width = 34
+      Height = 13
+      Caption = 'lbl_ID'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
     object lkpTipoAfastamento: TcxLookupComboBox
-      Left = 121
-      Top = 114
+      Left = 130
+      Top = 98
       ParentFont = False
       Properties.DropDownRows = 10
       Properties.DropDownWidth = 800
@@ -264,7 +279,6 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
         item
           FieldName = 'Abreviatura'
         end>
-      Properties.ListSource = dmFeriasAbonoAfastamento.dsTipoAfastamento
       Style.BorderStyle = ebsUltraFlat
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
@@ -277,7 +291,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Width = 600
     end
     object edtExercicio: TcxTextEdit
-      Left = 26
+      Left = 34
       Top = 53
       ParentFont = False
       Properties.MaxLength = 4
@@ -292,7 +306,7 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Width = 81
     end
     object edtProcessoSEI: TcxMaskEdit
-      Left = 136
+      Left = 130
       Top = 53
       ParentFont = False
       Properties.EditMask = '00000-00000000/0000-00;0;_'
@@ -309,8 +323,8 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Width = 313
     end
     object edtDt_Termino: TcxDateEdit
-      Left = 122
-      Top = 180
+      Left = 130
+      Top = 164
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
@@ -319,11 +333,12 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 4
+      OnExit = edtDt_TerminoExit
       Width = 149
     end
     object edtDt_Inicio: TcxDateEdit
-      Left = 122
-      Top = 144
+      Left = 130
+      Top = 128
       ParentFont = False
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
@@ -332,11 +347,12 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Style.Font.Style = []
       Style.IsFontAssigned = True
       TabOrder = 3
+      OnExit = edtDt_InicioExit
       Width = 149
     end
     object mmoObservacao: TcxMemo
       Left = 34
-      Top = 261
+      Top = 237
       Lines.Strings = (
         '')
       ParentFont = False
@@ -349,15 +365,15 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
       Style.IsFontAssigned = True
       TabOrder = 5
       OnExit = mmoObservacaoExit
-      Height = 88
-      Width = 687
+      Height = 78
+      Width = 694
     end
   end
   object pnlNome: TPanel
     Left = 0
     Top = 40
     Width = 779
-    Height = 57
+    Height = 67
     Align = alTop
     BevelOuter = bvNone
     Font.Charset = ANSI_CHARSET
@@ -367,44 +383,121 @@ object frmUpdateAfastamento: TfrmUpdateAfastamento
     Font.Style = []
     ParentFont = False
     TabOrder = 2
-    object lblMatricula: TLabel
-      Left = 21
-      Top = 8
-      Width = 94
-      Height = 18
-      Caption = 'lblMatricula'
-      Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
-      Font.Name = 'Verdana'
-      Font.Style = []
-      ParentFont = False
-    end
     object lblNome: TLabel
-      Left = 140
-      Top = 8
-      Width = 67
-      Height = 18
+      Left = 23
+      Top = 10
+      Width = 87
+      Height = 25
       Caption = 'lblNome'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
+      Font.Color = clGray
+      Font.Height = -21
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
     object lblCargo: TLabel
-      Left = 21
-      Top = 33
-      Width = 67
-      Height = 18
+      Left = 23
+      Top = 42
+      Width = 52
+      Height = 16
       Caption = 'lblCargo'
       Font.Charset = ANSI_CHARSET
-      Font.Color = clNavy
-      Font.Height = -16
+      Font.Color = clGray
+      Font.Height = -13
       Font.Name = 'Verdana'
       Font.Style = []
       ParentFont = False
     end
+    object lblMatricula: TLabel
+      Left = 685
+      Top = 48
+      Width = 64
+      Height = 13
+      Caption = 'lblMatricula'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clGray
+      Font.Height = -11
+      Font.Name = 'Verdana'
+      Font.Style = []
+      ParentFont = False
+    end
+  end
+  object barStatus: TStatusBar
+    Left = 0
+    Top = 570
+    Width = 779
+    Height = 19
+    Panels = <
+      item
+        Width = 100
+      end
+      item
+        Width = 100
+      end
+      item
+        Width = 100
+      end
+      item
+        Width = 100
+      end
+      item
+        Width = 100
+      end>
+  end
+  object cxGroupBox1: TcxGroupBox
+    Left = 0
+    Top = 434
+    Align = alClient
+    Caption = 'Abonos, afastamentos e f'#233'rias concomitantes'
+    TabOrder = 4
+    Height = 136
+    Width = 779
+    object grdFAA: TcxGrid
+      Left = 2
+      Top = 18
+      Width = 775
+      Height = 116
+      Align = alClient
+      TabOrder = 0
+      object tbvFAA: TcxGridDBTableView
+        NavigatorButtons.ConfirmDelete = False
+        DataController.Summary.DefaultGroupSummaryItems = <>
+        DataController.Summary.FooterSummaryItems = <>
+        DataController.Summary.SummaryGroups = <>
+        OptionsData.Deleting = False
+        OptionsData.Editing = False
+        OptionsData.Inserting = False
+        OptionsView.GroupByBox = False
+        object tbcDt_Inicio: TcxGridDBColumn
+          Caption = 'Data de in'#237'cio'
+          DataBinding.FieldName = 'Dt_Inicio'
+        end
+        object tbcDt_Termino: TcxGridDBColumn
+          Caption = 'Data de t'#233'rmino'
+          DataBinding.FieldName = 'Dt_Termino'
+        end
+        object tbcTabela: TcxGridDBColumn
+          DataBinding.FieldName = 'Tabela'
+        end
+      end
+      object lvlFAA: TcxGridLevel
+        GridView = tbvFAA
+      end
+    end
+  end
+  object qryAfastamentoNoPeriodo: TADOQuery
+    Parameters = <>
+    Left = 576
+    Top = 16
+  end
+  object dsAfastamentoNoPeriodo: TDataSource
+    DataSet = qryAfastamentoNoPeriodo
+    Left = 608
+    Top = 16
+  end
+  object dsFeriasAfastamentosAbonos: TDataSource
+    Left = 648
+    Top = 16
   end
 end

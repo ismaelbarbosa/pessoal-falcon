@@ -185,6 +185,8 @@ begin
         RetornaData(2),
         'tbServidor, tbHist_ExercicioExterno',
         frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.lbl_IDP.Caption,
+        frmUpdateServidor.txtMatricula.Caption,
         'idOrgaoExercicioExterno',
         'Alteração do exercício externo'
         + ', Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -226,6 +228,8 @@ begin
               RetornaData(2),
               'tbHist_ExercicioExterno',
               frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.lbl_IDP.Caption,
+              frmUpdateServidor.txtMatricula.Caption,
               'dt_TerminoExercicioExterno',
               'Registrado histórico do exercício externo'
               + ', Matrícula: ' + frmUpdateServidor.txtMatricula.Caption
@@ -256,6 +260,8 @@ begin
             RetornaData(2),
             'tbServidor',
             frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.lbl_IDP.Caption,
+            frmUpdateServidor.txtMatricula.Caption,
             'TODOS',
             'Desligamento do exercício externo: '
             + 'Matrícula: ' + frmUpdateServidor.txtMatricula.Caption

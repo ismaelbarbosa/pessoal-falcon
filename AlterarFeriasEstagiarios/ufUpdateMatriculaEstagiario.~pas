@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
   StdCtrls, cxButtons, ExtCtrls, cxControls, cxContainer, cxEdit, DBCtrls,
-  cxTextEdit, cxDBEdit, ComCtrls;
+  cxTextEdit, cxDBEdit, ComCtrls, cxMemo, cxMaskEdit, cxDropDownEdit,
+  cxCalendar;
 
 type
   TEstadoEdicao = record
@@ -25,14 +26,15 @@ type
     Label2: TLabel;
     btnSair: TcxButton;
     btnGravar: TcxButton;
+    StatusBar: TStatusBar;
+    Button1: TButton;
+    pnlNome: TPanel;
     txtNome: TDBText;
     edtidServidor: TcxTextEdit;
-    StatusBar: TStatusBar;
     Label19: TLabel;
     lbl_IDS: TLabel;
     Label34: TLabel;
     lbl_IDP: TLabel;
-    Button1: TButton;
     procedure btnSairClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
     procedure edtIdServidorExit(Sender: TObject);
@@ -65,7 +67,7 @@ var
 implementation
 
 uses ufReadEstagiarios, PRG_utils, uPesFuncoes, ufCreateServidor,
-  uDmCadastroServidor, uDMConexao, ufLogs, uDMPessoal;
+  uDmCadastroServidor, uDMConexao, ufLogs, uDMPessoal, uDMEstagiario;
 
 {$R *.dfm}
 
@@ -95,8 +97,13 @@ begin
     NIDS := lbl_IDS.Caption;
     }
 
+    {
     NIDP := frmReadEstagiarios.qryPesquisa.FieldValues['idPessoal'];
     NIDS := frmReadEstagiarios.qryPesquisa.FieldValues['ID'];
+    }
+
+    NIDP := DMEstagiario.qryPesquisa.FieldValues['idPessoal'];
+    NIDS := DMEstagiario.qryPesquisa.FieldValues['ID'];
 
     {if alterarMatricula(NIDP, NIDS, edtidServidor.Text) then
     ShowMessage('OK');
@@ -113,7 +120,8 @@ begin
     Gera_SQL(RemoveIndesejadas('EST'), 'serv.idCargo');
 
     frmReadEstagiarios.lblNumeroRegistros.Caption := 'Nº de registros encontrados: ' +
-    IntToStr(frmReadEstagiarios.pesquisarEstagiarios(condicao));
+    IntToStr(DMEstagiario.pesquisarEstagiarios(condicao));
+//    IntToStr(frmReadEstagiarios.pesquisarEstagiarios(condicao));
 
     Close;
 
@@ -181,7 +189,8 @@ begin
       edtidServidor.Text := InserirZeros(edtidServidor.Text,10);
       Setlength(Pessoal, 3);
 
-      Pessoal := MatriculaCadastradaNoID(frmReadEstagiarios.qryPesquisa.FieldValues['idPessoal'],
+//      Pessoal := MatriculaCadastradaNoID(frmReadEstagiarios.qryPesquisa.FieldValues['idPessoal'],
+      Pessoal := MatriculaCadastradaNoID(DMEstagiario.qryPesquisa.FieldValues['idPessoal'],
       Trim(edtIdServidor.Text)
       );
 
@@ -250,7 +259,9 @@ end;
 
 function TfrmUpdateMatriculaEstagiario.carregarDados: boolean;
 begin
-  with frmReadEstagiarios.qryPesquisa do
+//  with frmReadEstagiarios.qryPesquisa do
+
+  with DMEstagiario.qryPesquisa do
   begin
     lbl_IDP.Caption         := FieldValues['idPessoal'];
     lbl_IDS.Caption         := FieldValues['ID'];
@@ -261,6 +272,111 @@ begin
 
     // Manter o valor do campo idServidor no registro EstadoEdicao
     EstadoEdicao.idServidor[0]  := edtidServidor.Text;
+
+    if FieldByName('Supervisor_Estagiario').IsNull
+    then edtSupervisor_Estagiario.Text := ''
+    else edtSupervisor_Estagiario.Text := Trim(FieldValues['Supervisor_Estagiario']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+//    EstadoEdicao.Supervisor_Estagiario[0]   := Trim(edtSupervisor_Estagiario.Text);
+
+
+
+    if FieldByName('Dt_InicioContrato1_Estagiario').IsNull
+    then edtDt_InicioContrato1_Estagiario.Text := ''
+    else edtDt_InicioContrato1_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato1_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato1_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_InicioContrato1_Estagiario[0]   := Trim(edtDt_InicioContrato1_Estagiario.Text);
+
+    if FieldByName('Dt_InicioContrato2_Estagiario').IsNull
+    then edtDt_InicioContrato2_Estagiario.Text := ''
+    else edtDt_InicioContrato2_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato2_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato2_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_InicioContrato2_Estagiario[0]   := Trim(edtDt_InicioContrato2_Estagiario.Text);
+
+    if FieldByName('Dt_InicioContrato3_Estagiario').IsNull
+    then edtDt_InicioContrato3_Estagiario.Text := ''
+    else edtDt_InicioContrato3_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato3_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato3_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_InicioContrato3_Estagiario[0]   := Trim(edtDt_InicioContrato3_Estagiario.Text);
+
+    if FieldByName('Dt_InicioContrato4_Estagiario').IsNull
+    then edtDt_InicioContrato4_Estagiario.Text := ''
+    else edtDt_InicioContrato4_Estagiario.Text := Trim(FieldValues['Dt_InicioContrato4_Estagiario']);
+
+    // Manter o valor do campo Dt_InicioContrato4_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_InicioContrato4_Estagiario[0]   := Trim(edtDt_InicioContrato4_Estagiario.Text);
+
+
+    if FieldByName('Dt_TerminoContrato1_Estagiario').IsNull
+    then edtDt_TerminoContrato1_Estagiario.Text := ''
+    else edtDt_TerminoContrato1_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato1_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato1_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_TerminoContrato1_Estagiario[0]   := Trim(edtDt_TerminoContrato1_Estagiario.Text);
+
+
+    if FieldByName('Dt_TerminoContrato2_Estagiario').IsNull
+    then edtDt_TerminoContrato2_Estagiario.Text := ''
+    else edtDt_TerminoContrato2_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato2_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato2_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_TerminoContrato2_Estagiario[0]   := Trim(edtDt_TerminoContrato2_Estagiario.Text);
+
+    if FieldByName('Dt_TerminoContrato3_Estagiario').IsNull
+    then edtDt_TerminoContrato3_Estagiario.Text := ''
+    else edtDt_TerminoContrato3_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato3_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato3_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_TerminoContrato3_Estagiario[0]   := Trim(edtDt_TerminoContrato3_Estagiario.Text);
+
+    if FieldByName('Dt_TerminoContrato4_Estagiario').IsNull
+    then edtDt_TerminoContrato4_Estagiario.Text := ''
+    else edtDt_TerminoContrato4_Estagiario.Text := Trim(FieldValues['Dt_TerminoContrato4_Estagiario']);
+
+    // Manter o valor do campo Dt_TerminoContrato4_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Dt_TerminoContrato4_Estagiario[0]   := Trim(edtDt_TerminoContrato4_Estagiario.Text);
+
+    if FieldByName('Supervisor_Estagiario').IsNull
+    then edtSupervisor_Estagiario.Text := ''
+    else edtSupervisor_Estagiario.Text := Trim(FieldValues['Supervisor_Estagiario']);
+
+    // Manter o valor do campo Supervisor_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.Supervisor_Estagiario[0]   := Trim(edtSupervisor_Estagiario.Text);
+
+    if FieldByName('InstituicaoEnsino').IsNull
+    then edtInstituicaoEnsino.Text := ''
+    else edtInstituicaoEnsino.Text := Trim(FieldValues['InstituicaoEnsino']);
+
+    // Manter o valor do campo Supervisor_Estagiario no registro EstadoEdicao
+//    EstadoEdicao.InstituicaoEnsino[0]   := Trim(edtInstituicaoEnsino.Text);
+
+
+    if FieldByName('TurnoEstagio').IsNull
+    then edtTurnoEstagio.Text := ''
+    else edtTurnoEstagio.Text := Trim(FieldValues['TurnoEstagio']);
+
+    // Manter o valor do campo TurnoEstagio no registro EstadoEdicao
+//    EstadoEdicao.TurnoEstagio[0]   := Trim(edtTurnoEstagio.Text);
+
+    if FieldByName('Semestre').IsNull
+    then edtSemestre.Text := ''
+    else edtSemestre.Text := Trim(FieldValues['Semestre']);
+
+    // Manter o valor do campo Semestre no registro EstadoEdicao
+//    EstadoEdicao.Semestre[0]   := Trim(edtSemestre.Text);
+
+    if FieldByName('Observacao').IsNull
+    then mmoObservacao_Estagio.Text := ''
+    else mmoObservacao_Estagio.Text := Trim(FieldValues['Observacao']);
+
+    // Manter o valor do campo <> no registro EstadoEdicao
+//    EstadoEdicao.observacao[0]   := Trim(mmoObservacao_Estagio.Text);
+
+
   end;
 
   SetarAlteracaoDesfeita;

@@ -1,7 +1,7 @@
 object frmUpdateFeriados: TfrmUpdateFeriados
   Left = 192
   Top = 117
-  Width = 617
+  Width = 649
   Height = 617
   Caption = 'Atualiza'#231#227'o de feriados e pontos facultativos'
   Color = clBtnFace
@@ -19,7 +19,7 @@ object frmUpdateFeriados: TfrmUpdateFeriados
   object pnlBotoes: TPanel
     Left = 0
     Top = 0
-    Width = 609
+    Width = 641
     Height = 49
     Align = alTop
     BevelOuter = bvNone
@@ -186,11 +186,11 @@ object frmUpdateFeriados: TfrmUpdateFeriados
     Caption = 'Feriados e afastamentos'
     TabOrder = 1
     Height = 537
-    Width = 609
+    Width = 641
     object grdRegistros: TcxGrid
       Left = 2
       Top = 257
-      Width = 605
+      Width = 637
       Height = 278
       Align = alClient
       Font.Charset = ANSI_CHARSET
@@ -229,7 +229,7 @@ object frmUpdateFeriados: TfrmUpdateFeriados
     object pnlRegistro: TPanel
       Left = 2
       Top = 18
-      Width = 605
+      Width = 637
       Height = 88
       Align = alTop
       BevelOuter = bvNone
@@ -316,7 +316,7 @@ object frmUpdateFeriados: TfrmUpdateFeriados
     object pnlEditar: TPanel
       Left = 2
       Top = 106
-      Width = 605
+      Width = 637
       Height = 151
       Align = alTop
       BevelOuter = bvNone

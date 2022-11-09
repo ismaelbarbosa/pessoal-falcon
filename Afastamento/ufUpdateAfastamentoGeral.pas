@@ -8,7 +8,8 @@ uses
   Menus, StdCtrls, cxButtons, ExtCtrls, cxControls, cxContainer, cxEdit,
   cxStyles, cxCustomData, cxFilter, cxData, cxDataStorage, cxDBData,
   cxGridLevel, cxGridCustomTableView, cxGridTableView, cxGridDBTableView,
-  cxClasses, cxGridCustomView, cxGrid, cxTextEdit, cxPC, cxMemo, DBCtrls;
+  cxClasses, cxGridCustomView, cxGrid, cxTextEdit, cxPC, cxMemo, DBCtrls,
+  Grids, DBGrids;
 
 type
   TfrmUpdateAfastamentoGeral = class(TForm)
@@ -31,23 +32,26 @@ type
     tvcNome: TcxGridDBColumn;
     tvcCargo: TcxGridDBColumn;
     tvcLotacao: TcxGridDBColumn;
-    grdServidoresLevel1: TcxGridLevel;
+    lvlServidores: TcxGridLevel;
     tshRelacaoAfastamentos: TcxTabSheet;
-    Panel2: TPanel;
+    pnlCRUDAfastamento: TPanel;
     lblQtdAfastamentos: TLabel;
     btnIncluirAfastamento: TcxButton;
     btnEditarAfastamento: TcxButton;
     btnExcluirAfastamento: TcxButton;
-    grdFerias: TcxGrid;
+    grdAfastamento: TcxGrid;
     tbvAfastamento: TcxGridDBTableView;
     tvcExercicio: TcxGridDBColumn;
     tvcDt_Inicio: TcxGridDBColumn;
     tvcDt_Termino: TcxGridDBColumn;
     tvcProcessoSEI: TcxGridDBColumn;
     tvcObservacao: TcxGridDBColumn;
-    grdAfastamento: TcxGridLevel;
+    lvlAfastamento: TcxGridLevel;
     tvcIdAfastamento: TcxGridDBColumn;
     tvcDescricaoAfastamento: TcxGridDBColumn;
+    Timer1: TTimer;
+    tvcID: TcxGridDBColumn;
+    Label2: TLabel;
     procedure FormCreate(Sender: TObject);
     procedure edtPesquisaKeyDown(Sender: TObject; var Key: Word;
       Shift: TShiftState);
@@ -58,10 +62,18 @@ type
     procedure tshRelacaoAfastamentosShow(Sender: TObject);
     procedure btnIncluirAfastamentoClick(Sender: TObject);
     procedure btnEditarAfastamentoClick(Sender: TObject);
+    procedure FormKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
+    procedure Timer1Timer(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure btnExcluirAfastamentoClick(Sender: TObject);
+    procedure tbvServidoresKeyDown(Sender: TObject; var Key: Word;
+      Shift: TShiftState);
   private
     { Private declarations }
   public
-  //
+    procedure habilitaRelacaoAfastamentos;
+    procedure desabilitaRelacaoAfastamentos;
   end;
 
 var
@@ -70,7 +82,7 @@ var
 implementation
 
 uses uDMConexao, uPesFuncoes, PRG_utils, ufUpdateAfastamento, ufPrincipal,
-  uDmFeriasAbonoAfastamento;
+  uDmFeriasAbonoAfastamento, ufLogs;
 
 {$R *.dfm}
 
@@ -86,15 +98,21 @@ begin
   txtCargo.DataSource := DMFeriasAbonoAfastamento.dsPesquisa;
   txtLotacao.DataSource := DMFeriasAbonoAfastamento.dsPesquisa;
 
+  if not DMFeriasAbonoAfastamento.qryPesquisa.Active
+  then
+    tshRelacaoAfastamentos.Enabled := false;
 end;
 
 procedure TfrmUpdateAfastamentoGeral.edtPesquisaKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
+  Timer1.Enabled := true;
+
   case Key of
-    VK_RETURN: lblQtdServidores.Caption := IntToStr(DMFeriasAbonoAfastamento.pesquisarPessoal(edtPesquisa.Text));
+    VK_RETURN: btnPesquisarClick(Sender);
     VK_DOWN:  perform(WM_NEXTDLGCTL,0,0);
   end
+
 end;
 
 procedure TfrmUpdateAfastamentoGeral.edtPesquisaKeyPress(Sender: TObject;
@@ -136,16 +154,25 @@ begin
 end;
 
 procedure TfrmUpdateAfastamentoGeral.btnIncluirAfastamentoClick(Sender: TObject);
+var idServidor, Nome, descricaoCargo: String;
 begin
   Application.CreateForm(TfrmUpdateAfastamento, frmUpdateAfastamento);
   frmUpdateAfastamento.setarOperacao(1);
 
-  with DMFeriasAbonoAfastamento do
+  with DMFeriasAbonoAfastamento.qryPesquisa do
   begin
+
+    if FieldByName('idServidor').IsNull then idServidor := ''
+    else idServidor := FieldValues['idServidor'];
+
+    if FieldByName('Nome').IsNull then Nome := ''
+    else Nome := FieldValues['Nome'];
+
+    if FieldByName('Cargo').IsNull then descricaoCargo := ''
+    else descricaoCargo := FieldValues['Cargo'];
+
     frmUpdateAfastamento.setarDadosServidor
-    (qryPesquisa.FieldValues['idServidor'],
-     qryPesquisa.FieldValues['Nome'],
-     qryPesquisa.FieldValues['Cargo']);
+    (idServidor, Nome, descricaoCargo);
   end;
 
 
@@ -159,26 +186,47 @@ end;
 
 procedure TfrmUpdateAfastamentoGeral.btnEditarAfastamentoClick(
   Sender: TObject);
+var idExercicio, nProcessoSEI, idAfastamento, dt_Inicio, dt_Termino, Observacao, ID: String;
 begin
   Application.CreateForm(TfrmUpdateAfastamento, frmUpdateAfastamento);
   frmUpdateAfastamento.setarOperacao(2);
 
-  {with DMFeriasAbonoAfastamento.qryPesquisa do
-  begin
-    frmUpdateFerias.exibeFeriasNoPeriodo
-    (FieldValues['idPessoal'],
-    FieldValues['idServidor'],
-    FieldValues['idExercicio']);
-  end;
-  }
   frmUpdateAfastamento.configurarOperacao;
 
-  //frmUpdateAfastamento.carregarAfastamentoExistente;
+  //ShowMessage(DMFeriasAbonoAfastamento.qryAfastamento.FieldValues['idAfastamento']);
 
+  with DMFeriasAbonoAfastamento.qryAfastamento do
+  begin
+    if FieldByName('idExercicio').IsNull then idExercicio := ''
+    else idExercicio := FieldValues['idExercicio'];
 
-  //frmUpdateAfastamento.bloquearCampos;
-  //frmUpdateFerias.edtProcessoSEI.SetFocus;
+    if FieldByName('nProcessoSEI').IsNull then nProcessoSEI := ''
+    else nProcessoSEI := FieldValues['nProcessoSEI'];
 
+    if FieldByName('idAfastamento').IsNull then idAfastamento := ''
+    else idAfastamento := FieldValues['idAfastamento'];
+
+    if FieldByName('dt_Inicio').IsNull then dt_Inicio := ''
+    else dt_Inicio := FieldValues['dt_Inicio'];
+
+    if FieldByName('dt_Termino').IsNull then dt_Termino := ''
+    else dt_Termino := FieldValues['dt_Termino'];
+
+    {if FieldByName('Observacao').IsNull
+    then Observacao := ''
+    else Observacao := FieldValues['Observacao'];}
+
+    if (FieldByName('Observacao').IsNull) or (Trim(FieldValues['Observacao']) = '')
+    then Observacao := ''
+    else Observacao := FieldValues['Observacao'];
+
+    //ShowMessage(FieldValues['ID']);
+    ID := FieldValues['ID'];
+
+    frmUpdateAfastamento.carregarAfastamento
+    (idExercicio, nProcessoSEI, idAfastamento, dt_Inicio,
+    dt_Termino, Observacao, ID);
+  end;
 
   with DMFeriasAbonoAfastamento.qryPesquisa do
   begin
@@ -193,8 +241,133 @@ begin
   frmUpdateAfastamento.ShowModal;
   frmUpdateAfastamento.Release;
   frmUpdateAfastamento := nil;
+end;
+
+procedure TfrmUpdateAfastamentoGeral.FormKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Shift = [ssCtrl] then
+  begin
+    if key = VK_F12
+    then
+    frmLogs.ShowModal;
+  end
+end;
+
+procedure TfrmUpdateAfastamentoGeral.Timer1Timer(Sender: TObject);
+var resultado: Integer;
+begin
+  if length(Trim(edtPesquisa.Text)) > 3 then
+  begin
+
+    resultado := DMFeriasAbonoAfastamento.pesquisarPessoal(edtPesquisa.Text);
+
+    case resultado of
+      0:
+      begin
+        desabilitaRelacaoAfastamentos;
+        //focarNaEdicao;
+      end;
+      1:
+      begin
+        habilitaRelacaoAfastamentos;
+        //focarNaEdicao;
+        pgcAfastamento.ActivePage := tshRelacaoAfastamentos;
+        pnlCRUDAfastamento.SetFocus;
+      end;
+    end;
+
+    if resultado > 1 then habilitaRelacaoAfastamentos;
+
+    lblQtdServidores.Caption := IntToStr(resultado);
+
+    Timer1.Enabled := false;
+  end;
+end;
+
+procedure TfrmUpdateAfastamentoGeral.desabilitaRelacaoAfastamentos;
+begin
+  tshRelacaoAfastamentos.Enabled := false;
+end;
+
+procedure TfrmUpdateAfastamentoGeral.habilitaRelacaoAfastamentos;
+begin
+  tshRelacaoAfastamentos.Enabled := true;
+end;
+
+procedure TfrmUpdateAfastamentoGeral.FormClose(Sender: TObject;
+  var Action: TCloseAction);
+begin
+  DMFeriasAbonoAfastamento.qryPesquisa.Active := false;
+end;
+
+procedure TfrmUpdateAfastamentoGeral.btnExcluirAfastamentoClick(
+  Sender: TObject);
+var wMens, wOperacao, wEvento: String;
+begin
+  wMens := 'Atenção! Confirma esta';
+  wOperacao := 'exclusão';
+  wMens := wMens + ' ' + wOperacao + '?';
+
+  if ConfirmaAcao(wMens, 3) = 1 then
+  begin
+    if frmUpdateAfastamento.excluirAfastamento
+    (DMFeriasAbonoAfastamento.qryAfastamento.FieldValues['ID'])
+    then
+    begin
+      ShowMessage('Registro excluído.');
+
+      wEvento := UpperCase(wOperacao)+ ' de afastamento.';
+
+      with dmFeriasAbonoAfastamento.qryAfastamento do
+      begin
+       if not FieldByName('descricaoAfastamento').IsNull
+       then
+        wEvento := wEvento + ' ' 
+        + dmFeriasAbonoAfastamento.qryAfastamento.FieldValues['idAfastamento']
+        + ' - ' + dmFeriasAbonoAfastamento.qryAfastamento.FieldValues['descricaoAfastamento'];
+
+        if not FieldByName('idExercicio').IsNull then
+        wEvento := wEvento
+        + ', Exercício: '
+        + dmFeriasAbonoAfastamento.qryAfastamento.FieldValues['idExercicio'];
+
+        if not FieldByName('Dt_Inicio').IsNull then
+        wEvento := wEvento
+        + ', Data de início: ' + DateToStr(FieldValues['Dt_Inicio']);
+
+        if not FieldByName('Dt_Termino').IsNull then
+        wEvento := wEvento
+        + ', Data de término: ' + DateToStr(FieldValues['Dt_Termino']);
+      end;
+
+      IncluirLog
+      (
+      DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+      RetornaData(2),
+      'tbAfastamento',
+      //'NULL',
+      dmFeriasAbonoAfastamento.qryPesquisa.FieldValues['idPessoal'],
+      dmFeriasAbonoAfastamento.qryPesquisa.FieldValues['idPessoal'],
+      dmFeriasAbonoAfastamento.qryPesquisa.FieldValues['idServidor'],
+      'TODOS',
+      wEvento
+      );
+
+      //ShowMessage('Registrado no log de alterações.');
+    end;
 
 
+    frmUpdateAfastamentoGeral.tshRelacaoAfastamentosShow(Self);
+
+  end
+end;
+
+procedure TfrmUpdateAfastamentoGeral.tbvServidoresKeyDown(Sender: TObject;
+  var Key: Word; Shift: TShiftState);
+begin
+  if Key = VK_RETURN
+  then pgcAfastamento.ActivePageIndex := 1;
 end;
 
 end.

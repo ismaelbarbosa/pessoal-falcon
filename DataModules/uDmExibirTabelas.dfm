@@ -1,10 +1,10 @@
 object dmExibirTabelas: TdmExibirTabelas
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 441
+  Left = 372
   Top = 81
-  Height = 530
-  Width = 487
+  Height = 647
+  Width = 652
   object qryHistoricoFuncoes: TADOQuery
     DataSource = dsPessoal
     Parameters = <
@@ -117,6 +117,7 @@ object dmExibirTabelas: TdmExibirTabelas
       'Fer.Dt_InicioReagendamento, Fer.Dt_TerminoReagendamento,'
       'Fer.Observacao,'
       'Fer.nProcessoSEI,'
+      'Fer.ID,'
       ''
       'Per.idPeriodo, Per.descricao as descricaoPeriodo,'
       'Par.idParcela, Par.descricao as descricaoParcela,'
@@ -173,6 +174,7 @@ object dmExibirTabelas: TdmExibirTabelas
         '3,'
       'Abon.Dt_4, Abon.Dt_5, Abon.idServidor,'
       'nProcessoSEI'
+      ', Abon.ID'
       'FROM tbAbono AS Abon'
       'WHERE '
       'Abon.idPessoal = :idPessoal and'
@@ -193,11 +195,20 @@ object dmExibirTabelas: TdmExibirTabelas
         Precision = 255
         Size = 5
         Value = Null
+      end
+      item
+        Name = 'idServidor'
+        DataType = ftString
+        NumericScale = 255
+        Precision = 255
+        Size = 10
+        Value = Null
       end>
     SQL.Strings = (
       'SELECT'
       'tbafastamento.idafastamento, tbafastamento.descricao,'
       'tbAfastamento.Codigo,'
+      'tbserv_afast.ID,'
       'tbserv_afast.idpessoal, tbserv_afast.idafastamento, '
       
         'tbserv_afast.dt_inicio, tbserv_afast.dt_termino, tbserv_afast.id' +
@@ -210,7 +221,8 @@ object dmExibirTabelas: TdmExibirTabelas
       'ON tbserv_afast.idafastamento = tbafastamento.idafastamento '
       ''
       'WHERE '
-      'tbserv_afast.idpessoal = :idpessoal '
+      'tbserv_afast.idpessoal = :idPessoal'
+      'and tbserv_afast.idServidor = :idServidor'
       'and tbafastamento.idafastamento not in ('#39'721'#39')'
       ''
       'ORDER BY tbserv_afast.dt_inicio DESC;')
@@ -249,7 +261,7 @@ object dmExibirTabelas: TdmExibirTabelas
   end
   object qryFeriasTipoParcela: TADOQuery
     Parameters = <>
-    Left = 56
+    Left = 52
     Top = 400
   end
   object qryHistoricoExercicioExterno: TADOQuery
@@ -290,6 +302,7 @@ object dmExibirTabelas: TdmExibirTabelas
   end
   object qryTotalDiasSubstituidos: TADOQuery
     CursorType = ctStatic
+    DataSource = dsPessoal
     Parameters = <
       item
         Name = 'idPessoal'
@@ -315,9 +328,10 @@ object dmExibirTabelas: TdmExibirTabelas
   object qryProcuradorSubstituido: TADOQuery
     Connection = DMConexao.conPessoal
     CursorType = ctStatic
+    DataSource = dsPessoal
     Parameters = <
       item
-        Name = 'procsubstituto'
+        Name = 'idPessoal'
         DataType = ftString
         NumericScale = 255
         Precision = 255
@@ -326,12 +340,88 @@ object dmExibirTabelas: TdmExibirTabelas
       end>
     SQL.Strings = (
       
-        'select subst.*,  '#39'ndias'#39' = (DATEDIFF(DAY, subst.dt_inicio, subst' +
-        '. dt_termino)+1)'
-      'from tbsubstprocurador subst'
-      'where subst.idpessoalsubstituto = :procsubstituto'
-      'order by subst.dt_inicio desc, subst.dt_termino desc')
+        'SELECT pes.Nome, subst.*,  '#39'ndias'#39' = (DATEDIFF(DAY, subst.dt_ini' +
+        'cio, subst. dt_termino)+1)'
+      'FROM tbsubstprocurador subst'
+      
+        'INNER JOIN  tbPessoal pes on pes.idPessoal = subst.idPessoalSubs' +
+        'tituido'
+      'WHERE subst.idpessoalsubstituto = :idPessoal'
+      'ORDER BY subst.dt_inicio desc, subst.dt_termino desc')
     Left = 340
     Top = 270
+  end
+  object qryLogHistorico: TADOQuery
+    Parameters = <
+      item
+        Name = 'idPessoal'
+        DataType = ftString
+        Size = 5
+        Value = Null
+      end>
+    SQL.Strings = (
+      'SELECT  '
+      
+        'Log.idLog, Log.Data, Log.idUsuario, Log.tabela, Log.Chave, Log.C' +
+        'ampo,'
+      'Log.Evento, Pes.Nome as Operador'
+      ''
+      ''
+      'FROM tbLog as Log'
+      'LEFT JOIN tbPessoal Pes on Pes.CPF = Log.idUsuario'
+      ''
+      'WHERE 1=1'
+      'AND Log.idPessoal = :idPessoal '
+      'ORDER BY Log.idLog desc;'
+      '')
+    Left = 184
+    Top = 400
+  end
+  object qryBanco: TADOQuery
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT idBanco, Descricao'
+      'FROM tbBanco')
+    Left = 340
+    Top = 400
+  end
+  object qryCurso: TADOQuery
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT idCurso, Descricao'
+      'FROM tbCurso')
+    Left = 488
+    Top = 400
+  end
+  object qryAno: TADOQuery
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'SELECT YEAR(GETDATE())+1 ANO'
+      'UNION'
+      'SELECT YEAR(GETDATE()) ANO'
+      'UNION'
+      'SELECT YEAR(GETDATE())-1 ANO')
+    Left = 49
+    Top = 480
+  end
+  object qryMes: TADOQuery
+    CursorType = ctStatic
+    Parameters = <>
+    SQL.Strings = (
+      'DECLARE @Ano INT'
+      'SET @Ano = YEAR(GETDATE())'
+      'SELECT nmes, mes '
+      'FROM F_PrimeiroUltimoDia12Meses(@Ano)')
+    Left = 185
+    Top = 480
+  end
+  object qryDataHora: TADOQuery
+    Parameters = <>
+    SQL.Strings = (
+      'select "Ano" = year(getdate()), "DataHora" = getdate(),'
+      '"Mes" = month(getdate());')
+    Left = 338
+    Top = 480
   end
 end

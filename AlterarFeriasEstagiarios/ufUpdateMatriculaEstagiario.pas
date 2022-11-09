@@ -6,7 +6,8 @@ uses
   Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
   Dialogs, cxGraphics, cxLookAndFeels, cxLookAndFeelPainters, Menus,
   StdCtrls, cxButtons, ExtCtrls, cxControls, cxContainer, cxEdit, DBCtrls,
-  cxTextEdit, cxDBEdit, ComCtrls;
+  cxTextEdit, cxDBEdit, ComCtrls, cxMemo, cxMaskEdit, cxDropDownEdit,
+  cxCalendar;
 
 type
   TEstadoEdicao = record
@@ -25,14 +26,15 @@ type
     Label2: TLabel;
     btnSair: TcxButton;
     btnGravar: TcxButton;
+    StatusBar: TStatusBar;
+    Button1: TButton;
+    pnlNome: TPanel;
     txtNome: TDBText;
     edtidServidor: TcxTextEdit;
-    StatusBar: TStatusBar;
     Label19: TLabel;
     lbl_IDS: TLabel;
     Label34: TLabel;
     lbl_IDP: TLabel;
-    Button1: TButton;
     procedure btnSairClick(Sender: TObject);
     procedure btnGravarClick(Sender: TObject);
     procedure edtIdServidorExit(Sender: TObject);
@@ -65,7 +67,7 @@ var
 implementation
 
 uses ufReadEstagiarios, PRG_utils, uPesFuncoes, ufCreateServidor,
-  uDmCadastroServidor, uDMConexao, ufLogs, uDMPessoal;
+  uDmCadastroServidor, uDMConexao, ufLogs, uDMPessoal, uDMEstagiario;
 
 {$R *.dfm}
 
@@ -95,8 +97,13 @@ begin
     NIDS := lbl_IDS.Caption;
     }
 
+    {
     NIDP := frmReadEstagiarios.qryPesquisa.FieldValues['idPessoal'];
     NIDS := frmReadEstagiarios.qryPesquisa.FieldValues['ID'];
+    }
+
+    NIDP := DMEstagiario.qryPesquisa.FieldValues['idPessoal'];
+    NIDS := DMEstagiario.qryPesquisa.FieldValues['ID'];
 
     {if alterarMatricula(NIDP, NIDS, edtidServidor.Text) then
     ShowMessage('OK');
@@ -113,7 +120,8 @@ begin
     Gera_SQL(RemoveIndesejadas('EST'), 'serv.idCargo');
 
     frmReadEstagiarios.lblNumeroRegistros.Caption := 'Nº de registros encontrados: ' +
-    IntToStr(frmReadEstagiarios.pesquisarEstagiarios(condicao));
+    IntToStr(DMEstagiario.pesquisarEstagiarios(condicao));
+//    IntToStr(frmReadEstagiarios.pesquisarEstagiarios(condicao));
 
     Close;
 
@@ -181,7 +189,8 @@ begin
       edtidServidor.Text := InserirZeros(edtidServidor.Text,10);
       Setlength(Pessoal, 3);
 
-      Pessoal := MatriculaCadastradaNoID(frmReadEstagiarios.qryPesquisa.FieldValues['idPessoal'],
+//      Pessoal := MatriculaCadastradaNoID(frmReadEstagiarios.qryPesquisa.FieldValues['idPessoal'],
+      Pessoal := MatriculaCadastradaNoID(DMEstagiario.qryPesquisa.FieldValues['idPessoal'],
       Trim(edtIdServidor.Text)
       );
 
@@ -250,7 +259,9 @@ end;
 
 function TfrmUpdateMatriculaEstagiario.carregarDados: boolean;
 begin
-  with frmReadEstagiarios.qryPesquisa do
+//  with frmReadEstagiarios.qryPesquisa do
+
+  with DMEstagiario.qryPesquisa do
   begin
     lbl_IDP.Caption         := FieldValues['idPessoal'];
     lbl_IDS.Caption         := FieldValues['ID'];
@@ -261,6 +272,7 @@ begin
 
     // Manter o valor do campo idServidor no registro EstadoEdicao
     EstadoEdicao.idServidor[0]  := edtidServidor.Text;
+
   end;
 
   SetarAlteracaoDesfeita;

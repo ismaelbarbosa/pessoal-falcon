@@ -36,8 +36,8 @@ type
     tvcLotacao: TcxGridDBColumn;
     grdServidoresLevel1: TcxGridLevel;
     tshRelacaoSubstituicao: TcxTabSheet;
-    Panel2: TPanel;
-    lblQtdFerias: TLabel;
+    pnlCRUDSubstituicao: TPanel;
+    lblQtdServidores: TLabel;
     btnIncluirSubstituicao: TcxButton;
     btnEditarFerias: TcxButton;
     btnExcluirFerias: TcxButton;
@@ -58,6 +58,8 @@ type
     dsProcuradorSubstituido: TDataSource;
     qryTotalDiasSubstituidos: TADOQuery;
     qryProcuradorSubstituido: TADOQuery;
+    DBText2: TDBText;
+    Timer1: TTimer;
     procedure FormCreate(Sender: TObject);
     procedure FormActivate(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word;
@@ -69,6 +71,8 @@ type
     procedure btnSairClick(Sender: TObject);
     procedure tshRelacaoSubstituicaoShow(Sender: TObject);
     procedure btnIncluirSubstituicaoClick(Sender: TObject);
+    procedure Timer1Timer(Sender: TObject);
+    procedure btnExcluirFeriasClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -76,6 +80,8 @@ type
     function exibirTotalDiasSubstituidos(idPessoal, idServidor: String): Integer;
     function ExibirSubstituicoes(pidPessoal: String; pTop, pOrdem: integer): Integer;
 
+    procedure habilitaRelacaoSubstituicao;
+    procedure desabilitaRelacaoSubstituicao;
   end;
 
 var
@@ -103,13 +109,14 @@ begin
   dsTotalDiasSubstituidos.DataSet := qryTotalDiasSubstituidos;
   dsProcuradorSubstituido.DataSet := qryProcuradorSubstituido;
 
+  tshRelacaoSubstituicao.Enabled := false;
 end;
 
 procedure TfrmUpdateSubstituicaoGeral.FormActivate(Sender: TObject);
 begin
   pgcSubstituicoes.ActivePageIndex := 0;
   edtPesquisa.SetFocus;
-  lblQtdFerias.Caption := '0';
+  lblQtdServidores.Caption := '0';
 end;
 
 procedure TfrmUpdateSubstituicaoGeral.FormKeyDown(Sender: TObject;
@@ -127,14 +134,16 @@ end;
 procedure TfrmUpdateSubstituicaoGeral.edtPesquisaKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
-  case Key of
+  Timer1.Enabled := true;
+
+  {case Key of
     VK_RETURN:
     begin
       if IntToStr(pesquisarPessoal(edtPesquisa.Text)) = '0' then ShowMessage('A pesquisa não localizou procuradores com esse nome ou matrícula.');
     end;
 
     VK_DOWN:  perform(WM_NEXTDLGCTL,0,0);
-  end
+  end}
 end;
 
 function TfrmUpdateSubstituicaoGeral.pesquisarPessoal(
@@ -245,7 +254,7 @@ procedure TfrmUpdateSubstituicaoGeral.tshRelacaoSubstituicaoShow(
 begin
   if (qryPesquisa.Active) and (qryPesquisa.RecordCount > 0) then
   begin
-    lblQtdFerias.Caption := 'Total de registros: ' +
+    lblQtdServidores.Caption := 'Total de registros: ' +
     IntToStr(exibirTotalDiasSubstituidos(qryPesquisa.FieldValues['idPessoal']
     , qryPesquisa.FieldValues['idServidor']));
 
@@ -316,6 +325,104 @@ begin
 
   end;
 
+end;
+
+procedure TfrmUpdateSubstituicaoGeral.Timer1Timer(Sender: TObject);
+var resultado: Integer;
+begin
+  if length(Trim(edtPesquisa.Text)) > 3 then
+  begin
+    resultado := pesquisarPessoal(edtPesquisa.Text);
+
+    //  if IntToStr(pesquisarPessoal(edtPesquisa.Text)) = '0' then ShowMessage('A pesquisa não localizou procuradores com esse nome ou matrícula.');
+
+    case resultado of
+      0:
+      begin
+        desabilitaRelacaoSubstituicao;
+        //focarNaEdicao;
+      end;
+      1:
+      begin
+        habilitaRelacaoSubstituicao;
+        //focarNaEdicao;
+        pgcSubstituicoes.ActivePage := tshRelacaoSubstituicao;
+        pnlCRUDSubstituicao.SetFocus;
+      end;
+    end;
+
+    if resultado > 1 then habilitaRelacaoSubstituicao;
+
+    lblQtdServidores.Caption := IntToStr(resultado);
+
+
+    Timer1.Enabled := false;
+  end;
+end;
+
+procedure TfrmUpdateSubstituicaoGeral.desabilitaRelacaoSubstituicao;
+begin
+  tshRelacaoSubstituicao.Enabled := false;
+end;
+
+procedure TfrmUpdateSubstituicaoGeral.habilitaRelacaoSubstituicao;
+begin
+  tshRelacaoSubstituicao.Enabled := true;
+end;
+
+procedure TfrmUpdateSubstituicaoGeral.btnExcluirFeriasClick(
+  Sender: TObject);
+var wMens, wOperacao, wEvento: String;
+begin
+  wMens := 'Atenção! Confirma esta';
+  wOperacao := 'exclusão';
+  wMens := wMens + ' ' + wOperacao + '?';
+
+  if ConfirmaAcao(wMens, 3) = 1 then
+  begin
+    //ShowMessage(qryProcuradorSubstituido.FieldValues['idSubstituicao']);
+
+    if frmUpdateSubstituicao.excluirAfastamento
+    (qryProcuradorSubstituido.FieldValues['idSubstituicao'])
+    then
+    begin
+      ShowMessage('Registro excluído.');
+
+      wEvento := UpperCase(wOperacao)+ ' de substituição.';
+
+      with qryProcuradorSubstituido do
+      begin
+        if not FieldByName('Dt_Inicio').IsNull then
+        wEvento := wEvento
+        + ', Data de início: ' + DateToStr(FieldValues['Dt_Inicio']);
+
+        if not FieldByName('Dt_Termino').IsNull then
+        wEvento := wEvento
+        + ', Data de término: ' + DateToStr(FieldValues['Dt_Termino']);
+      end;
+
+
+      IncluirLog
+      // usuário, data, tabela, chave, idPessoal, idServidor, Campo, Transação
+      (
+      DMConexao.Usuario.CPF,  // antes era função do frmPrincipal
+      RetornaData(2),
+      'tbAfastamento',
+      //'NULL',
+      qryProcuradorSubstituido.FieldValues['idSubstituicao'],
+      qryProcuradorSubstituido.FieldValues['idPessoal'],
+      'NULL',
+      'TODOS',
+      wEvento
+      );
+
+      //ShowMessage('Registrado no log de alterações.');
+    end;
+
+
+    frmUpdateSubstituicaoGeral.tshRelacaoSubstituicaoShow(Self);
+
+  end
 end;
 
 end.

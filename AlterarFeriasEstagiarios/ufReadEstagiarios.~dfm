@@ -41,7 +41,6 @@ object frmReadEstagiarios: TfrmReadEstagiarios
       OptionsData.Editing = False
       OptionsData.Inserting = False
       OptionsView.GroupByBox = False
-      Styles.ContentEven = frmPrincipal.cxStyle1
       object cxGrid1DBTableView1Column1: TcxGridDBColumn
         DataBinding.FieldName = 'Nome'
       end
@@ -245,17 +244,11 @@ object frmReadEstagiarios: TfrmReadEstagiarios
       Font.Style = []
       ParentFont = False
     end
-    object lblQtdServidores: TLabel
-      Left = 632
-      Top = 19
-      Width = 95
-      Height = 13
-      Caption = 'lblQtdServidores'
-    end
     object edtPesquisa: TcxTextEdit
       Left = 183
       Top = 17
       ParentFont = False
+      Properties.OnChange = edtPesquisaPropertiesChange
       Style.Font.Charset = ANSI_CHARSET
       Style.Font.Color = clWindowText
       Style.Font.Height = -16
@@ -264,18 +257,18 @@ object frmReadEstagiarios: TfrmReadEstagiarios
       Style.IsFontAssigned = True
       TabOrder = 0
       OnKeyDown = edtPesquisaKeyDown
+      OnKeyPress = edtPesquisaKeyPress
       Width = 355
     end
   end
-  object qryPesquisa: TADOQuery
-    Parameters = <>
-    Left = 80
-    Top = 248
-  end
   object dsPesquisa: TDataSource
     AutoEdit = False
-    DataSet = qryPesquisa
-    Left = 112
-    Top = 248
+    Left = 680
+    Top = 8
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 752
+    Top = 56
   end
 end

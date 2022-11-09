@@ -211,6 +211,8 @@ begin
     RetornaData(2),
     'tbHist_Funcao',
     frmUpdateServidor.lbl_IDP.Caption,
+    frmUpdateServidor.lbl_IDP.Caption,
+    frmUpdateServidor.txtMatricula.Caption,
     'TODOS',
     'Alteração do histórico da função: '
     + 'ID: ' + txtIDHistorico.Caption

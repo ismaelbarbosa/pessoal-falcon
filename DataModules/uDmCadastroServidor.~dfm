@@ -1,8 +1,8 @@
 object dmCadastroServidor: TdmCadastroServidor
   OldCreateOrder = False
   OnCreate = DataModuleCreate
-  Left = 399
-  Top = 73
+  Left = 624
+  Top = 114
   Height = 547
   Width = 420
   object qryPessoal: TADOQuery
